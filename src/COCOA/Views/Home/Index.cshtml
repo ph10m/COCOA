@@ -1,0 +1,19 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>Hello COCOA</title>
+
+    <!-- Latest compiled and minified bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+</head>
+<body>
+    @Html.React("HomePage", new { });
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.30.7/react-bootstrap.min.js"></script>
+    <script src="@Url.Content("~/js/components/HomePage.jsx")"></script>
+    @Html.ReactInitJavaScript()
+</body>
+</html>

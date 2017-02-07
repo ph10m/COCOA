@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "name": "cocoa",
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {
+    "react-bootstrap": "^0.30.7"
+  }
+}
