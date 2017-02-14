@@ -10,9 +10,9 @@
 </head>
 <body>
     @Html.React("HomePage", new { });
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.30.7/react-bootstrap.min.js"></script>
+    <script src="@Url.Content("~/node_modules/react/dist/react.min.js")"></script>
+    <script src="@Url.Content("~/node_modules/react-dom/dist/react-dom.min.js")"></script>
+    <script src="@Url.Content("~/node_modules/react-bootstrap/dist/react-bootstrap.min.js")"></script>
     <script src="@Url.Content("~/js/components/HomePage.jsx")"></script>
     @Html.ReactInitJavaScript()
 </body>

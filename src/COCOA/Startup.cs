@@ -72,6 +72,7 @@ namespace COCOA
                 // your components as well as all of their dependencies.
                 // See http://reactjs.net/ for more information. Example:
                 config
+                .AddScript("~/node_modules/react-bootstrap/dist/react-bootstrap.min.js")
                 .AddScript("~/js/components/HomePage.jsx");
 
                 // If you use an external build too (for example, Babel, Webpack,
