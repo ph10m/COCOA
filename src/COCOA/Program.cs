@@ -11,6 +11,8 @@ namespace COCOA
     {
         public static void Main(string[] args)
         {
+            WebScraper scraper = new WebScraper("tollefj");
+
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
@@ -19,6 +21,7 @@ namespace COCOA
                 .Build();
 
             host.Run();
+
         }
     }
 }
