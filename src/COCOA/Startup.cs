@@ -9,6 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using React.AspNet;
+using COCOA.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using COCOA.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace COCOA
 {
@@ -42,6 +46,35 @@ namespace COCOA
             services.AddReact();
 
             services.AddMvc();
+
+            var connection = @"Server=cocoadbserver.database.windows.net; Database=cocoadb; User Id=coffee; password=HEm3LsGnjVMn27LR";
+            services.AddDbContext<CocoaDbContext>(options => options.UseSqlServer(connection));
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<CocoaDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+
+                // Cookie settings
+                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
+                options.Cookies.ApplicationCookie.LoginPath = "/Account/LogIn";
+                options.Cookies.ApplicationCookie.LogoutPath = "/Account/LogOff";
+
+                // User settings
+                options.User.RequireUniqueEmail = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,6 +118,8 @@ namespace COCOA
             });
 
             app.UseStaticFiles();
+
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {
