@@ -2,3 +2,17 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
+
+
+.header-logo {
+    height: inherit;
+}
+
+.logo-div a {
+    height: inherit;
+    align-self: center;
+}
+
+.form-div {
+    align-self: center;
+}
