@@ -7,9 +7,9 @@ namespace COCOA.Data
     /// <summary>
     /// Database context for code-first migration.
     /// </summary>
-    public class CocoaDbContext : IdentityDbContext<User>
+    public class CocoaIdentityDbContext : IdentityDbContext<User>
     {
-        public CocoaDbContext(DbContextOptions<CocoaDbContext> options)
+        public CocoaIdentityDbContext(DbContextOptions<CocoaIdentityDbContext> options)
             : base(options)
         {
 

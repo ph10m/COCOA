@@ -48,20 +48,25 @@ namespace COCOA
             services.AddMvc();
 
             var connection = @"Server=cocoadbserver.database.windows.net; Database=cocoadb; User Id=coffee; password=HEm3LsGnjVMn27LR";
-            services.AddDbContext<CocoaDbContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<CocoaIdentityDbContext>(options => options.UseSqlServer(connection));
 
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<CocoaDbContext>()
+                .AddEntityFrameworkStores<CocoaIdentityDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Authenticated", policy => policy.RequireRole("Administrator", "Student", "Teacher"));
+            });
 
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 4;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
 
                 // Lockout settings
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
@@ -74,6 +79,7 @@ namespace COCOA
 
                 // User settings
                 options.User.RequireUniqueEmail = false;
+
             });
         }
 
@@ -94,6 +100,8 @@ namespace COCOA
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            RolesSetup.SeedRoles(app.ApplicationServices).Wait();
 
             app.UseApplicationInsightsExceptionTelemetry();
 
