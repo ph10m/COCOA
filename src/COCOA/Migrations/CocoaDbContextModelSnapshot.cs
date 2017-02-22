@@ -7,7 +7,7 @@ using COCOA.Data;
 
 namespace COCOA.Migrations
 {
-    [DbContext(typeof(CocoaDbContext))]
+    [DbContext(typeof(CocoaIdentityDbContext))]
     partial class CocoaDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

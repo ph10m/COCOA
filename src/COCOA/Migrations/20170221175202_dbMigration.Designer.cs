@@ -7,7 +7,7 @@ using COCOA.Data;
 
 namespace COCOA.Migrations
 {
-    [DbContext(typeof(CocoaDbContext))]
+    [DbContext(typeof(CocoaIdentityDbContext))]
     [Migration("20170221175202_dbMigration")]
     partial class dbMigration
     {
