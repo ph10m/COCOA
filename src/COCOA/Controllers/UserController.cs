@@ -29,31 +29,6 @@ namespace COCOA.Controllers
             _roleManager = roleManager;
         }
 
-        /// <summary>
-        /// Setup roles if they dont exist already.
-        /// </summary>
-        /// <returns></returns>
-        public async Task SetupRoles()
-        {
-            if (!await _roleManager.RoleExistsAsync("Administrator"))
-            {
-                var adminRole = new IdentityRole("Administrator");
-                await _roleManager.CreateAsync(adminRole);
-            }
-
-            if (!await _roleManager.RoleExistsAsync("Student"))
-            {
-                var adminRole = new IdentityRole("Student");
-                await _roleManager.CreateAsync(adminRole);
-            }
-
-            if (!await _roleManager.RoleExistsAsync("Teacher"))
-            {
-                var adminRole = new IdentityRole("Teacher");
-                await _roleManager.CreateAsync(adminRole);
-            }
-        }
-
         public IActionResult Index()
         {
             return View();
