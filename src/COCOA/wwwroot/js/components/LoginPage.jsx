@@ -21,6 +21,34 @@ class FieldGroup extends React.Component {
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = { email: '', password: '' };
+    }
+
+
+
+    sendLoginRequest() {
+        var xhr = new XMLHttpRequest();
+        var email = this.state.email;
+        var password = this.state.password;
+
+        xhr.open('get', "/user/signin?email=" + email + "&password=" + password + "&persistent=true", true);
+        xhr.onload = function () {
+            if (xhr.status == 200) {
+                console.log("Signed in with " + email + ".");
+            }
+            else {
+                console.log("Failed to sign in, wrong email or password.");
+            }
+        }.bind(this);
+    }
+
+    emailChanged(event) {
+        this.setState({ email: event.target.value });
+    }
+
+    passwordChanged(event) {
+        this.setState({ password: event.target.value });
     }
 
     render() {
