@@ -12,10 +12,11 @@ class CocoaHeader extends React.Component {
     render() {
         return (<Navbar inverse collapseOnSelect fluid>
                     <Navbar.Header>
+                        <a href='#' className='logo-link'>
+                        <Image src='/../images/logo.png' className='header-logo' />
+                        </a>
+
                       <Navbar.Brand>
-                          <div className='logo-div'>
-                             <a href='#'><Image src='/../images/logo.png' className='header-logo' responsive /></a>
-                          </div>
                       </Navbar.Brand>
                       <Navbar.Toggle />
                     </Navbar.Header>

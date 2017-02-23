@@ -5,13 +5,14 @@
 
 
 .header-logo {
-    height: inherit;
+    height: 50px;
+    padding: 5px;
 }
 
-.logo-div a {
-    height: inherit;
-    align-self: center;
+.logo-link {
+    height: 100%;
 }
+
 
 .form-div {
     align-self: center;
