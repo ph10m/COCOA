@@ -1,16 +1,11 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
 
 .header-logo {
-    height: 50px;
+    max-height: 50px;
     padding: 5px;
-}
-
-.logo-link {
-    height: 100%;
 }
 
 
