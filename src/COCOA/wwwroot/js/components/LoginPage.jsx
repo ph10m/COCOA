@@ -62,12 +62,14 @@ class LoginPage extends React.Component {
                                 type="username"
                                 label="Username"
                                 placeholder='Username'
-                                bsSize='lg'/>
+                                bsSize='lg'
+                                onChange={this.emailChanged.bind(this)}/>
                     <FieldGroup id="formControlPassword"
                                 label="Password"
                                 type="password" 
-                                placeholder='Password'/>
-                    <Button type="submit">
+                                placeholder='Password'
+                                onChange={this.passwordChanged.bind(this)}/>
+                    <Button onClick={this.sendLoginRequest.bind(this)}>
                         Submit
                     </Button>
                 </form>
