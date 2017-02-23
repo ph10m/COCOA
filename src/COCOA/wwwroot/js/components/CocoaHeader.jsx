@@ -22,8 +22,8 @@ class CocoaHeader extends React.Component {
                     </Navbar.Header>
                     <Navbar.Collapse>
                       <Nav>
-                        <NavItem eventKey={1} href="#">A tab</NavItem>
-                        <NavItem eventKey={2} href="#">Another tab</NavItem>
+                        <NavItem eventKey={1} href="/Home">A tab</NavItem>
+                        <NavItem eventKey={2} href="/Home">Another tab</NavItem>
                         <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
                           <MenuItem eventKey={3.1}>Action</MenuItem>
                           <MenuItem eventKey={3.2}>Another action</MenuItem>
@@ -33,8 +33,8 @@ class CocoaHeader extends React.Component {
                         </NavDropdown>
                       </Nav>
                       <Nav pullRight>
-                        <NavItem eventKey={1} href="#">Link Right</NavItem>
-                        <NavItem eventKey={2} href="#">Link Right</NavItem>
+                        <NavItem eventKey={1} href="/Login">Log in</NavItem>
+                        <NavItem eventKey={2} href="/Register">Create new user</NavItem>
                       </Nav>
                     </Navbar.Collapse>
                 </Navbar>

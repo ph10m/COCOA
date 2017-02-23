@@ -41,6 +41,7 @@ class LoginPage extends React.Component {
                 console.log("Failed to sign in, wrong email or password.");
             }
         }.bind(this);
+        xhr.send();
     }
 
     emailChanged(event) {
