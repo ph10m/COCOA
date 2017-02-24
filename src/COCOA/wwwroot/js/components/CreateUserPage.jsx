@@ -22,7 +22,7 @@ class CreateUserPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { email: '', password: '' };
+        this.state = { email: '', name: '', password: '', passwordConfirmed: '' };
     }
 
 
