@@ -39,7 +39,15 @@ public class WebScraper{
             });
             return json;
         }
-        
+        public int getStartTime()
+        {
+            // return sthe amount of minutes in the start-time of a lecture
+            // for easy comparison
+            var tmp = startTime.Split(':');
+            int x = Int32.Parse(tmp[0]) * 60 + Int32.Parse(tmp[1]);
+            Console.WriteLine("was: " + this.startTime + "becomes in mins: " + x);
+            return x;
+        }
     }
     public class JsonLecture
     {
@@ -86,10 +94,10 @@ public class WebScraper{
                 {
                     string time = splitted[splitted.Length - 1];
                     string day = splitted[splitted.Length - 2];
-                    day = FirstCharToUpper(day);
                     formatted = formatted.Replace(time, "");
                     formatted = formatted.Replace(day, "");
                     string subject = formatted.Trim();
+                    day = FirstCharToUpper(day);
                     //if (!this.courseNames.Contains(subject))
                     //{
                     //    courseNames.Add(subject);
@@ -108,17 +116,27 @@ public class WebScraper{
     {
         var currentTime = DateTime.Now;
         var day = currentTime.DayOfWeek;
-        var time = currentTime.TimeOfDay;
-        Console.WriteLine("It's now " + day + ", " + time);
+        int hour = currentTime.TimeOfDay.Hours;
+        int min = currentTime.TimeOfDay.Minutes;
+        var timeValue = hour * 60 + min;
+        foreach (var lect in this.lectures)
+        {
+            // check first if the day matches
+            if (day > lect.getDay())
+            {
 
+            }
+        }
         return null;
     }
 
     private void getJson()
     {
+        String lectureJson = "";
         foreach (var lect in this.lectures)
         {
-            Console.WriteLine(lect.getLecture());
+            lectureJson += lect.getLecture() + "\n";
         }
+        Console.WriteLine(lectureJson);
     }
 }
