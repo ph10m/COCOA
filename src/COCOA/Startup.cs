@@ -101,7 +101,7 @@ namespace COCOA
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            RolesSetup.SeedRoles(app.ApplicationServices).Wait();
+            //RolesSetup.SeedRoles(app.ApplicationServices).Wait();
 
             app.UseApplicationInsightsExceptionTelemetry();
 
