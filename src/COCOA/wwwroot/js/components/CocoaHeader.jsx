@@ -10,7 +10,7 @@ class CocoaHeader extends React.Component {
         super(props);
     }
     render() {
-        return (<Navbar inverse collapseOnSelect fluid>
+        return (<Navbar inverse fluid>
                     <Navbar.Header>
                         <a href='#' className='logo-link'>
                         <Image src='/../images/logo.png' className='header-logo' />
