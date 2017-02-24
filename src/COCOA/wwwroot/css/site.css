@@ -1,4 +1,14 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
+}
+
+
+.header-logo {
+    max-height: 50px;
+    padding: 5px;
+}
+
+
+.form-div {
+    align-self: center;
 }

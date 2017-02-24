@@ -9,7 +9,7 @@ namespace COCOA.Controllers
 {
     //[RequireHttps]
     //[Authorize(Policy = "Authenticated")]
-    public class HomeController : Controller
+    public class LoginController : Controller
     {
         public IActionResult Index()
         {
