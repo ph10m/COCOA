@@ -30,18 +30,19 @@ class CreateUserPage extends React.Component {
     createNewUser() {
         var xhr = new XMLHttpRequest();
         var email = this.state.email;
+        var name = this.state.name;
         var password = this.state.password;
         var passwordConfirmed = this.state.passwordConfirmed;
         if (password === passwordConfirmed) {
-            xhr.open('put', "/user/register?email=" + encodeURIComponent(email) + "&password=" + encodeURIComponent(password), true);
-            //xhr.onload = function () {
-            //    if (xhr.status == 200) {
-            //        console.log("Signed in with " + email + ".");
-            //    }
-            //    else {
-            //        console.log("Failed to sign in, wrong email or password.");
-            //    }
-            //}.bind(this);
+            xhr.open('get', "/user/register?email=" + encodeURIComponent(email) + "&name=" + encodeURIComponent(name) + "&password=" + encodeURIComponent(password) + "&persistent=true", true);
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    console.log("Signed in with " + email + ".");
+                }
+                else {
+                    console.log("Failed to sign in, wrong email or password.");
+                }
+            }.bind(this);
             xhr.send();
         }
         else {
@@ -51,6 +52,10 @@ class CreateUserPage extends React.Component {
 
     emailChanged(event) {
         this.setState({ email: event.target.value });
+    }
+
+    nameChanged(event) {
+        this.setState({ name: event.target.value });
     }
 
     passwordChanged(event) {
@@ -68,11 +73,17 @@ class CreateUserPage extends React.Component {
                 <div className='container'>
                     <form>
                         <FieldGroup id="formControlsUsername"
-                            type="username"
-                            label="Username"
-                            placeholder='Username'
-                            bsSize='lg'
-                            onChange={this.emailChanged.bind(this)}/>
+                                    type="username"
+                                    label="Username"
+                                    placeholder='Username'
+                                    bsSize='lg'
+                                    onChange={this.emailChanged.bind(this)} />
+                        <FieldGroup id="formControlsName"
+                                    type="username"
+                                    label="Name"
+                                    placeholder='Name'
+                                    bsSize='lg'
+                                    onChange={this.nameChanged.bind(this)} />
                         <FieldGroup id="formControlPassword"
                             label="Password"
                             type="password" 
