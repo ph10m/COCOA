@@ -11,7 +11,7 @@ class CocoaHeader extends React.Component {
     }
     render() {
         return (
-            <Navbar inverse fluid>
+            <Navbar inverse staticTop>
                 <Navbar.Header>
                     <a href='/home' className='logo-link'>
                     <Image src='/../images/logo.png' className='header-logo' />
@@ -29,12 +29,17 @@ class CocoaHeader extends React.Component {
                         <MenuItem eventKey={3.1}>TDT4140</MenuItem>
                         <MenuItem eventKey={3.2}>TDT4145</MenuItem>
                         <MenuItem eventKey={3.3}>TDT4170</MenuItem>
+                        <MenuItem divider />
+                        <MenuItem eventKey={3.3} href='/course/register'>Create new course</MenuItem>
                     </NavDropdown>
                     </Nav>
                     <Nav pullRight>
                     {!this.props.signedIn && (<NavItem eventKey={1} href='/user/signin'>Log in</NavItem>)}
                     {!this.props.signedIn && (<NavItem eventKey={2} href='/user/register'>Create new user</NavItem>)}
                     {this.props.signedIn && (<NavItem eventKey={3} href='/user/signout'>Log out</NavItem>)}
+                    {this.props.signedIn && (<a href='/user' className='logo-link'>
+                            <Image src='/../images/userIcon.png' className='header-logo' />
+                        </a>)}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
