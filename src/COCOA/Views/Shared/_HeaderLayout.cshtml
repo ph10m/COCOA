@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="~/css/site.css">
+        @RenderSection("head", required: false)
+    </head>
+    <body>
+        @Html.React("CocoaHeader", new
+        {
+
+        })
+        <script src="@Url.Content("~/node_modules/react/dist/react.min.js")"></script>
+        <script src="@Url.Content("~/node_modules/react-dom/dist/react-dom.min.js")"></script>
+        <script src="@Url.Content("~/node_modules/react-bootstrap/dist/react-bootstrap.min.js")"></script>
+        <script src="@Url.Content("~/js/components/CocoaHeader.jsx")"></script>
+        @RenderBody()
+        @Html.ReactInitJavaScript()
+    </body>
+</html>

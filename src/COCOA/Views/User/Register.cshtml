@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Shared/_HeaderLayout.cshtml";
+}
+<html>
+    <head>
+        <title>Register</title>
+    </head>
+    <body>
+        @Html.React("CreateUserPage", new { });
+        <script src="@Url.Content("~/js/components/CreateUserPage.jsx")"></script>
+    </body>
+</html>
