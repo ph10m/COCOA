@@ -71,11 +71,12 @@ class CreateUserPage extends React.Component {
             <div>
                 <CocoaHeader />
                 <div className='container'>
+                    <h1>Create new user</h1>
                     <form>
                         <FieldGroup id="formControlsUsername"
                                     type="username"
-                                    label="Username"
-                                    placeholder='Username'
+                                    label="Email"
+                                    placeholder='Email'
                                     bsSize='lg'
                                     onChange={this.emailChanged.bind(this)} />
                         <FieldGroup id="formControlsName"

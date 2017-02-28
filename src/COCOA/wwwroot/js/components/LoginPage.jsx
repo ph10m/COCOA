@@ -58,11 +58,12 @@ class LoginPage extends React.Component {
               <div>
                 <CocoaHeader />
                   <div className='container'>
+                    <h1>Log in</h1>
                   <form>
                     <FieldGroup id="formControlsUsername"
                                 type="username"
-                                label="Username"
-                                placeholder='Username'
+                                label="Email"
+                                placeholder='Email'
                                 bsSize='lg'
                                 onChange={this.emailChanged.bind(this)}/>
                     <FieldGroup id="formControlPassword"
@@ -71,7 +72,7 @@ class LoginPage extends React.Component {
                                 placeholder='Password'
                                 onChange={this.passwordChanged.bind(this)}/>
                     <Button onClick={this.sendLoginRequest.bind(this)}>
-                        Submit
+                        Log in
                     </Button>
                 </form>
                 </div>

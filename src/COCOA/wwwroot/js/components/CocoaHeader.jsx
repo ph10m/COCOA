@@ -12,7 +12,7 @@ class CocoaHeader extends React.Component {
     render() {
         return (<Navbar inverse fluid>
                     <Navbar.Header>
-                        <a href='#' className='logo-link'>
+                        <a href='/Home' className='logo-link'>
                         <Image src='/../images/logo.png' className='header-logo' />
                         </a>
 
@@ -22,14 +22,12 @@ class CocoaHeader extends React.Component {
                     </Navbar.Header>
                     <Navbar.Collapse>
                       <Nav>
-                        <NavItem eventKey={1} href='/Home'>A tab</NavItem>
-                        <NavItem eventKey={2} href='/Home'>Another tab</NavItem>
-                        <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                          <MenuItem eventKey={3.1}>Action</MenuItem>
-                          <MenuItem eventKey={3.2}>Another action</MenuItem>
-                          <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                          <MenuItem divider />
-                          <MenuItem eventKey={3.3}>Separated link</MenuItem>
+                        <NavItem eventKey={1} href='/Home'>Home</NavItem>
+                        <NavItem eventKey={2} href='/Home'>Tasks</NavItem>
+                        <NavDropdown eventKey={3} title="Courses" id="basic-nav-dropdown">
+                          <MenuItem eventKey={3.1}>TDT4140</MenuItem>
+                          <MenuItem eventKey={3.2}>TDT4145</MenuItem>
+                          <MenuItem eventKey={3.3}>TDT4170</MenuItem>
                         </NavDropdown>
                       </Nav>
                       <Nav pullRight>
