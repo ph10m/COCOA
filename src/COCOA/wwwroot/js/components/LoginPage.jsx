@@ -54,9 +54,7 @@ class LoginPage extends React.Component {
 
     render() {
         return (
-
               <div>
-                <CocoaHeader />
                   <div className='container'>
                     <h1>Log in</h1>
                   <form>

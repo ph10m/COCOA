@@ -7,14 +7,9 @@ class HomePage extends React.Component {
 
     render() {
         return (
-
             <div>
-                <CocoaHeader/>
                 <PageHeader>Welcome to COCOA!</PageHeader>
             </div>
-            
         );
     }
-
-
 }

@@ -69,7 +69,6 @@ class CreateUserPage extends React.Component {
     render() {
         return (
             <div>
-                <CocoaHeader />
                 <div className='container'>
                     <h1>Create new user</h1>
                     <form>
