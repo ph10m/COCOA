@@ -16,7 +16,6 @@ class CocoaHeader extends React.Component {
                     <a href='/home' className='logo-link'>
                     <Image src='/../images/logo.png' className='header-logo' />
                     </a>
-
                     <Navbar.Brand>
                     </Navbar.Brand>
                     <Navbar.Toggle />
@@ -32,6 +31,7 @@ class CocoaHeader extends React.Component {
                         <MenuItem divider />
                         <MenuItem eventKey={3.3} href='/course/register'>Create new course</MenuItem>
                     </NavDropdown>
+                    <NavItem eventKey={4} href='/DocumentSearch'>Document search</NavItem>
                     </Nav>
                     <Nav pullRight>
                     {!this.props.signedIn && (<NavItem eventKey={1} href='/user/signin'>Log in</NavItem>)}
