@@ -12,3 +12,8 @@
 .form-div {
     align-self: center;
 }
+
+div.scroll {
+    height: 600px;
+    overflow-y: scroll
+}
