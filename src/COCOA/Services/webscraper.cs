@@ -150,19 +150,24 @@ public class WebScraper
         var currentTime = DateTime.Now;
         //currentTime = currentTime.AddDays(5); //used for debugging
         int todayValue = this.dayValues[currentTime.DayOfWeek.ToString()];
-        TimeSpan minDiff = new TimeSpan(999);   //set a default high timespan
+        //TimeSpan minDiff = new TimeSpan(999);   //set a default high timespan
+        double minTimeSpan = 99999;
         Lecture nextLecture = this.lectures[0];
-        string format = "dd.MM.yyyy HH.mm.ss";
+        string format = "dd/MM/yyyy HH.mm.ss";
         foreach (var lecture in this.lectures)
         {
             int dayDiff = this.dayValuesNorwegian[lecture.getDay()] - todayValue;
             if (dayDiff >= 0) // if the day is in the future...
             {
-                DateTime lectureDateTime = DateTime.ParseExact(findLectureDate(currentTime, dayDiff) + " " + lecture.getFormattedTime(), format, null);
+                string lectureTimeDate = findLectureDate(currentTime, dayDiff) + " " + lecture.getFormattedTime();
+                //Console.WriteLine(lectureTimeDate);
+                DateTime lectureDateTime = DateTime.ParseExact(lectureTimeDate, format, null);
+
                 TimeSpan dayTimeDiff = lectureDateTime - currentTime;
-                if (dayTimeDiff.TotalHours < minDiff.TotalHours)
+                if (dayTimeDiff.TotalHours > 0 && dayTimeDiff.TotalHours < minTimeSpan)
                 {
-                    minDiff = dayTimeDiff;
+                    //Console.WriteLine("Changed next lecture to " + lecture.getLectureJson());
+                    minTimeSpan = dayTimeDiff.TotalHours;
                     nextLecture = lecture;
                 }
             }
