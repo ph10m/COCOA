@@ -6,6 +6,7 @@ class HomePage extends React.Component {
         super(props);
         this.data = [JSON.parse('{ "header": "TDT4145", "text": "tralala" }')];
         this.indexTest = 4100;
+        this.id = 0;
     }
     clickedPanel() {
         alert('You have clicked on me');
@@ -24,12 +25,17 @@ class HomePage extends React.Component {
         this.data.pop();
         this.forceUpdate();
         console.log(this.data);
-    }
+   }
+
+   onClickPanel(clickedPanel) {
+       var panel = clickedPanel.target.parentNode
+       panel.parentNode.removeChild(panel);
+   }
     
     render() {
         var elementList = this.data.map((element) => {
             return (
-                <Panel header={element.header}>
+                <Panel header={element.header} onClick={this.onClickPanel.bind(this)}>
                     {element.text}
                 </Panel>
             );
