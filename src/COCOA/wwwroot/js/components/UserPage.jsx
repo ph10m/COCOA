@@ -65,7 +65,6 @@ class UserPage extends React.Component {
     render() {
         return (
             <div>
-                <CocoaHeader />
                 <div className='container'>
                     <h1>Change password</h1>
                     <form>

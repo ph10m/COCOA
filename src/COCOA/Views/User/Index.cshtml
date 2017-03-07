@@ -1,0 +1,12 @@
+@{
+    Layout = "~/Views/Shared/_HeaderLayout.cshtml";
+}
+<html>
+    <head>
+        <title>Sign in</title>
+    </head>
+    <body>
+        @Html.React("UserPage", new { });
+        <script src="@Url.Content("~/js/components/UserPage.jsx")"></script>
+    </body>
+</html>

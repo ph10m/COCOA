@@ -33,7 +33,7 @@ class CocoaHeader extends React.Component {
                       <Nav pullRight>
                         <NavItem eventKey={1} href='/user/signin'>Log in</NavItem>
                         <NavItem eventKey={2} href='/user/register'>Create new user</NavItem>
-                        <a href='/Home' className='logo-link'>
+                        <a href='/user' className='logo-link'>
                             <Image src='/../images/userIcon.png' className='header-logo' />
                         </a>
                       </Nav>
