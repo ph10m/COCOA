@@ -50,7 +50,6 @@ class HomePage extends React.Component {
         return (
 
             <div>
-                <CocoaHeader/>
                 <PageHeader>Welcome to COCOA!</PageHeader>
                 <button onClick={this.addPanel.bind(this)}>Add panel</button>
                 <button onClick={this.removePanel.bind(this)}>Remove panel</button>
