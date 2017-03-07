@@ -32,7 +32,7 @@ class LoginPage extends React.Component {
         var email = this.state.email;
         var password = this.state.password;
 
-        xhr.open('get', "/user/signin?email=" + encodeURIComponent(email) + "&password=" + encodeURIComponent(password) + "&persistent=true", true);
+        xhr.open('get', "/user/signinuser?email=" + encodeURIComponent(email) + "&password=" + encodeURIComponent(password) + "&persistent=true", true);
         xhr.onload = function () {
             if (xhr.status == 200) {
                 console.log("Signed in with " + email + ".");
@@ -54,9 +54,7 @@ class LoginPage extends React.Component {
 
     render() {
         return (
-
               <div>
-                <CocoaHeader />
                   <div className='container'>
                     <h1>Log in</h1>
                   <form>

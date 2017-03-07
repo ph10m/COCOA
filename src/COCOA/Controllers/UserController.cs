@@ -29,7 +29,29 @@ namespace COCOA.Controllers
             _roleManager = roleManager;
         }
 
+        /// <summary>
+        /// User managment page.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// View for register. /register
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// View for signin. /signin
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult SignIn()
         {
             return View();
         }
@@ -42,7 +64,7 @@ namespace COCOA.Controllers
         /// <param name="password">Password. Will be hashed by ASP.NET Identity</param>
         /// <returns>Returns Ok(200) on success. (400) on fail.</returns>
         [AllowAnonymous]
-        public async Task<IActionResult> Register (string email, string name, string password)
+        public async Task<IActionResult> RegisterUser (string email, string name, string password)
         {
             var user = new User { UserName = email, Email = email, name = name };
 
@@ -79,7 +101,7 @@ namespace COCOA.Controllers
         /// <param name="persistent">Remember session?</param>
         /// <returns>Returns Ok(200) on success. (401) on fail (wrong email/password)</returns>
         [AllowAnonymous]
-        public async Task<IActionResult> SignIn (string email, string password, bool persistent)
+        public async Task<IActionResult> SignInUser (string email, string password, bool persistent)
         {
             // Sign in
             var result = await _signInManager.PasswordSignInAsync(email, password, persistent, false);
