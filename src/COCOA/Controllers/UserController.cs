@@ -64,16 +64,18 @@ namespace COCOA.Controllers
         /// <param name="password">Password. Will be hashed by ASP.NET Identity</param>
         /// <returns>Returns Ok(200) on success. (400) on fail.</returns>
         [AllowAnonymous]
-        public async Task<IActionResult> RegisterUser (string email, string name, string password)
+        public async Task<IActionResult> RegisterUser(string email, string name, string password)
         {
-            var user = new User { UserName = email, Email = email, name = name };
+            var user = new User { UserName = email, Email = email, Name = name };
+            
+            IdentityResult resultCreate = null;
 
             if (email.EndsWith("@stud.ntnu.no") || email.EndsWith("@ntnu.no"))
             {
                 // Student or teacher?
                 var role = (email.EndsWith("@stud.ntnu.no") ? "Student" : "Teacher");
 
-                var resultCreate = await _userManager.CreateAsync(user, password);
+                resultCreate = await _userManager.CreateAsync(user, password);
                 if (resultCreate.Succeeded)
                 {
                     // Add role
@@ -86,11 +88,12 @@ namespace COCOA.Controllers
 
                         return Ok();
                     }
+
                 }
             }
 
             // Error
-            return StatusCode(400);
+            return StatusCode(400, resultCreate?.Errors);
         }
 
         /// <summary>
@@ -112,6 +115,7 @@ namespace COCOA.Controllers
             }
 
             // Error
+            //return StatusCode(401);
             return StatusCode(401);
         }
 

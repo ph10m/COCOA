@@ -11,8 +11,9 @@ namespace COCOA.Models
     /// </summary>
     public class User : IdentityUser
     {
-        public string name { get; set; }
+        public string Name { get; set; }
+        public long RegisterTimestamp { get; set; }
 
-        public string name1024 { get; set; }
+        public ICollection<Enrollment> Enrollments { get; set; }
     }
 }
