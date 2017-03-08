@@ -67,7 +67,7 @@ namespace COCOA.Controllers
         public async Task<IActionResult> RegisterUser(string email, string name, string password)
         {
             var user = new User { UserName = email, Email = email, Name = name };
-            
+
             IdentityResult resultCreate = null;
 
             if (email.EndsWith("@stud.ntnu.no") || email.EndsWith("@ntnu.no"))

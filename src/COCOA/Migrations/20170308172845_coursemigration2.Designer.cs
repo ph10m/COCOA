@@ -8,9 +8,10 @@ using COCOA.Data;
 namespace COCOA.Migrations
 {
     [DbContext(typeof(CocoaIdentityDbContext))]
-    partial class CocoaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170308172845_coursemigration2")]
+    partial class coursemigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
