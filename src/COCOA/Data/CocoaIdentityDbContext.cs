@@ -15,6 +15,11 @@ namespace COCOA.Data
 
         }
 
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<MaterialPDF> MaterialPDFs { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<CourseAssignment> CourseAssignments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

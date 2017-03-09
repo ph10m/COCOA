@@ -32,8 +32,9 @@ class CocoaHeader extends React.Component {
                     </NavDropdown>
                     </Nav>
                     <Nav pullRight>
-                    <NavItem eventKey={1} href='/user/signin'>Log in</NavItem>
-                    <NavItem eventKey={2} href='/user/register'>Create new user</NavItem>
+                    {!this.props.signedIn && (<NavItem eventKey={1} href='/user/signin'>Log in</NavItem>)}
+                    {!this.props.signedIn && (<NavItem eventKey={2} href='/user/register'>Create new user</NavItem>)}
+                    {this.props.signedIn && (<NavItem eventKey={3} href='/user/signout'>Log out</NavItem>)}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

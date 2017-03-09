@@ -22,7 +22,7 @@ class CreateUserPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { email: '', name: '', password: '', passwordConfirmed: '' };
+        this.state = { email: '', name: '', password: '', passwordConfirmed: '', errorText: null };
     }
 
 
@@ -38,15 +38,17 @@ class CreateUserPage extends React.Component {
             xhr.onload = function () {
                 if (xhr.status == 200) {
                     console.log("Signed in with " + email + ".");
+                    this.setState({ errorText: null });
                 }
                 else {
-                    console.log("Failed to sign in, wrong email or password.");
+                    console.error(JSON.parse(xhr.response)[0].description);
+                    this.setState({ errorText: JSON.parse(xhr.response)[0].description });
                 }
             }.bind(this);
             xhr.send();
         }
         else {
-            console.log("Passwords are not equal.");
+            this.setState({ errorText: "Passwords are not matching." });
         }
     }
 
@@ -94,6 +96,7 @@ class CreateUserPage extends React.Component {
                                     type="password"
                                     placeholder='Confirm password'
                                     onChange={this.passwordConfirmedChanged.bind(this)} />
+                        <p>{this.state.errorText}</p>
                         <Button onClick={this.createNewUser.bind(this)}>
                             Submit
                         </Button>
