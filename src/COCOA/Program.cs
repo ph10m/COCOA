@@ -12,6 +12,7 @@ namespace COCOA
         public static void Main(string[] args)
         {
             WebScraper scraper = new WebScraper("tollefj");
+            scraper.getNextLecture();
 
             var host = new WebHostBuilder()
                 .UseKestrel()
