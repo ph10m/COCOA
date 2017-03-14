@@ -3,6 +3,18 @@
 }
 
 
+.main {
+    width: 60%;
+    margin: 0 auto;
+    
+}
+
+@media (max-width: 768px){
+    .main {
+        width: 100%;
+    }
+}
+
 .header-logo {
     max-height: 50px;
     padding: 5px;
@@ -11,4 +23,13 @@
 
 .form-div {
     align-self: center;
+}
+
+div.scroll {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.btn-close {
+    float: right;
 }
