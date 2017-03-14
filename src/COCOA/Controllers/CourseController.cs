@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using COCOA.Data;
 using COCOA.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace COCOA.Controllers
 {
     public class CourseController : Controller
     {
-        public CocoaIdentityDbContext _context;
-        public UserManager<User> _userManager;
+        private readonly CocoaIdentityDbContext _context;
+        private readonly UserManager<User> _userManager;
 
         public CourseController (CocoaIdentityDbContext context, UserManager<User> userManager)
         {
@@ -37,21 +38,25 @@ namespace COCOA.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
+            var courseAssignments = await (
+                from cA in _context.CourseAssignments
+                where cA.UserId == user.Id
+                select cA).ToListAsync();
+
             // Any user with a course assigment can upload PDF material.
-            if (user.CourseAssignments.FirstOrDefault((cA) => { return (cA.CourseId == courseId); }) != null)
+            if (courseAssignments.FirstOrDefault((cA) => { return (cA.CourseId == courseId); }) != null)
             {
-                var materialPDF = new MaterialPDF();
-                materialPDF.UserId = user.Id;
-                materialPDF.CourseId = courseId;
-                materialPDF.Name = name;
-                materialPDF.Description = description;
-                materialPDF.Timestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-                materialPDF.Data = data;
+                var materialPDF = new MaterialPDF
+                {
+                    AuthorId = user.Id,
+                    CourseId = courseId,
+                    Name = name,
+                    Description = description,
+                    Timestamp = DateTime.Now,
+                    Data = data
+                };
 
-                // Add file to database
                 _context.MaterialPDFs.Add(materialPDF);
-
-                // Synchronize changes
                 await _context.SaveChangesAsync();
 
                 return true;
@@ -60,43 +65,95 @@ namespace COCOA.Controllers
             return false;
         }
 
-        public async Task<IActionResult> NewCourse (string name, string description, string name1024)
+        // TODO: restrict action to teachers only.
+        public async Task<IActionResult> NewCourse(string name, string description, string name1024)
         {
-            var course = new Course();
-            course.Name = name;
-            course.Description = description;
-            course.Name1024 = name1024;
-            
-            _context.Courses.Add(course);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            // Save new course to get id to use in CourseAssignment
+            var course = new Course
+            {
+                Name = name,
+                Description = description,
+                Name1024 = name1024,
+                Timestamp = DateTime.Now
+            };
+
+            _context.Courses.Add(course);
             await _context.SaveChangesAsync();
 
-            var courseAssigment = new CourseAssignment();
-            courseAssigment.CourseId = course.Id;
-            courseAssigment.UserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
-            courseAssigment.CourseAssignmentRole = CourseAssignment.Role.Owner;
+            var courseAssigment = new CourseAssignment
+            {
+
+                CourseId = course.Id,
+                UserId = user.Id,
+                CourseAssignmentRole = CourseAssignment.Role.Owner,
+                Timestamp = DateTime.Now
+            };
 
             _context.CourseAssignments.Add(courseAssigment);
-
-            // Synchronize changes
             await _context.SaveChangesAsync();
 
             return Ok();
         }
 
+        public async Task<IActionResult> NewBulletin (int courseId, string title, string content, string href, BulletinType bulletinType, bool stickey)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var courseAssignments = await (
+                from cA in _context.CourseAssignments
+                where cA.UserId == user.Id
+                select cA).ToListAsync();
+
+            // Any user with a course assigment can create a bulletin.
+            if (courseAssignments.FirstOrDefault((cA) => { return (cA.CourseId == courseId); }) != null)
+            {
+                var courseBulletin = new CourseBulletin
+                {
+                    AuthorId = user.Id,
+                    CourseId = courseId,
+                    Title = title,
+                    Content = content,
+                    Href = href,
+                    BulletinType = bulletinType,
+                    Stickey = stickey,
+                    Timestamp = DateTime.Now
+                };
+
+                _context.CourseBulletins.Add(courseBulletin);
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+
+            return StatusCode(400, "User not assigned to course.");
+        }
+
         public async Task<IActionResult> EnrollToCourse (int id)
         {
-            var enrollment = new Enrollment();
-            enrollment.CourseId = id;
-            enrollment.UserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
-            enrollment.EnrollmentTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            _context.Enrollments.Add(enrollment);
+            var course = await (
+                from c in _context.Courses
+                where c.Id == id
+                select c).SingleOrDefaultAsync();
 
-            await _context.SaveChangesAsync();
+            if (course != null)
+            {
+                var enrollment = new Enrollment
+                {
+                    CourseId = course.Id,
+                    UserId = user.Id,
+                    EnrollmentTimestamp = DateTime.Now
+                };
 
-            return Ok();
+                _context.Enrollments.Add(enrollment);
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+
+            return StatusCode(400, "Course not found.");
         }
     }
 }
