@@ -11,12 +11,11 @@ namespace COCOA.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
+
         public string Description { get; set; }
+
         public string Name1024 { get; set; }
 
-        public ICollection<MaterialPDF> MaterialPDFs { get; set; }
-        public ICollection<Enrollment> Enrollments { get; set; }
-
-        public ICollection<CourseAssignment> CourseAssignments { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

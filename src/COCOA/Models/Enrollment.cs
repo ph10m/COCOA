@@ -8,12 +8,15 @@ namespace COCOA.Models
     public class Enrollment
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
-        public int CourseId { get; set; }
 
-        public long EnrollmentTimestamp { get; set; }
+        public string UserId { get; set; }
 
         public User User { get; set; }
+
+        public int CourseId { get; set; }
+
         public Course Course { get; set; }
+
+        public DateTime EnrollmentTimestamp { get; set; }
     }
 }

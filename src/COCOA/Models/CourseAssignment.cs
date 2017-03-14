@@ -17,11 +17,15 @@ namespace COCOA.Models
         public int Id { get; set; }
 
         public string UserId { get; set; }
-        public int CourseId { get; set; }
-
-        public Role CourseAssignmentRole { get; set; }
 
         public User User { get; set; }
+
+        public int CourseId { get; set; }
+
         public Course Course { get; set; }
+
+        public Role CourseAssignmentRole { get; set; }        
+        
+        public DateTime Timestamp { get; set; }
     }
 }
