@@ -9,27 +9,27 @@ class HomePage extends React.Component {
         this.indexTest = 4100;
     }
 
+    // Temporary on click listener for adding panel for testing
     addPanel() {
         this.id++;
-        //this.data.push(JSON.parse('{ "header": "TDT4145", "text": "tralala" }'));
-        //this.data.push(JSON.parse('{ "header": "TDT4145", "text": "blablabla" }'));
         this.data.unshift((JSON.parse('{ "id": '+this.id+', "header": "TDT'+this.indexTest+'", "text": "lalala" }')));
         this.forceUpdate();
         this.indexTest++;
     }
 
+    // Temporary on click listener for removing panel for testing
    removePanel() {
         this.data.pop();
         this.forceUpdate();
    }
 
+    // On click listener for removing panel
    onClickPanel(element) {
        this.data.splice(this.getPanelIndexFromId(element.target.parentNode.id), 1);
        this.forceUpdate();
-       //var panel = clickedPanel.target.parentNode
-       //panel.parentNode.removeChild(panel);
    }
 
+    // Get index of panel in data list
    getPanelIndexFromId(id) {
        for (var i = 0; i < this.data.length; i++) {
            if (this.data[i].id == id) {
