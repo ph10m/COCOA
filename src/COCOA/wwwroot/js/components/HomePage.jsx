@@ -24,9 +24,14 @@ class HomePage extends React.Component {
    }
 
     // On click listener for removing panel
-   onClickPanel(element) {
-       this.data.splice(this.getPanelIndexFromId(element.target.parentNode.id), 1);
+   onClickClose(element) {
+       this.data.splice(this.getPanelIndexFromId(element.target.parentNode.parentNode.id), 1);
        this.forceUpdate();
+   }
+
+    // Dummy on click listener fo panel
+   onClickPanel(element) {
+       console.log(element.target.parentNode.id);
    }
 
     // Get index of panel in data list
@@ -41,9 +46,17 @@ class HomePage extends React.Component {
     render() {
         var elementList = this.data.map((element) => {
             return (
-                <Panel id={element.id} header={element.header} bsStyle="primary" onClick={this.onClickPanel.bind(this) }>
-                    {element.text}
-                </Panel>
+                <div className="panel panel-primary" id={element.id}>
+                    <div className="panel-heading">
+                        {element.header}
+                        <button type="button" className="close" onClick={this.onClickClose.bind(this)}>
+                            &times;
+                        </button>
+                    </div>
+                    <div className="panel-body" onClick={this.onClickPanel.bind(this)}>
+                        {element.text}
+                    </div>
+                </div>
             );
         })
 
