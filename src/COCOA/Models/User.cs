@@ -11,8 +11,17 @@ namespace COCOA.Models
     /// </summary>
     public class User : IdentityUser
     {
-        public string name { get; set; }
+        public string Name { get; set; }
+        public long RegisterTimestamp { get; set; }
 
-        public string name1024 { get; set; }
+        /// <summary>
+        /// Courses a user is enrolled to.
+        /// </summary>
+        public ICollection<Enrollment> Enrollments { get; set; }
+
+        /// <summary>
+        /// Courses a user is assigned to as an Owner, Instructor or Assistant.
+        /// </summary>
+        public ICollection<CourseAssignment> CourseAssignments { get; set; }
     }
 }

@@ -8,9 +8,10 @@ using COCOA.Data;
 namespace COCOA.Migrations
 {
     [DbContext(typeof(CocoaIdentityDbContext))]
-    partial class CocoaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170308172845_coursemigration2")]
+    partial class coursemigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -27,29 +28,13 @@ namespace COCOA.Migrations
 
                     b.Property<string>("Name1024");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("COCOA.Models.CourseAssignment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CourseAssignmentRole");
-
-                    b.Property<int>("CourseId");
-
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("CourseAssignments");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("COCOA.Models.Enrollment", b =>
@@ -87,15 +72,11 @@ namespace COCOA.Migrations
 
                     b.Property<long>("Timestamp");
 
-                    b.Property<string>("UserId");
-
                     b.Property<int>("Views");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("MaterialPDFs");
                 });
@@ -260,22 +241,17 @@ namespace COCOA.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("COCOA.Models.CourseAssignment", b =>
+            modelBuilder.Entity("COCOA.Models.Course", b =>
                 {
-                    b.HasOne("COCOA.Models.Course", "Course")
-                        .WithMany("CourseAssignments")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("COCOA.Models.User", "User")
-                        .WithMany("CourseAssignments")
+                        .WithMany()
                         .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("COCOA.Models.Enrollment", b =>
                 {
                     b.HasOne("COCOA.Models.Course", "Course")
-                        .WithMany("Enrollments")
+                        .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -290,10 +266,6 @@ namespace COCOA.Migrations
                         .WithMany("MaterialPDFs")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("COCOA.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
