@@ -65,7 +65,7 @@ class UserPage extends React.Component {
     render() {
         return (
             <div>
-                <div className='container'>
+                <div>
                     <h1>Change password</h1>
                     <form>
                         <FieldGroup id="formControlsOldPassword"
