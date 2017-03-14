@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using COCOA.Data;
 using COCOA.Models;
 using Microsoft.AspNetCore.Identity;
+using COCOA.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace COCOA.Controllers
 {
@@ -20,8 +22,23 @@ namespace COCOA.Controllers
             _userManager = userManager;
         }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int id)
         {
+            var name1024 = await (
+                from c in _context.Courses
+                where c.Id == id
+                select c.Name1024).SingleOrDefaultAsync();
+            if (name1024 == null)
+            {
+                return StatusCode(400, "Course not found!");
+            }
+            var nextLect = new WebScraper(name1024).getNextLecture();
+
+            var viewModel = new CourseViewModel
+            {
+                nextLecture = nextLect
+            };
+
             return View();
         }
 
