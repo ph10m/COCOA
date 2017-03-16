@@ -2,63 +2,49 @@
 using HtmlAgilityPack;
 using System.Net;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using System.Linq;
 using COCOA.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.ServiceModel;
 
 /// <summary>
 /// Webscraper grabs schedule information and keeps
 /// each lecture in a "Lecture"-object.
 /// Takes "username" from 1024 in the constructor.
 /// </summary>
-[RequireHttps]
 public class WebScraper
 {
     private string user, schedule;
     private List<Lecture> lectures;
 
-    /// <summary>
-    /// A class containing needed information about each lecture
-    /// </summary>
-        
-    public class Lecture
+    public WebScraper(string user)
     {
-        private string day, time, course, startTime;
-        public Lecture(string course, string day, string time)
+        lectures = new List<Lecture>();
+        string year = DateTime.Now.Year.ToString();
+        this.schedule = "https://ntnu.1024.no/" + year + "/var/" + user + "/";
+        var html = new HtmlDocument();
+        html.LoadHtml(new WebClient().DownloadString(schedule));
+        var root = html.DocumentNode;
+        // select nodes under table id=lecture and under the tag tbody
+        foreach (HtmlNode node in root.SelectNodes("//table[@id='lectures']//tbody"))
         {
-            this.day = day;
-            this.time = time;
-            this.course = course;
-            this.startTime = time.Split('-')[0];
-        }
-        /// <summary>
-        /// Returns a json-formatted "NextLecture"-object, found in Models.
-        /// </summary>
-        [AllowAnonymous]
-        public string getLectureJson()
-        {
-            string json = JsonConvert.SerializeObject(
-               new NextLecture {course = this.course, day=this.day,time=this.time});
-            return json;
-        }
-        /// <summary>
-        /// Get the date of a lecture
-        /// </summary>
-        public string getDay() { return this.day; }
-        /// <summary>
-        /// Convert time to the format: HH.MM.SS
-        /// </summary>
-        public string getFormattedTime() { return this.startTime.Replace(':', '.') + ".00"; }
-
-        public override string ToString()
-        {
-            return "Class: " + this.course + "\nDay: " + this.day + "\nTime: " + this.time + "\n";
+            foreach (var child in node.ChildNodes)
+            {
+                // ORIGINAL:    Tjenester og nett onsdag 18:15-20:00   F1  A~ving MTDT, MTIA~T, MTKOM, MTTK, BIT, MTENERG, MIENERG 2-14, 16
+                string formatted = this.parseLine(child.InnerText);
+                // PARSED:      Tjenester og nett onsdag 18:15-20:00
+                string[] splitted = formatted.Split();
+                if (splitted.Length > 2) // valid list of subject, time and day.
+                {
+                    string time = splitted[splitted.Length - 1];    // fetch the last list item (timestamp)
+                    string day = splitted[splitted.Length - 2];     // fetch the second-to-last list item (weekday)
+                    formatted = formatted.Replace(time, "");        // remove these items from the list
+                    formatted = formatted.Replace(day, "");
+                    string subject = formatted.Trim();              // finally, only the course name is left
+                    day = FirstCharToUpper(day);
+                    lectures.Add(new Lecture(subject, day, time));
+                }
+            }
         }
     }
-
     /// <summary>
     ///  Parses the string retrieved from scraping the timeplan website
     /// </summary>
@@ -74,38 +60,6 @@ public class WebScraper
     {
         if (String.IsNullOrEmpty(input)) throw new ArgumentException("Invalid input!");
         return input.First().ToString().ToUpper() + String.Join("", input.Skip(1));
-    }
-
-    public WebScraper(string user)
-    {
-        lectures = new List<Lecture>();
-        string year = DateTime.Now.Year.ToString();
-        var html = new HtmlDocument();
-        this.schedule = "https://ntnu.1024.no/" + year + "/var/" + user + "/";
-        html.LoadHtml(new WebClient().DownloadString(schedule));
-        var root = html.DocumentNode;
-        // select nodes under table id=lecture and under the tag tbody
-        foreach (HtmlNode node in root.SelectNodes("//table[@id='lectures']//tbody"))
-        {
-            foreach (var child in node.ChildNodes)
-            {
-                // ORIGINAL:    Tjenester og nett onsdag 18:15-20:00   F1  A~ving MTDT, MTIA~T, MTKOM, MTTK, BIT, MTENERG, MIENERG 2-14, 16
-                string formatted = this.parseLine(child.InnerText);
-                // PARSED:      Tjenester og nett onsdag 18:15-20:00
-                string[] splitted = formatted.Split();
-                if (splitted.Length > 2) // valid list of subject, time and day.
-                {
-                    string time = splitted[splitted.Length - 1];
-                    string day = splitted[splitted.Length - 2];
-                    formatted = formatted.Replace(time, "");
-                    formatted = formatted.Replace(day, "");
-                    string subject = formatted.Trim();
-                    day = FirstCharToUpper(day);
-                    lectures.Add(new Lecture(subject, day, time));
-                }
-            }
-        }
-        //this.getJson();
     }
 
     /// <summary>
@@ -139,7 +93,7 @@ public class WebScraper
     /// Based on the weekday, calculate the date
     /// </summary>
     /// <returns>JSON object containing information about the next lecture</returns>
-    public string getNextLecture()
+    public Lecture getNextLecture()
     {
         var currentTime = DateTime.Now;
         //currentTime = currentTime.AddDays(5); //used for debugging
@@ -168,17 +122,7 @@ public class WebScraper
                 }
             }
         }
-        Console.WriteLine("Your next lecture is:\n" + nextLecture.getLectureJson());
-        return nextLecture.getLectureJson();
-    }
-
-    private void getJson()
-    {
-        String lectureJson = "";
-        foreach (var lect in this.lectures)
-        {
-            lectureJson += lect.getLectureJson() + "\n";
-        }
-        Console.WriteLine(lectureJson);
+        Console.WriteLine(nextLecture);
+        return nextLecture;
     }
 }

@@ -8,6 +8,6 @@ namespace COCOA.ViewModels
 {
     public class CourseViewModel
     {
-        public NextLecture nextLecture { get; set; }
+        public Lecture nextLecture { get; set; }
     }
 }
