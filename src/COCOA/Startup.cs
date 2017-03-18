@@ -113,14 +113,15 @@ namespace COCOA
                 // your components as well as all of their dependencies.
                 // See http://reactjs.net/ for more information. Example:
                 config
-                .AddScript("~/node_modules/react-bootstrap/dist/react-bootstrap.min.js")
+                .AddScript("~/node_modules/react-bootstrap/dist/react-bootstrap.js")
                 .AddScript("~/js/components/HomePage.jsx")
                 .AddScript("~/js/components/LoginPage.jsx")
                 .AddScript("~/js/components/CreateUserPage.jsx")
                 .AddScript("~/js/components/UserPage.jsx")
                 .AddScript("~/js/components/CreateCoursePage.jsx")
                 .AddScript("~/js/components/CocoaHeader.jsx")
-                .AddScript("~/js/components/DocumentSearchPage.jsx");
+                .AddScript("~/js/components/DocumentSearchPage.jsx")
+                .AddScript("~/js/components/DocumentUploadPage.jsx");
                 // If you use an external build too (for example, Babel, Webpack,
                 // Browserify or Gulp), you can improve performance by disabling
                 // ReactJS.NET's version of Babel and loading the pre-transpiled

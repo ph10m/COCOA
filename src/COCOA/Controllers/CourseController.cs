@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 using COCOA.Data;
 using COCOA.Models;
 using Microsoft.AspNetCore.Identity;
 using COCOA.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace COCOA.Controllers
 {
@@ -39,6 +42,11 @@ namespace COCOA.Controllers
                 //nextLecture = nextLect
             };
 
+            return View();
+        }
+
+        public IActionResult DocumentUpload()
+        {
             return View();
         }
 
@@ -88,6 +96,35 @@ namespace COCOA.Controllers
             }
 
             return false;
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Upload(string name, string courseId, string description)
+        {
+            byte[] bytes;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Request.Body.CopyTo(ms);
+                bytes = ms.ToArray();
+            }
+
+            var courses = await (
+                from c in _context.Courses
+                where c.Name == courseId
+                select c).ToListAsync();
+            
+            // Any user with a course assigment can upload PDF material.
+            if (courses.Count == 0)
+            {
+                return StatusCode(404, "No matching course was found");
+            }
+
+            bool success = await SaveMaterialPDF(courses.First().Id, name, description, bytes);
+
+            if (success)
+                return Ok();
+            else
+                return StatusCode(400, "You are not eligible to upload to the given course");
         }
 
         // TODO: restrict action to teachers only.

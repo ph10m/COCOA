@@ -14,6 +14,22 @@ class DocumentSearchPage extends React.Component {
     handleChange(e) {
         this.setState({ searchString: e.target.value });
     }
+
+    searchInDocuments() {
+        console.log("Searching with " + this.state.searchString);
+        var xhr = new XMLHttpRequest();
+        var searchString = this.state.searchString;
+        xhr.open('get', "/documentsearch/search?searchString=" + searchString, true);
+        xhr.onload = function () {
+            if (xhr.status == 200) {
+                console.log("Got response: " +
+                xhr.response);
+                window.location = xhr.response;
+            }
+        }
+        xhr.send();
+    }
+
     render() {
         return (
 
