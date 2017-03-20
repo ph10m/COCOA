@@ -34,8 +34,7 @@ class DocumentSearchPage extends React.Component {
         return (
 
         <div>
-        <CocoaHeader />
-          <form>
+          <form >
               <div className='container'>
             <FormGroup controllerId="formSearch">
                 <ControlLabel>
