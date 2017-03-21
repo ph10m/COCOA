@@ -22,7 +22,7 @@ class CreateCoursePage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { code: '', name: '', errorText: null };
+        this.state = { code: '', name: '', description: '', name1024: '', errorText: null };
     }
 
 
@@ -34,8 +34,7 @@ class CreateCoursePage extends React.Component {
         var description = this.state.description;
         var name1024 = this.state.name1024;
         console.log("Create course with code: " + code + ", " + name + ", " + description + " and " + name1024);
-        xhr.open('get', "/course/newcourse?name=" + encodeURIComponent(name) + "&description=" + encodeURIComponent(description) + "&name1024=" + encodeURIComponent(name1024) + "&persistent=true", true);
-        //xhr.open('get', "/course/newcourse?code=" + encodeURIComponent(code) + "&name=" + encodeURIComponent(name) + "&description=" + encodeURIComponent(description) + "&name1024=" + encodeURIComponent(name1024) + "&persistent=true", true);
+        xhr.open('get', "/course/newcourse?code=" + encodeURIComponent(code) + "&name=" + encodeURIComponent(name) + "&description=" + encodeURIComponent(description) + "&name1024=" + encodeURIComponent(name1024) + "&persistent=true", true);
         xhr.onload = function () {
             if (xhr.status == 200) {
                 console.log("Added course " + code + ".");
