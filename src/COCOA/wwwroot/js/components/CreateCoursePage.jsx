@@ -88,6 +88,7 @@ class CreateCoursePage extends React.Component {
                                     label="Description"
                                     placeholder='Description'
                                     bsSize='lg'
+                                    componentClass='textarea'
                                     onChange={this.descriptionChanged.bind(this)} />
                         <FieldGroup id="formControlsName1024"
                                     type="text"
