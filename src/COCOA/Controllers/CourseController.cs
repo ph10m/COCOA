@@ -21,9 +21,22 @@ namespace COCOA.Controllers
             _userManager = userManager;
         }
         
+        /// <summary>
+        /// Course page.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
+        }
+
+        /// <summary>
+        /// View for register course. /register
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Register()
+        {
+            return View("Register");
         }
 
         /// <summary>
