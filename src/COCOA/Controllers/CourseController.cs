@@ -43,6 +43,15 @@ namespace COCOA.Controllers
         }
 
         /// <summary>
+        /// View for register course. /register
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Register()
+        {
+            return View("Register");
+        }
+
+        /// <summary>
         /// Async call to save material PDF to database. User needs to be assigned to a course(Owner, Instructor or Assistant) to add a file for it.
         /// </summary>
         /// <param name="courseId">Course to add this MaterialPDF to</param>
