@@ -4,53 +4,53 @@ using System.Net;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Linq;
+using COCOA.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.ServiceModel;
 
+/// <summary>
+/// Webscraper grabs schedule information and keeps
+/// each lecture in a "Lecture"-object.
+/// Takes "username" from 1024 in the constructor.
+/// </summary>
+[RequireHttps]
 public class WebScraper
 {
-
     private string user, schedule;
-    private List<string> courseNames;
     private List<Lecture> lectures;
 
+    /// <summary>
+    /// A class containing needed information about each lecture
+    /// </summary>
+        
     public class Lecture
     {
-        private string day;
-        private string time;
-        private string course;
-        private string startTime;
-        private string endTime;
+        private string day, time, course, startTime;
         public Lecture(string course, string day, string time)
         {
             this.day = day;
             this.time = time;
             this.course = course;
-
-            string[] timeSplit = time.Split('-');
-            this.startTime = timeSplit[0];
-            this.endTime = timeSplit[1];
+            this.startTime = time.Split('-')[0];
         }
+        /// <summary>
+        /// Returns a json-formatted "NextLecture"-object, found in Models.
+        /// </summary>
+        [AllowAnonymous]
         public string getLectureJson()
         {
-            string json = JsonConvert.SerializeObject(new
-            {
-                lecture = new List<JsonLecture>()
-                {
-                    new JsonLecture {course = this.course, day=this.day, time=this.time }
-                }
-            });
+            string json = JsonConvert.SerializeObject(
+               new NextLecture {course = this.course, day=this.day,time=this.time});
             return json;
         }
-        public int getStartTime()
-        {
-            // return sthe amount of minutes in the start-time of a lecture
-            // for easy comparison
-            var tmp = startTime.Split(':');
-            int x = Int32.Parse(tmp[0]) * 60 + Int32.Parse(tmp[1]);
-            Console.WriteLine("was: " + this.startTime + "becomes in mins: " + x);
-            return x;
-        }
+        /// <summary>
+        /// Get the date of a lecture
+        /// </summary>
         public string getDay() { return this.day; }
-        public string getTime() { return this.startTime; }
+        /// <summary>
+        /// Convert time to the format: HH.MM.SS
+        /// </summary>
         public string getFormattedTime() { return this.startTime.Replace(':', '.') + ".00"; }
 
         public override string ToString()
@@ -58,13 +58,11 @@ public class WebScraper
             return "Class: " + this.course + "\nDay: " + this.day + "\nTime: " + this.time + "\n";
         }
     }
-    public class JsonLecture
-    {
-        public string day { get; set; }
-        public string time { get; set; }
-        public string course { get; set; }
-    }
 
+    /// <summary>
+    ///  Parses the string retrieved from scraping the timeplan website
+    /// </summary>
+    /// <returns>a prettified string, containing relevant data</returns>
     private string parseLine(string text)
     {
         text = text.Trim();
@@ -81,24 +79,19 @@ public class WebScraper
     public WebScraper(string user)
     {
         lectures = new List<Lecture>();
-        courseNames = new List<string>();
         string year = DateTime.Now.Year.ToString();
         var html = new HtmlDocument();
-        this.user = user;
         this.schedule = "https://ntnu.1024.no/" + year + "/var/" + user + "/";
         html.LoadHtml(new WebClient().DownloadString(schedule));
         var root = html.DocumentNode;
-
         // select nodes under table id=lecture and under the tag tbody
         foreach (HtmlNode node in root.SelectNodes("//table[@id='lectures']//tbody"))
         {
-            //Console.WriteLine(node.InnerText);
             foreach (var child in node.ChildNodes)
             {
-                //Console.WriteLine(child.InnerText);
-                // Tjenester og nett onsdag 18:15-20:00   F1  A~ving MTDT, MTIA~T, MTKOM, MTTK, BIT, MTENERG, MIENERG 2-14, 16
+                // ORIGINAL:    Tjenester og nett onsdag 18:15-20:00   F1  A~ving MTDT, MTIA~T, MTKOM, MTTK, BIT, MTENERG, MIENERG 2-14, 16
                 string formatted = this.parseLine(child.InnerText);
-                // Tjenester og nett onsdag 18:15-20:00
+                // PARSED:      Tjenester og nett onsdag 18:15-20:00
                 string[] splitted = formatted.Split();
                 if (splitted.Length > 2) // valid list of subject, time and day.
                 {
@@ -108,20 +101,17 @@ public class WebScraper
                     formatted = formatted.Replace(day, "");
                     string subject = formatted.Trim();
                     day = FirstCharToUpper(day);
-                    //if (!this.courseNames.Contains(subject))
-                    //{
-                    //    courseNames.Add(subject);
-                    //}
-                    //Console.WriteLine("Subject:\t" + subject + "\nDay:\t" + day + "\nTime:\t" + time);
                     lectures.Add(new Lecture(subject, day, time));
                 }
             }
         }
-
-        this.getJson();
-        this.getNextLecture();
+        //this.getJson();
     }
 
+    /// <summary>
+    /// These dictionaries are used to find the date based on a given day name.
+    /// This has to be done as the web scraping only returns the weekday, not date.
+    /// </summary>
     Dictionary<string, int> dayValues = new Dictionary<string, int>()
     {
         {"Monday",      1 },
@@ -145,14 +135,21 @@ public class WebScraper
         return now.AddDays(daysDifference).ToShortDateString();
     }
 
-    private string getNextLecture()
+    /// <summary>
+    /// Based on the weekday, calculate the date
+    /// </summary>
+    /// <returns>JSON object containing information about the next lecture</returns>
+    public string getNextLecture()
     {
         var currentTime = DateTime.Now;
         //currentTime = currentTime.AddDays(5); //used for debugging
         int todayValue = this.dayValues[currentTime.DayOfWeek.ToString()];
-        //TimeSpan minDiff = new TimeSpan(999);   //set a default high timespan
+        // set a default high timespan. This is later used to check hours until next lecture.
         double minTimeSpan = 99999;
+        // set the default next lecture to the first one in line.
         Lecture nextLecture = this.lectures[0];
+        // format may vary based on OS
+        // #TODO: grab format from system
         string format = "dd/MM/yyyy HH.mm.ss";
         foreach (var lecture in this.lectures)
         {
@@ -160,13 +157,12 @@ public class WebScraper
             if (dayDiff >= 0) // if the day is in the future...
             {
                 string lectureTimeDate = findLectureDate(currentTime, dayDiff) + " " + lecture.getFormattedTime();
-                //Console.WriteLine(lectureTimeDate);
                 DateTime lectureDateTime = DateTime.ParseExact(lectureTimeDate, format, null);
-
                 TimeSpan dayTimeDiff = lectureDateTime - currentTime;
+                // if there's fewer hours until this lecture than the previous one.
                 if (dayTimeDiff.TotalHours > 0 && dayTimeDiff.TotalHours < minTimeSpan)
                 {
-                    //Console.WriteLine("Changed next lecture to " + lecture.getLectureJson());
+                    // update temporary next lecture
                     minTimeSpan = dayTimeDiff.TotalHours;
                     nextLecture = lecture;
                 }
