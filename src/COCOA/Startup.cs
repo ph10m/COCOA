@@ -121,7 +121,8 @@ namespace COCOA
                 .AddScript("~/js/components/CreateCoursePage.jsx")
                 .AddScript("~/js/components/CocoaHeader.jsx")
                 .AddScript("~/js/components/DocumentSearchPage.jsx")
-                .AddScript("~/js/components/DocumentUploadPage.jsx");
+                .AddScript("~/js/components/DocumentUploadPage.jsx")
+                .AddScript("~/js/components/MaterialPDFMetaComponent.jsx");
                 // If you use an external build too (for example, Babel, Webpack,
                 // Browserify or Gulp), you can improve performance by disabling
                 // ReactJS.NET's version of Babel and loading the pre-transpiled

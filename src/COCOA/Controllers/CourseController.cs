@@ -97,7 +97,6 @@ namespace COCOA.Controllers
 
             return false;
         }
-
         [AllowAnonymous]
         public async Task<IActionResult> Upload(string name, string courseId, string description)
         {
@@ -112,8 +111,7 @@ namespace COCOA.Controllers
                 from c in _context.Courses
                 where c.Name == courseId
                 select c).ToListAsync();
-            
-            // Any user with a course assigment can upload PDF material.
+ 
             if (courses.Count == 0)
             {
                 return StatusCode(404, "No matching course was found");
@@ -217,7 +215,7 @@ namespace COCOA.Controllers
             return StatusCode(400, "Course not found.");
         }
 
-        public async Task<IActionResult> AssignToCourse (int id, string userId, CourseAssignment.Role role)
+        public async Task<IActionResult> AssignToCourse(int id, string userId, CourseAssignment.Role role)
         {
             var course = await (from c in _context.Courses
                                 where c.Id == id
@@ -240,8 +238,8 @@ namespace COCOA.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
             var userAssignment = await (from cA in _context.CourseAssignments
-                                     where (cA.CourseId == course.Id && cA.UserId == user.Id)
-                                     select cA).SingleOrDefaultAsync();
+                                        where (cA.CourseId == course.Id && cA.UserId == user.Id)
+                                        select cA).SingleOrDefaultAsync();
 
             if (userAssignment == null || userAssignment.CourseAssignmentRole == CourseAssignment.Role.Assistant)
             {
@@ -260,6 +258,30 @@ namespace COCOA.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> DocumentSearch(int courseId, string searchString, int page = 0)
+        {
+            var result = await (from m in _context.MaterialPDFs
+                                where (m.CourseId == courseId && m.Name.Contains(searchString))
+                                select m.Meta).Skip(10 * page).Take(10).ToListAsync();
+
+            /*string pdfPath = System.IO.Path.GetFullPath("..\\..\\example.pdf");
+            using (PdfReader reader = new PdfReader(pdfPath))
+            {
+                searchString = searchString.ToLower();
+                for (int i = 1; i <= reader.NumberOfPages; i++)
+                {
+                    string page = PdfTextExtractor.GetTextFromPage(reader, i).ToLower();
+                    if (page.IndexOf(searchString) != -1)
+                    {
+                        string url = System.IO.Path.GetFullPath(pdfPath) + "#page=" + i;
+                        return Ok(url);
+                    }
+                }
+            }*/
+            return Json(result);
         }
     }
 }
