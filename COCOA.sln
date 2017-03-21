@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "COCOA", "src\COCOA\COCOA.xproj", "{577EE548-E9B4-4A21-BBE2-B36B5E79D0F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COCOA.tests", "COCOA.tests\COCOA.tests.csproj", "{9E664625-D047-4738-AB92-2D510BB292FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,10 @@ Global
 		{577EE548-E9B4-4A21-BBE2-B36B5E79D0F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{577EE548-E9B4-4A21-BBE2-B36B5E79D0F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{577EE548-E9B4-4A21-BBE2-B36B5E79D0F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E664625-D047-4738-AB92-2D510BB292FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E664625-D047-4738-AB92-2D510BB292FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E664625-D047-4738-AB92-2D510BB292FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E664625-D047-4738-AB92-2D510BB292FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
