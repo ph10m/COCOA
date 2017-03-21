@@ -45,6 +45,19 @@ namespace COCOA.Controllers
             return View();
         }
 
+        /// <summary>
+        /// View for searching in course material. /materialsearch
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult MaterialSearch()
+        {
+            return View("DocumentSearch");
+        }
+
+        /// <summary>
+        /// View for uploading documents /documentupload
+        /// </summary>
+        /// <returns></returns>
         public IActionResult DocumentUpload()
         {
             return View();
