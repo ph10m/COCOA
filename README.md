@@ -10,3 +10,6 @@ Our relational MS-SQL database stores all the informations for Cocoa. It uses AS
 
 ## Database relations
 ![alt tag](https://i.gyazo.com/e41511c2040314d98166b7364a0af712.png)
+
+## Testing
+We have added a seperate project to our solution for running tests. We are mostly running integration tests, using a temporary in-memory-database so that actual user-data wont be affected.
