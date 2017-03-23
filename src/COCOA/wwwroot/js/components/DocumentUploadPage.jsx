@@ -27,8 +27,7 @@ class DocumentUploadPage extends React.Component {
             file: undefined,
             materialName: '',
             courseId: '',
-            validMaterialName: true,
-            validcourseId: true
+            validMaterialName: true
         };
     }
 
@@ -39,7 +38,6 @@ class DocumentUploadPage extends React.Component {
     }
 
     sendFile(event) {
-
         var reader = new FileReader();
         var materialName = this.state.materialName;
         var courseId = this.state.courseId;
@@ -62,21 +60,12 @@ class DocumentUploadPage extends React.Component {
         reader.readAsArrayBuffer(this.state.file);
     }
 
-    isValidCourseId(id) {
-        return id.length >= 6 && !isNaN(id.slice(-1));
-    }
-
     isValidMaterialName(name) {
         return name.length >= 3;
     }
 
-    courseIdChanged(event) {
-        var valid = 'error';
-        //TODO: Should check if course is valid, our use selection box
-        if (this.isValidCourseId(event.target.value)) {
-            valid = 'success';
-        }
-        this.setState({ courseId: event.target.value, validCourseId: valid });
+    courseChanged(event) {
+        this.setState({courseId: event.target.options[event.target.selectedIndex].value});
     }
 
     materialNameChanged(event) {
@@ -91,9 +80,7 @@ class DocumentUploadPage extends React.Component {
         this.setState({ description: event.target.value });
     }
 
-    
-
-        render() {
+    render() {
             return (
                 <div>
                 <div className='container'>
@@ -106,14 +93,20 @@ class DocumentUploadPage extends React.Component {
                                 accept='application/pdf'
                                 onChange={this.fileChanged.bind(this)
                         } />
-                    <FieldGroup id="formControlCourseId"
-                                type="text"
-                                label="Course ID"
-                                placeholder='Course ID'
-                                bsSize='lg'
-                                value={this.state.courseId}
-                                validationState={this.state.validCourseId}
-                                onChange={this.courseIdChanged.bind(this)} />
+
+                      <FormGroup controlId="formControlsSelect">
+                      <ControlLabel>Course</ControlLabel>
+                      <FormControl componentClass="select" 
+                                   placeholder="Course"
+                                   onChange={this.courseChanged.bind(this)}>
+                          <option value='' label=''/>
+                         {this.props.courses.map(course => {
+                             return (<option value={course.id} label={course.name}/>)
+                            })
+                         }
+                      </FormControl>
+                      </FormGroup>
+
                     <FieldGroup id="formControlName"
                                 label="Material name"
                                 type="text"
@@ -129,9 +122,8 @@ class DocumentUploadPage extends React.Component {
                                   value={this.state.description}
                                   onChange={this.descriptionChanged.bind(this)} />
                     <Button onClick={this.sendFile.bind(this)}
-                            disabled={!(this.isValidCourseId(this.state.courseId) 
+                            disabled={!(this.state.courseId.length > 0
                                         && this.isValidMaterialName(this.state.materialName)
-                                        && this.state.courseId.length > 0
                                         && this.state.materialName.length > 0
                                         && this.state.file !== undefined)}>
                         Upload

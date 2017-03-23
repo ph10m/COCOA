@@ -58,9 +58,15 @@ namespace COCOA.Controllers
         /// View for uploading documents /documentupload
         /// </summary>
         /// <returns></returns>
-        public IActionResult DocumentUpload()
+        public async Task<IActionResult> DocumentUpload()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var courses = await (from cA in _context.CourseAssignments
+                                 where cA.UserId == user.Id
+                                 select cA.Course).ToListAsync();
+
+            return View(courses);
         }
 
         /// <summary>
@@ -111,7 +117,7 @@ namespace COCOA.Controllers
             return false;
         }
         [AllowAnonymous]
-        public async Task<IActionResult> Upload(string name, string courseId, string description)
+        public async Task<IActionResult> Upload(string name, int courseId, string description)
         {
             byte[] bytes;
             using (MemoryStream ms = new MemoryStream())
@@ -122,7 +128,7 @@ namespace COCOA.Controllers
 
             var courses = await (
                 from c in _context.Courses
-                where c.Name == courseId
+                where c.Id == courseId
                 select c).ToListAsync();
  
             if (courses.Count == 0)
