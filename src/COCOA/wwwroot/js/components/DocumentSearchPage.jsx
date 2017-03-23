@@ -41,7 +41,7 @@ class DocumentSearchPage extends React.Component {
 
         <div>
           <form>
-              <div className='container'>
+              <h1>Document search</h1>
             <FormGroup controllerId="formSearch">
                 <ControlLabel>
                     Search:
@@ -70,7 +70,6 @@ class DocumentSearchPage extends React.Component {
                     Search
                 </Button>
             </FormGroup>
-              </div>
           </form>
 
           <div>
