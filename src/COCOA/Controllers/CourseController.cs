@@ -49,9 +49,15 @@ namespace COCOA.Controllers
         /// View for searching in course material. /materialsearch
         /// </summary>
         /// <returns></returns>
-        public IActionResult MaterialSearch()
+        public async Task<IActionResult> MaterialSearch()
         {
-            return View("DocumentSearch");
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var courses = await(from cE in _context.Enrollments
+                                where cE.UserId == user.Id
+                                select cE.Course).ToListAsync();
+
+            return View("DocumentSearch", courses);
         }
 
         /// <summary>

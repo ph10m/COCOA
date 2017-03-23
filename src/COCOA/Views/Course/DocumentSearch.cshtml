@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<COCOA.Models.Course>
+@{
     Layout = "~/Views/Shared/_HeaderLayout.cshtml";
 }
 <html>
@@ -10,7 +11,9 @@
     <link rel="stylesheet" type="text/css" href="~/css/site.css">
 </head>
 <body>
-    @Html.React("DocumentSearchPage", new { });
+    @Html.React("DocumentSearchPage", new {
+        courses = Model
+     });
     <script src="@Url.Content("~/js/components/MaterialPDFMetaComponent.jsx")"></script>
     <script src="@Url.Content("~/js/components/DocumentSearchPage.jsx")"></script>
     @Html.ReactInitJavaScript()
