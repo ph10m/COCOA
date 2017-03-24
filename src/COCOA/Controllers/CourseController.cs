@@ -42,7 +42,7 @@ namespace COCOA.Controllers
                 //nextLecture = nextLect
             };
 
-            return View();
+            return View(viewModel);
         }
 
         /// <summary>
