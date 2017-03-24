@@ -75,27 +75,29 @@ class CreateUserPage extends React.Component {
                     <h1>Create new user</h1>
                     <form>
                         <FieldGroup id="formControlsUsername"
-                                    type="username"
-                                    label="Email"
-                                    placeholder='Email'
-                                    bsSize='lg'
-                                    onChange={this.emailChanged.bind(this)} />
+                            type="username"
+                            label="Email"
+                            placeholder='Email'
+                            bsSize='lg'
+                            onChange={this.emailChanged.bind(this)} />
                         <FieldGroup id="formControlsName"
-                                    type="username"
-                                    label="Name"
-                                    placeholder='Name'
-                                    bsSize='lg'
-                                    onChange={this.nameChanged.bind(this)} />
+                            type="username"
+                            label="Name"
+                            placeholder='Name'
+                            bsSize='lg'
+                            onChange={this.nameChanged.bind(this)} />
                         <FieldGroup id="formControlPassword"
                             label="Password"
                             type="password" 
                             placeholder='Password'
+                            bsSize='lg'
                             onChange={this.passwordChanged.bind(this)}/>
                         <FieldGroup id="formConfirmPassword"
-                                    label="Password"
-                                    type="password"
-                                    placeholder='Confirm password'
-                                    onChange={this.passwordConfirmedChanged.bind(this)} />
+                            label="Password"
+                            type="password"
+                            placeholder='Confirm password'
+                            bsSize='lg'
+                            onChange={this.passwordConfirmedChanged.bind(this)} />
                         <p>{this.state.errorText}</p>
                         <Button onClick={this.createNewUser.bind(this)}>
                             Submit

@@ -59,16 +59,17 @@ class LoginPage extends React.Component {
                     <h1>Log in</h1>
                   <form>
                     <FieldGroup id="formControlsUsername"
-                                type="username"
-                                label="Email"
-                                placeholder='Email'
-                                bsSize='lg'
-                                onChange={this.emailChanged.bind(this)}/>
+                        type="username"
+                        label="Email"
+                        placeholder='Email'
+                        bsSize='lg'
+                        onChange={this.emailChanged.bind(this)}/>
                     <FieldGroup id="formControlPassword"
-                                label="Password"
-                                type="password" 
-                                placeholder='Password'
-                                onChange={this.passwordChanged.bind(this)}/>
+                        label="Password"
+                        type="password" 
+                        placeholder='Password'
+                        bsSize='lg'
+                        onChange={this.passwordChanged.bind(this)}/>
                     <Button onClick={this.sendLoginRequest.bind(this)}>
                         Log in
                     </Button>
