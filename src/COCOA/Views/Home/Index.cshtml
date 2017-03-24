@@ -1,16 +1,8 @@
+﻿@model List<COCOA.Models.Course>
 ﻿@{
     Layout = "~/Views/Shared/_HeaderLayout.cshtml";
 }
 <html>
-<<<<<<< HEAD
-    <head>
-        <title>COCOA</title>
-    </head>
-    <body>
-        @Html.React("HomePage", new { })
-        <script src="@Url.Content("~/js/components/HomePage.jsx")"></script>
-    </body>
-=======
 <head>
     <title>Hello COCOA</title>
 
@@ -19,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="~/css/site.css">
 </head>
 <body>
-    @Html.React("HomePage", new { });
+    @Html.React("HomePage", new { courses = Model });
     <script src="@Url.Content("~/node_modules/react/dist/react.min.js")"></script>
     <script src="@Url.Content("~/node_modules/react-dom/dist/react-dom.min.js")"></script>
     <script src="@Url.Content("~/node_modules/react-bootstrap/dist/react-bootstrap.min.js")"></script>
@@ -30,5 +22,4 @@
     <script src="@Url.Content("~/js/components/HomePage.jsx")"></script>
     @Html.ReactInitJavaScript()
 </body>
->>>>>>> add user page that does not use backend yet
 </html>

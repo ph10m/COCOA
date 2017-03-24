@@ -21,8 +21,7 @@ class FieldGroup extends React.Component {
 class CreateUserPage extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = { email: '', name: '', password: '', passwordConfirmed: '', errorText: null };
+        this.state = { email: "", name: "", password: "", passwordConfirmed: "", errorText: null };
     }
 
 
@@ -90,11 +89,13 @@ class CreateUserPage extends React.Component {
                             label="Password"
                             type="password" 
                             placeholder='Password'
+                            bsSize = 'lg'
                             onChange={this.passwordChanged.bind(this)}/>
                         <FieldGroup id="formConfirmPassword"
                                     label="Password"
                                     type="password"
                                     placeholder='Confirm password'
+                                    bsSize='lg'
                                     onChange={this.passwordConfirmedChanged.bind(this)} />
                         <p>{this.state.errorText}</p>
                         <Button onClick={this.createNewUser.bind(this)}>
