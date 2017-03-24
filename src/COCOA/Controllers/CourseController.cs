@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 using COCOA.Data;
 using COCOA.Models;
 using Microsoft.AspNetCore.Identity;
 using COCOA.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace COCOA.Controllers
 {
@@ -40,6 +43,36 @@ namespace COCOA.Controllers
             };
 
             return View();
+        }
+
+        /// <summary>
+        /// View for searching in course material. /materialsearch
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> MaterialSearch()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var courses = await(from cE in _context.Enrollments
+                                where cE.UserId == user.Id
+                                select cE.Course).ToListAsync();
+
+            return View("DocumentSearch", courses);
+        }
+
+        /// <summary>
+        /// View for uploading documents /documentupload
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> DocumentUpload()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var courses = await (from cA in _context.CourseAssignments
+                                 where cA.UserId == user.Id
+                                 select cA.Course).ToListAsync();
+
+            return View(courses);
         }
 
         /// <summary>
@@ -88,6 +121,33 @@ namespace COCOA.Controllers
             }
 
             return false;
+        }
+        [AllowAnonymous]
+        public async Task<IActionResult> Upload(string name, int courseId, string description)
+        {
+            byte[] bytes;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Request.Body.CopyTo(ms);
+                bytes = ms.ToArray();
+            }
+
+            var courses = await (
+                from c in _context.Courses
+                where c.Id == courseId
+                select c).ToListAsync();
+ 
+            if (courses.Count == 0)
+            {
+                return StatusCode(404, "No matching course was found");
+            }
+
+            bool success = await SaveMaterialPDF(courses.First().Id, name, description, bytes);
+
+            if (success)
+                return Ok();
+            else
+                return StatusCode(400, "You are not eligible to upload to the given course");
         }
 
         // TODO: restrict action to teachers only.
@@ -180,7 +240,7 @@ namespace COCOA.Controllers
             return StatusCode(400, "Course not found.");
         }
 
-        public async Task<IActionResult> AssignToCourse (int id, string userId, CourseAssignment.Role role)
+        public async Task<IActionResult> AssignToCourse(int id, string userId, CourseAssignment.Role role)
         {
             var course = await (from c in _context.Courses
                                 where c.Id == id
@@ -223,6 +283,30 @@ namespace COCOA.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> DocumentSearch(int courseId, string searchString, int page = 0)
+        {
+            var result = await (from m in _context.MaterialPDFs
+                                where (m.CourseId == courseId && m.Name.Contains(searchString))
+                                select m.Meta).Skip(10 * page).Take(10).ToListAsync();
+
+            /*string pdfPath = System.IO.Path.GetFullPath("..\\..\\example.pdf");
+            using (PdfReader reader = new PdfReader(pdfPath))
+            {
+                searchString = searchString.ToLower();
+                for (int i = 1; i <= reader.NumberOfPages; i++)
+                {
+                    string page = PdfTextExtractor.GetTextFromPage(reader, i).ToLower();
+                    if (page.IndexOf(searchString) != -1)
+                    {
+                        string url = System.IO.Path.GetFullPath(pdfPath) + "#page=" + i;
+                        return Ok(url);
+                    }
+                }
+            }*/
+            return Json(result);
         }
     }
 }

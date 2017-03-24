@@ -29,7 +29,25 @@ namespace COCOA.Models
 
         public byte[] Data { get; set; }
 
-        
-        
+        public MaterialPDFMetadata Meta {
+            get
+            {
+                MaterialPDFMetadata mpmd = new MaterialPDFMetadata();
+                mpmd.description = Description;
+                mpmd.id = Id;
+                mpmd.name = Name;
+                return mpmd;
+            }
+
+        }
+
+        public class MaterialPDFMetadata
+        {
+            public int id { get; set; }
+
+            public string name { get; set; }
+
+            public string description { get; set; }
+        }
     }
 }

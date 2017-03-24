@@ -1,0 +1,21 @@
+﻿@model List<COCOA.Models.Course>
+@{
+    Layout = "~/Views/Shared/_HeaderLayout.cshtml";
+}
+<html>
+<head>
+    <title>Hello COCOA</title>
+
+    <!-- Latest compiled and minified bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/site.css">
+</head>
+<body>
+    @Html.React("DocumentSearchPage", new {
+        courses = Model
+     });
+    <script src="@Url.Content("~/js/components/MaterialPDFMetaComponent.jsx")"></script>
+    <script src="@Url.Content("~/js/components/DocumentSearchPage.jsx")"></script>
+    @Html.ReactInitJavaScript()
+</body>
+</html>
