@@ -263,8 +263,8 @@ namespace COCOA.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
             var userAssignment = await (from cA in _context.CourseAssignments
-                                        where (cA.CourseId == course.Id && cA.UserId == user.Id)
-                                        select cA).SingleOrDefaultAsync();
+                                     where (cA.CourseId == course.Id && cA.UserId == user.Id)
+                                     select cA).SingleOrDefaultAsync();
 
             if (userAssignment == null || userAssignment.CourseAssignmentRole == CourseAssignment.Role.Assistant)
             {

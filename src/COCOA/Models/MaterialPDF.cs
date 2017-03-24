@@ -49,6 +49,5 @@ namespace COCOA.Models
 
             public string description { get; set; }
         }
-        
     }
 }
