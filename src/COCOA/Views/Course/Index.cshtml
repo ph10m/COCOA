@@ -1,5 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    Layout = "~/Views/Shared/_HeaderLayout.cshtml";
 }
+<html>
+    <head>
+        <title>COCOA</title>
+    </head>
+    <body>
+        @Html.React("HomePage", new { });
+        <script src="@Url.Content("~/js/components/HomePage.jsx")"></script>
+    </body>
+</html>

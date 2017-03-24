@@ -118,6 +118,7 @@ namespace COCOA
                 .AddScript("~/js/components/LoginPage.jsx")
                 .AddScript("~/js/components/CreateUserPage.jsx")
                 .AddScript("~/js/components/UserPage.jsx")
+                .AddScript("~/js/components/CreateCoursePage.jsx")
                 .AddScript("~/js/components/CocoaHeader.jsx");
                 // If you use an external build too (for example, Babel, Webpack,
                 // Browserify or Gulp), you can improve performance by disabling

@@ -36,10 +36,19 @@ namespace COCOA.Controllers
 
             var viewModel = new CourseViewModel
             {
-                nextLecture = nextLect
+                //nextLecture = nextLect
             };
 
             return View();
+        }
+
+        /// <summary>
+        /// View for register course. /register
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Register()
+        {
+            return View("Register");
         }
 
         /// <summary>
@@ -99,7 +108,6 @@ namespace COCOA.Controllers
 
             var courseAssigment = new CourseAssignment
             {
-
                 CourseId = course.Id,
                 UserId = user.Id,
                 CourseAssignmentRole = CourseAssignment.Role.Owner,
@@ -170,6 +178,51 @@ namespace COCOA.Controllers
             }
 
             return StatusCode(400, "Course not found.");
+        }
+
+        public async Task<IActionResult> AssignToCourse (int id, string userId, CourseAssignment.Role role)
+        {
+            var course = await (from c in _context.Courses
+                                where c.Id == id
+                                select c).SingleOrDefaultAsync();
+
+            if (course == null)
+            {
+                return StatusCode(400, "Course not found!");
+            }
+
+            var userToAssign = await (from u in _context.Users
+                                      where u.Id == userId
+                                      select u).SingleOrDefaultAsync();
+
+            if (userToAssign == null)
+            {
+                return StatusCode(400, "Users not found!");
+            }
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var userAssignment = await (from cA in _context.CourseAssignments
+                                     where (cA.CourseId == course.Id && cA.UserId == user.Id)
+                                     select cA).SingleOrDefaultAsync();
+
+            if (userAssignment == null || userAssignment.CourseAssignmentRole == CourseAssignment.Role.Assistant)
+            {
+                return StatusCode(400, "Currently signed in user does not have the rights to assign a new user to this course!");
+            }
+
+            var newCourseAssignment = new CourseAssignment
+            {
+                CourseId = course.Id,
+                UserId = userToAssign.Id,
+                CourseAssignmentRole = role,
+                Timestamp = DateTime.Now
+            };
+
+            _context.CourseAssignments.Add(newCourseAssignment);
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }
