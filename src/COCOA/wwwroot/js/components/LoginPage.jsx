@@ -22,7 +22,7 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { email: '', password: '' };
+        this.state = { email: "", password: "" };
     }
 
 
@@ -32,12 +32,13 @@ class LoginPage extends React.Component {
         var email = this.state.email;
         var password = this.state.password;
 
-        xhr.open('get', "/user/signinuser?email=" + encodeURIComponent(email) + "&password=" + encodeURIComponent(password) + "&persistent=true", true);
+        xhr.open("get", `/user/signinuser?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&persistent=true`, true);
         xhr.onload = function () {
             if (xhr.status == 200) {
-                console.log("Signed in with " + email + ".");
+                console.log(`Signed in with ${email}.`);
             }
             else {
+
                 console.log("Failed to sign in, wrong email or password.");
             }
         }.bind(this);
@@ -61,14 +62,15 @@ class LoginPage extends React.Component {
                     <FieldGroup id="formControlsUsername"
                                 type="username"
                                 label="Email"
-                                placeholder='Email'
-                                bsSize='lg'
+                                placeholder="Email"
+                                bsSize="lg"
                                 onChange={this.emailChanged.bind(this)}/>
                     <FieldGroup id="formControlPassword"
                                 label="Password"
                                 type="password" 
-                                placeholder='Password'
-                                onChange={this.passwordChanged.bind(this)}/>
+                                placeholder="Password"
+                                bsSize="lg"
+                                onChange={this.passwordChanged.bind(this)}></FieldGroup>
                     <Button onClick={this.sendLoginRequest.bind(this)}>
                         Log in
                     </Button>

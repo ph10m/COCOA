@@ -24,6 +24,7 @@ namespace COCOA.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             var courses = await (
                 from c in _context.Courses
                 select new Course()
@@ -39,6 +40,7 @@ namespace COCOA.Controllers
                 // TODO: do something with each course
                 Console.WriteLine(courseInfo.Id + ": " + courseInfo.Description);
             }
+
             return View(courses);
         }
     }

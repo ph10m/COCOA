@@ -79,11 +79,13 @@ class UserPage extends React.Component {
                             label="Password"
                             type="password" 
                             placeholder='Password'
+                            bsSize='lg'
                             onChange={this.passwordChanged.bind(this)}/>
                         <FieldGroup id="formConfirmPassword"
                                     label="Password"
                                     type="password"
                                     placeholder='Confirm password'
+                                    bsSize='lg'
                                     onChange={this.passwordConfirmedChanged.bind(this)} />
                         <Button onClick={this.updatePassword.bind(this)}>
                             Change password

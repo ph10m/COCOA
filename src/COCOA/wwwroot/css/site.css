@@ -12,3 +12,12 @@
 .form-div {
     align-self: center;
 }
+
+div.scroll {
+    height: 70%;
+    overflow-y: auto;
+}
+
+.btn-close {
+    float: right;
+}
