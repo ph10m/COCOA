@@ -27,16 +27,9 @@ namespace COCOA.Controllers
         
         public async Task<IActionResult> Index(int id)
         {
-            var name1024 = await (
-                from c in _context.Courses
-                where c.Id == id
-                select c.Name1024).SingleOrDefaultAsync();
-            if (name1024 == null)
-            {
-                return StatusCode(400, "Course not found!");
-            }
-            var nextLect = new WebScraper(name1024).getNextLecture();
-
+            var bulletins = await (from b in _context.CourseBulletins
+                where b.CourseId == id
+                select b).ToListAsync();
             var viewModel = new CourseViewModel
             {
                 //nextLecture = nextLect
