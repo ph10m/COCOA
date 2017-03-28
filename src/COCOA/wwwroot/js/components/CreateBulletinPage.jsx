@@ -68,7 +68,7 @@ class CreateBulletinPage extends React.Component {
     }
 
     stickeyChanged(event) {
-        this.setState({ stickey: event.target.value });
+        this.setState({ stickey: event.target.checked });
     }
 
     bulletinTypeChanged(event) {
@@ -107,19 +107,17 @@ class CreateBulletinPage extends React.Component {
                                     bsSize='lg'
                                     onChange={this.hrefChanged.bind(this)} />
                         <FormGroup controlId="formControlsbulletinType">
-                            <ControlLabel>Select</ControlLabel>
+                            <ControlLabel>BulletinType</ControlLabel>
                             <FormControl componentClass="select" placeholder="select" onChange={this.bulletinTypeChanged.bind(this)}>
                                 <option value="0">Normal</option>
                                 <option value="1">Info</option>
                                 <option value="2">Urgent</option>
                             </FormControl>
                         </FormGroup>
-                        <FieldGroup id="formControlsStickey"
-                                    type="text"
-                                    label="Stickey"
-                                    placeholder='Stickey'
-                                    bsSize='lg'
-                                    onChange={this.stickeyChanged.bind(this)} />
+                        <Checkbox checked={this.state.stickey}
+                                  onChange={this.stickeyChanged.bind(this)}>
+                            Stickey
+                        </Checkbox>
                         <p>{this.state.errorText}</p>
                         <Button onClick={this.createNewBulletin.bind(this)}>
                             Create bulletin
