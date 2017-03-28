@@ -8,7 +8,7 @@ using COCOA.Data;
 namespace COCOA.Migrations
 {
     [DbContext(typeof(CocoaIdentityDbContext))]
-    [Migration("20170314130526_initial")]
+    [Migration("20170328122920_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -47,7 +47,7 @@ namespace COCOA
 
             services.AddMvc();
 
-            var connection = @"Server=cocoadbserver.database.windows.net; Database=cocoadb; User Id=coffee; password=HEm3LsGnjVMn27LR";
+            var connection = @"Server=cocoadatabase.database.windows.net; Database=cocoadatabase; User Id=coffee; password=HEm3LsGnjVMn27LR";
             services.AddDbContext<CocoaIdentityDbContext>(options => options.UseSqlServer(connection));
 
             services.AddIdentity<User, IdentityRole>()
@@ -58,7 +58,7 @@ namespace COCOA
             {
                 options.AddPolicy("Authenticated", policy => policy.RequireRole("Administrator", "Student", "Teacher"));
             });
-
+            
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -88,6 +88,9 @@ namespace COCOA
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            // REMEMBER TO SEED ROLES ON BLANK DATABASE
+            //RolesSetup.SeedRoles(app.ApplicationServices);
 
             app.UseApplicationInsightsRequestTelemetry();
 
