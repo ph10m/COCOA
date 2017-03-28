@@ -23,7 +23,7 @@ class FieldGroup extends React.Component {
 class CreateBulletinPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { courseId: '', title: '', content: '', href: '', stickey: false, bulletinType: '', errorText: null };
+        this.state = { courseId: '', title: '', content: '', href: '', stickey: false, bulletinType: '0', errorText: null };
     }
 
 
@@ -106,12 +106,14 @@ class CreateBulletinPage extends React.Component {
                                     placeholder='Href'
                                     bsSize='lg'
                                     onChange={this.hrefChanged.bind(this)} />
-                        <FieldGroup id="formControlsbulletinType"
-                                    type="text"
-                                    label="BulletinType"
-                                    placeholder='BulletinType'
-                                    bsSize='lg'
-                                    onChange={this.bulletinTypeChanged.bind(this)} />
+                        <FormGroup controlId="formControlsbulletinType">
+                            <ControlLabel>Select</ControlLabel>
+                            <FormControl componentClass="select" placeholder="select" onChange={this.bulletinTypeChanged.bind(this)}>
+                                <option value="0">Normal</option>
+                                <option value="1">Info</option>
+                                <option value="2">Urgent</option>
+                            </FormControl>
+                        </FormGroup>
                         <FieldGroup id="formControlsStickey"
                                     type="text"
                                     label="Stickey"
