@@ -37,18 +37,18 @@ class CreateBulletinPage extends React.Component {
         var bulletinType = this.state.bulletinType;
         var stickey = this.state.stickey;
         console.log("/course/newbulletin?courseid=" + encodeURIComponent(courseId) + "&title=" + encodeURIComponent(title) + "&content=" + encodeURIComponent(content) + "&href=" + encodeURIComponent(href) + "&bulletinType=" + encodeURIComponent(bulletinType) + "&stickey=" + encodeURIComponent(stickey) + "&persistent=true");
-        //xhr.open('post', "/course/newbulletin?courseid=" + encodeURIComponent(courseId) + "&title=" + encodeURIComponent(title) + "&content=" + encodeURIComponent(content) + "&href=" + encodeURIComponent(href) + "&stickey=" + encodeURIComponent(stickey) + "&persistent=true", true);
-        //xhr.onload = function () {
-        //    if (xhr.status == 200) {
-        //        console.log("Added bulletin " + title + ".");
-        //        this.setState({ errorText: null });
-        //    }
-        //    else {
-        //        console.error(JSON.parse(xhr.response)[0].description);
-        //        this.setState({ errorText: JSON.parse(xhr.response)[0].description });
-        //    }
-        //}.bind(this);
-        //xhr.send();
+        xhr.open('post', "/course/newbulletin?courseid=" + encodeURIComponent(courseId) + "&title=" + encodeURIComponent(title) + "&content=" + encodeURIComponent(content) + "&href=" + encodeURIComponent(href) + "&stickey=" + encodeURIComponent(stickey) + "&persistent=true", true);
+        xhr.onload = function () {
+            if (xhr.status == 200) {
+                console.log("Added bulletin " + title + ".");
+                this.setState({ errorText: null });
+            }
+            else {
+                console.error(JSON.parse(xhr.response)[0].description);
+                this.setState({ errorText: JSON.parse(xhr.response)[0].description });
+            }
+        }.bind(this);
+        xhr.send();
     }
 
     courseIdChanged(event) {
