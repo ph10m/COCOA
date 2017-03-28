@@ -354,9 +354,12 @@ namespace COCOA.Controllers
         public async Task<IActionResult> DocumentSearch(int courseId, string searchString, int page = 0)
         {
             var result = await (from m in _context.MaterialPDFs
-                                where (m.CourseId == courseId && m.Name.Contains(searchString))
-                                select m.Meta).Skip(10 * page).Take(10).ToListAsync();
+                                where (m.CourseId == courseId && (m.Name.Contains(searchString) || m.Description.Contains(searchString)))
+                                select m.Meta).ToListAsync();
 
+            
+            result = result.OrderBy(mpmd => mpmd.name.Contains(searchString)?0:1)
+                .Skip(10 * page).Take(10).ToList();
             /*string pdfPath = System.IO.Path.GetFullPath("..\\..\\example.pdf");
             using (PdfReader reader = new PdfReader(pdfPath))
             {
