@@ -8,7 +8,7 @@ namespace COCOA.ViewModels
 {
     public class CourseViewModel
     {
-        public List<CourseBulletin> bulletins { get; set; }
-        public List<CourseBulletin> stickyBulletins { get; set; }
+        public IEnumerable<BulletinViewModel> bulletins { get; set; }
+        public IEnumerable<BulletinViewModel> stickyBulletins { get; set; }
     }
 }

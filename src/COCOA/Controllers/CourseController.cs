@@ -28,11 +28,34 @@ namespace COCOA.Controllers
         public async Task<IActionResult> Index(int id)
         {
             var bulletins = await (from b in _context.CourseBulletins
-                where b.CourseId == id
-                select b).ToListAsync();
+                                   where b.CourseId == id
+                                   select new BulletinViewModel
+                                   {
+                                       id = b.Id,
+                                       authorName = b.Author.Name,
+                                       title = b.Title,
+                                       content = b.Content,
+                                       href = b.Href,
+                                       publishedDate = b.Timestamp.ToShortDateString() + "   " + b.Timestamp.ToShortTimeString(),
+                                       publishedDateUnix = (long)b.Timestamp.Subtract(new DateTime(1970, 1, 1)).TotalSeconds,
+                                       bulletinType = b.BulletinType,
+                                       stickey = b.Stickey
+                                    }).ToListAsync();
+
+            var sticky = bulletins.Where(x =>
+            {
+                return x.stickey;
+            });
+
+            var normal = bulletins.Where(x =>
+            {
+                return !x.stickey;
+            });
+
             var viewModel = new CourseViewModel
             {
-                //nextLecture = nextLect
+                bulletins = normal,
+                stickyBulletins = sticky
             };
 
             return View(viewModel);
