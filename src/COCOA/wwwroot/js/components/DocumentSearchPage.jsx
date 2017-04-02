@@ -26,17 +26,22 @@ class DocumentSearchPage extends React.Component {
         xhr.open('get', "/course/documentsearch?courseId=" + this.state.courseId + "&searchString=" + searchString, true);
         xhr.onload = function () {
             if (xhr.status == 200) {
-                console.log("Got response: " +
-                xhr.response);
                 this.setState({ result: JSON.parse(xhr.response) });
-            } else {
-                console.log("Got status " + xhr.status);
             }
         }.bind(this);
         xhr.send();
     }
 
+    openDocument(event) {
+        id = event.target.id;
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', "/course/getdocumentdata?documentid=" + id);
+        xhr.send();
+    }
+
     render() {
+
+        viewRef = this;
         return (
 
         <div>
@@ -73,12 +78,15 @@ class DocumentSearchPage extends React.Component {
           </form>
 
           <div>
-            {this.state.result.map(function(el) {
+            {this.state.result.map(function (el) {
                 return (
-                    <MaterialPDFMetaComponent name={el.name} description={el.description}>
+                    <MaterialPDFMetaComponent name={el.name} 
+                                              description={el.description}
+                                              id={el.id}
+                                              download={viewRef.openDocument}>
                     </MaterialPDFMetaComponent>
                     );
-                })
+                })  
             }
           </div>
         </div>
