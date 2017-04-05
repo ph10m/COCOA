@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using COCOA.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace COCOA.Controllers
 {
@@ -343,6 +344,27 @@ namespace COCOA.Controllers
                 }
             }*/
             return Json(result);
+        }
+
+        public async Task GetDocumentData(int documentId)
+        {
+            //TODO: Restrict to users of course
+
+            var doc = await (from m in _context.MaterialPDFs
+                             where (m.Id == documentId)
+                             select m).SingleOrDefaultAsync();
+
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            Response.Headers.Add("Content-Disposition",
+                "filename=\"" + doc.Name + ".pdf\"");
+
+            await Response.Body.WriteAsync(doc.Data, 0, doc.Data.Length);
+
+            //Response.
+            //Response.Flush();
+
+            //Response.End();
         }
     }
 }
