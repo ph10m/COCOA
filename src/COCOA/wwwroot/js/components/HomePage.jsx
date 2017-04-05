@@ -51,7 +51,8 @@ class HomePage extends React.Component {
         const elementList = this.props.courses.map((c) => {
             return (
                 <div className="panel panel-primary" id={c.id}>
-                    <div className="panel-heading">{c.name}
+                    <div className="panel-heading" >
+                        <a href={"/course/index/" + c.id}>{c.name}</a>
                         <button type="button" className="close" onClick={this.onClickClose.bind(this)}>
                             &times;
                         </button>

@@ -27,6 +27,21 @@ namespace COCOA.Controllers
         
         public async Task<IActionResult> Index(int id)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var enrollment = await (from e in _context.Enrollments
+                           where e.UserId == user.Id
+                           select e).SingleOrDefaultAsync();
+
+            var assignment = await (from cA in _context.CourseAssignments
+                                    where cA.UserId == user.Id
+                                    select cA).SingleOrDefaultAsync();
+
+            if (enrollment == null && assignment == null)
+            {
+                return StatusCode(400, "User not enrolled or assigned to course.");
+            }
+
             var bulletins = await (from b in _context.CourseBulletins
                                    where b.CourseId == id
                                    select new BulletinViewModel
@@ -42,6 +57,10 @@ namespace COCOA.Controllers
                                        stickey = b.Stickey
                                     }).ToListAsync();
 
+            var managment = await (from cA in _context.CourseAssignments
+                                   where cA.CourseId == id
+                                   select (cA.CourseAssignmentRole.ToString() + ": " + cA.User.Name)).ToListAsync();
+
             var sticky = bulletins.Where(x =>
             {
                 return x.stickey;
@@ -54,6 +73,7 @@ namespace COCOA.Controllers
 
             var viewModel = new CourseViewModel
             {
+                courseManagment = managment,
                 bulletins = normal,
                 stickyBulletins = sticky
             };

@@ -26,19 +26,19 @@ namespace COCOA.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var courses = await (
-                from c in _context.Courses
+                from e in _context.Enrollments
+                where e.UserId == user.Id
                 select new Course()
                 {
-                    Name = c.Name,
-                    Name1024 = c.Name1024,
-                    Id = c.Id,
-                    Description = c.Description
+                    Name = e.Course.Name,
+                    Name1024 = e.Course.Name1024,
+                    Id = e.Course.Id,
+                    Description = e.Course.Description
                 }).ToListAsync();
-            if (courses == null) return StatusCode(400, "Couldn't fetch courses");
-            foreach (var courseInfo in courses)
+
+            if (courses == null)
             {
-                // TODO: do something with each course
-                Console.WriteLine(courseInfo.Id + ": " + courseInfo.Description);
+                return StatusCode(400, "Couldn't fetch courses");
             }
 
             return View(courses);

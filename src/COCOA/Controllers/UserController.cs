@@ -86,7 +86,7 @@ namespace COCOA.Controllers
                         // Sign in
                         await _signInManager.SignInAsync(user, true);
 
-                        return Ok();
+                        return new RedirectToActionResult("index", "home", null);
                     }
 
                 }
@@ -111,7 +111,7 @@ namespace COCOA.Controllers
 
             if (result == Microsoft.AspNetCore.Identity.SignInResult.Success)
             {
-                return Ok();
+                return new RedirectToActionResult("index", "home", null);
             }
 
             // Error
@@ -128,7 +128,7 @@ namespace COCOA.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            return Ok();
+            return new RedirectToActionResult("index", "home", null);
         }
     }
 }

@@ -2,7 +2,7 @@
 var PageHeader = ReactBootstrap.PageHeader;
 var Panel = ReactBootstrap.Panel;
 
-class HomePage extends React.Component {
+class CoursePage extends React.Component {
     constructor(props) {
         super(props);
     }
