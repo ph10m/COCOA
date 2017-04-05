@@ -40,13 +40,13 @@ namespace COCOA.Controllers
             }
 
             var enrollment = await (from e in _context.Enrollments
-                                    where e.UserId == user.Id
+                                    where e.UserId == user.Id && e.CourseId == id
                                     select e)
                                    .Include(x => x.Course)
                                    .SingleOrDefaultAsync();
 
             var assignment = await (from cA in _context.CourseAssignments
-                                    where cA.UserId == user.Id
+                                    where cA.UserId == user.Id && cA.CourseId == id
                                     select cA).SingleOrDefaultAsync();
 
             if (enrollment == null && assignment == null)
