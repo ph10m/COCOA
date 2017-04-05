@@ -30,9 +30,19 @@ namespace COCOA.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
+            var model = new CoursePageViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
             var enrollment = await (from e in _context.Enrollments
-                           where e.UserId == user.Id
-                           select e).SingleOrDefaultAsync();
+                                    where e.UserId == user.Id
+                                    select e)
+                                   .Include(x => x.Course)
+                                   .SingleOrDefaultAsync();
 
             var assignment = await (from cA in _context.CourseAssignments
                                     where cA.UserId == user.Id
@@ -72,14 +82,13 @@ namespace COCOA.Controllers
                 return !x.stickey;
             });
 
-            var viewModel = new CourseViewModel
-            {
-                courseManagment = managment,
-                bulletins = normal,
-                stickyBulletins = sticky
-            };
+            model.courseName = enrollment.Course.Name;
+            model.courseId = enrollment.Course.Id;
+            model.courseManagment = managment;
+            model.bulletins = normal;
+            model.stickyBulletins = sticky;
 
-            return View(viewModel);
+            return View(model);
         }
 
         /// <summary>
@@ -90,11 +99,15 @@ namespace COCOA.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            var courses = await(from cE in _context.Enrollments
-                                where cE.UserId == user.Id
-                                select cE.Course).ToListAsync();
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
 
-            return View("DocumentSearch", courses);
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View("DocumentSearch", model);
         }
 
         /// <summary>
@@ -105,11 +118,15 @@ namespace COCOA.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            var courses = await (from cA in _context.CourseAssignments
-                                 where cA.UserId == user.Id
-                                 select cA.Course).ToListAsync();
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
 
-            return View(courses);
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View("DocumentSearch", model);
         }
 
         /// <summary>
@@ -259,22 +276,33 @@ namespace COCOA.Controllers
                 where c.Id == id
                 select c).SingleOrDefaultAsync();
 
-            if (course != null)
+            if (course == null)
             {
-                var enrollment = new Enrollment
-                {
-                    CourseId = course.Id,
-                    UserId = user.Id,
-                    EnrollmentTimestamp = DateTime.Now
-                };
-
-                _context.Enrollments.Add(enrollment);
-                await _context.SaveChangesAsync();
-
-                return Ok();
+                return StatusCode(400, "Course not found.");
             }
 
-            return StatusCode(400, "Course not found.");
+            var existing = await (from e in _context.Enrollments
+                                  where ((e.CourseId == course.Id) &&
+                                  (e.UserId == user.Id))
+                                  select e)
+                                  .SingleOrDefaultAsync();
+
+            if (existing != null)
+            {
+                return StatusCode(400, "Already enrolled to course.");
+            }
+
+            var enrollment = new Enrollment
+            {
+                CourseId = course.Id,
+                UserId = user.Id,
+                EnrollmentTimestamp = DateTime.Now
+            };
+
+            _context.Enrollments.Add(enrollment);
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
 
         public async Task<IActionResult> AssignToCourse(int id, string userId, CourseAssignment.Role role)

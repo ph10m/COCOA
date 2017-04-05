@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using COCOA.Data;
 using COCOA.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using COCOA.ViewModels;
 
 namespace COCOA.Controllers
 {
@@ -25,23 +27,16 @@ namespace COCOA.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var courses = await (
-                from e in _context.Enrollments
-                where e.UserId == user.Id
-                select new Course()
-                {
-                    Name = e.Course.Name,
-                    Name1024 = e.Course.Name1024,
-                    Id = e.Course.Id,
-                    Description = e.Course.Description
-                }).ToListAsync();
 
-            if (courses == null)
+            var model = new HomePageViewModel();
+            string resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
             {
-                return StatusCode(400, "Couldn't fetch courses");
+                return StatusCode(400, resultShared);
             }
 
-            return View(courses);
+            return View(model);
         }
     }
 }

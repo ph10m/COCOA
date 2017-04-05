@@ -63,7 +63,7 @@ class DocumentSearchPage extends React.Component {
                                    onChange={this.handleCourseIdChange.bind(this)}>
                           <option value='' label='' />
                           {this.props.courses.map(course => {
-                              return (<option value={course.id} label={course.name } />)
+                              return (<option value={course.courseId} label={course.courseName} />)
                             })
                           }
                       </FormControl>

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using COCOA.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using COCOA.ViewModels;
+using COCOA.Data;
 
 namespace COCOA.Controllers
 {
@@ -20,40 +22,72 @@ namespace COCOA.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly CocoaIdentityDbContext _context;
 
-        public UserController (UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
+        public UserController (UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, CocoaIdentityDbContext context)
         {
             // Dependency injection
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _context = context;
         }
 
         /// <summary>
         /// User managment page.
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View(model);
         }
 
         /// <summary>
         /// View for register. /register
         /// </summary>
         /// <returns></returns>
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View(model);
         }
 
         /// <summary>
         /// View for signin. /signin
         /// </summary>
         /// <returns></returns>
-        public IActionResult SignIn()
+        public async Task<IActionResult> SignIn()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View(model);
         }
 
         /// <summary>
@@ -128,7 +162,7 @@ namespace COCOA.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            return new RedirectToActionResult("index", "home", null);
+            return new RedirectToActionResult("signin", "user", null);
         }
     }
 }
