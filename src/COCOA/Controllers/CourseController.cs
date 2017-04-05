@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -388,7 +389,9 @@ namespace COCOA.Controllers
             Response.Clear();
             Response.ContentType = "application/pdf";
             Response.Headers.Add("Content-Disposition",
-                "filename=\"" + doc.Name + ".pdf\"");
+                "filename=\"" 
+                + WebUtility.UrlEncode(doc.Name)
+                + ".pdf\"");
 
             await Response.Body.WriteAsync(doc.Data, 0, doc.Data.Length);
 
