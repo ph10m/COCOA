@@ -6,10 +6,10 @@ class CourseMetaComponent extends React.Component {
         super(props);
     }
 
-    enroll(event) {
-        console.log(event);
-        console.log(event.target.parent);
-        console.log(event.target.id);
+    enroll() {
+        console.log(this);
+        console.log(this.props);
+        console.log(this.props.id);
     }
 
     render() {
