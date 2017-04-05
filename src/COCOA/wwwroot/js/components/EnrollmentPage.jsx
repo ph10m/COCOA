@@ -9,16 +9,17 @@ class EnrollmentPage extends React.Component {
         super(props);
 
         this.state = { searchString: '', result: [] };
+
+        this.searchInCourses = this.searchInCourses.bind(this);
     }
 
     handleSearchStringChange(e) {
         this.setState({ searchString: e.target.value });
+        this.searchInCourses(e.target.value);
     }
 
-    searchInCourses() {
-        console.log("Searching with " + this.state.searchString);
+    searchInCourses(searchString) {
         var xhr = new XMLHttpRequest();
-        var searchString = this.state.searchString;
         xhr.open('get', "/course/coursesearch?searchString=" + searchString, true);
         xhr.onload = function () {
             if (xhr.status == 200) {
@@ -29,7 +30,6 @@ class EnrollmentPage extends React.Component {
     }
 
     render() {
-        viewRef = this;
         return (
             <div>
                 <form>
@@ -40,11 +40,6 @@ class EnrollmentPage extends React.Component {
                             value={this.state.searchString}
                             placeholder="Enter search string"
                             onChange={this.handleSearchStringChange.bind(this)} />
-                        <HelpBlock>We will search for courses containing this string</HelpBlock>
-                        <Button onClick={this.searchInCourses.bind(this)}
-                            disabled={!this.state.searchString.length > 0}>
-                            Search
-                        </Button>
                     </FormGroup>
                 </form>
             <div>
