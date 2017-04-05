@@ -17,6 +17,8 @@ namespace COCOA.ViewModels
     {
         public string userName { get; private set; }
 
+        public bool isTeacher { get; private set; }
+
         public List<CourseListItemViewModel> enrolledCourses { get; private set; }
 
         public List<CourseListItemViewModel> assignedCourses { get; private set; }
@@ -25,10 +27,14 @@ namespace COCOA.ViewModels
         {
             enrolledCourses = new List<CourseListItemViewModel>();
             assignedCourses = new List<CourseListItemViewModel>();
+            isTeacher = false;
 
             if (user != null)
             {
                 userName = user.Name;
+
+                // TODO: Use roles for this.
+                isTeacher = user.Email.EndsWith("@ntnu.no");
 
                 enrolledCourses = await (
                     from e in dbContext.Enrollments

@@ -44,8 +44,8 @@ class CreateUserPage extends React.Component {
                     window.location.href = "/";
                 }
                 else {
-                    console.error(JSON.parse(xhr.response)[0].description);
-                    this.setState({ errorText: JSON.parse(xhr.response)[0].description });
+                    console.error(xhr.response);
+                    this.setState({ errorText: xhr.response });
                 }
             }.bind(this);
             xhr.send();

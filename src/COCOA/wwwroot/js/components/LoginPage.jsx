@@ -23,6 +23,8 @@ class LoginPage extends React.Component {
         super(props);
 
         this.state = { email: '', password: '', error: false };
+
+        this.sendLoginRequest = this.sendLoginRequest.bind(this);
     }
 
 
@@ -55,6 +57,12 @@ class LoginPage extends React.Component {
         this.setState({ password: event.target.value });
     }
 
+    handleEnter(event) {
+        if (event.key === 'Enter') {
+            this.sendLoginRequest();
+        }
+    }
+
     render() {
         return (
               <div>
@@ -66,13 +74,17 @@ class LoginPage extends React.Component {
                         label="Email"
                         placeholder='Email'
                         bsSize='lg'
-                        onChange={this.emailChanged.bind(this)}/>
+                        onChange={this.emailChanged.bind(this)}
+                        onKeyPress={this.handleEnter.bind(this)}
+                        />
                     <FieldGroup id="formControlPassword"
                         label="Password"
                         type="password" 
                         placeholder='Password'
                         bsSize='lg'
-                        onChange={this.passwordChanged.bind(this)}/>
+                        onChange={this.passwordChanged.bind(this)}
+                        onKeyPress={this.handleEnter.bind(this)}
+                        />
                     {this.state.error && (<p>Wrong password or username!</p>)}
                     <Button onClick={this.sendLoginRequest.bind(this)}>
                         Log in
