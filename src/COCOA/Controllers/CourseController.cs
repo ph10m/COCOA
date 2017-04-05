@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -133,9 +134,38 @@ namespace COCOA.Controllers
         /// View for register course. /register
         /// </summary>
         /// <returns></returns>
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
-            return View("Register");
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View("Register", model);
+        }
+
+        /// <summary>
+        /// View for creating bulletin course. /createbulletin
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> CreateBulletin()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View("CreateBulletin", model);
         }
 
         /// <summary>
@@ -243,6 +273,7 @@ namespace COCOA.Controllers
             return Ok();
         }
 
+        [HttpPost]
         public async Task<IActionResult> NewBulletin (int courseId, string title, string content, string href, BulletinType bulletinType, bool stickey)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -363,9 +394,12 @@ namespace COCOA.Controllers
         public async Task<IActionResult> DocumentSearch(int courseId, string searchString, int page = 0)
         {
             var result = await (from m in _context.MaterialPDFs
-                                where (m.CourseId == courseId && m.Name.Contains(searchString))
-                                select m.Meta).Skip(10 * page).Take(10).ToListAsync();
+                                where (m.CourseId == courseId && (m.Name.Contains(searchString) || m.Description.Contains(searchString)))
+                                select m.Meta).ToListAsync();
 
+            
+            result = result.OrderBy(mpmd => mpmd.name.Contains(searchString)?0:1)
+                .Skip(10 * page).Take(10).ToList();
             /*string pdfPath = System.IO.Path.GetFullPath("..\\..\\example.pdf");
             using (PdfReader reader = new PdfReader(pdfPath))
             {
@@ -403,7 +437,9 @@ namespace COCOA.Controllers
             Response.Clear();
             Response.ContentType = "application/pdf";
             Response.Headers.Add("Content-Disposition",
-                "filename=\"" + doc.Name + ".pdf\"");
+                "filename=\"" 
+                + WebUtility.UrlEncode(doc.Name)
+                + ".pdf\"");
 
             await Response.Body.WriteAsync(doc.Data, 0, doc.Data.Length);
 

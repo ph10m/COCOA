@@ -33,12 +33,15 @@ class CreateUserPage extends React.Component {
         var name = this.state.name;
         var password = this.state.password;
         var passwordConfirmed = this.state.passwordConfirmed;
+
+        this.setState({ errorText: null });
+
         if (password === passwordConfirmed) {
             xhr.open('get', "/user/registeruser?email=" + encodeURIComponent(email) + "&name=" + encodeURIComponent(name) + "&password=" + encodeURIComponent(password) + "&persistent=true", true);
             xhr.onload = function () {
                 if (xhr.status == 200) {
                     console.log("Signed in with " + email + ".");
-                    this.setState({ errorText: null });
+                    window.location.href = "/";
                 }
                 else {
                     console.error(JSON.parse(xhr.response)[0].description);

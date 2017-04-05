@@ -122,6 +122,7 @@ namespace COCOA
                 .AddScript("~/js/components/CreateUserPage.jsx")
                 .AddScript("~/js/components/UserPage.jsx")
                 .AddScript("~/js/components/CreateCoursePage.jsx")
+                .AddScript("~/js/components/CreateBulletinPage.jsx")
                 .AddScript("~/js/components/CocoaHeader.jsx")
                 .AddScript("~/js/components/DocumentSearchPage.jsx")
                 .AddScript("~/js/components/DocumentUploadPage.jsx")
