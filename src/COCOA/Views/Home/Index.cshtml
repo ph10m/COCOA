@@ -1,25 +1,27 @@
-﻿@model List<COCOA.Models.Course>
+﻿@model COCOA.ViewModels.HomePageViewModel
 ﻿@{
     Layout = "~/Views/Shared/_HeaderLayout.cshtml";
 }
 <html>
-<head>
-    <title>Hello COCOA</title>
+    <head>
+        <title>Hello COCOA</title>
 
-    <!-- Latest compiled and minified bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="~/css/site.css">
-</head>
-<body>
-    @Html.React("HomePage", new { courses = Model })
-    <script src="@Url.Content("~/node_modules/react/dist/react.min.js")"></script>
-    <script src="@Url.Content("~/node_modules/react-dom/dist/react-dom.min.js")"></script>
-    <script src="@Url.Content("~/node_modules/react-bootstrap/dist/react-bootstrap.min.js")"></script>
-    <script src="@Url.Content("~/js/components/CocoaHeader.jsx")"></script>
-    <script src="@Url.Content("~/js/components/LoginPage.jsx")"></script>
-    <script src="@Url.Content("~/js/components/CreateUserPage.jsx")"></script>
-    <script src="@Url.Content("~/js/components/UserPage.jsx")"></script>
-    <script src="@Url.Content("~/js/components/HomePage.jsx")"></script>
-    @Html.ReactInitJavaScript()
-</body>
+        <!-- Latest compiled and minified bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="~/css/site.css">
+    </head>
+    <body>
+        @Html.React("HomePage", new {
+            enrolledCourses = Model.enrolledCourses
+        })
+        <script src="@Url.Content("~/node_modules/react/dist/react.min.js")"></script>
+        <script src="@Url.Content("~/node_modules/react-dom/dist/react-dom.min.js")"></script>
+        <script src="@Url.Content("~/node_modules/react-bootstrap/dist/react-bootstrap.min.js")"></script>
+        <script src="@Url.Content("~/js/components/CocoaHeader.jsx")"></script>
+        <script src="@Url.Content("~/js/components/LoginPage.jsx")"></script>
+        <script src="@Url.Content("~/js/components/CreateUserPage.jsx")"></script>
+        <script src="@Url.Content("~/js/components/UserPage.jsx")"></script>
+        <script src="@Url.Content("~/js/components/HomePage.jsx")"></script>
+        @Html.ReactInitJavaScript()
+    </body>
 </html>

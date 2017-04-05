@@ -10,11 +10,18 @@ class CocoaHeader extends React.Component {
         super(props);
     }
     render() {
+        const enrolled = this.props.enrolledCourses.map(course => {
+            console.log(course.courseName + ": " + course.courseId);
+            return (
+                <MenuItem eventKey={"3." + course.courseId} href={"/course/index/" + course.courseId}>{course.courseName}</MenuItem>
+                );
+        });
+
         return (
             <Navbar inverse>
                 <Navbar.Header>
                     <a href='/home' className='logo-link'>
-                    <Image src='/../images/logo.png' className='header-logo' />
+                        <Image src='/../images/logo.png' className='header-logo' />
                     </a>
                     <Navbar.Brand>
                     </Navbar.Brand>
@@ -22,20 +29,18 @@ class CocoaHeader extends React.Component {
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                    <NavItem eventKey={1} href='/home'>Home</NavItem>
-                    <NavItem eventKey={2} href='/home'>Tasks</NavItem>
-                    <NavDropdown eventKey={3} title="Courses" id="basic-nav-dropdown">
-                        <MenuItem eventKey={3.1}>TDT4140</MenuItem>
-                        <MenuItem eventKey={3.2}>TDT4145</MenuItem>
-                        <MenuItem eventKey={3.3}>TDT4170</MenuItem>
+                    <NavItem eventKey={"1"} href='/home'>Home</NavItem>
+                    <NavItem eventKey={"2"} href='/home'>Tasks</NavItem>
+                    <NavDropdown eventKey={"3"} title="Courses" id="basic-nav-dropdown">
+                        {enrolled}
                         <MenuItem divider />
-                        <MenuItem eventKey={3.3} href='/course/register'>Create new course</MenuItem>
                     </NavDropdown>
-                    {this.props.signedIn && (<NavItem eventKey={4} href='/course/materialsearch'>Document search</NavItem>)}
+                    {this.props.signedIn && (<NavItem eventKey={"4"} href='/course/materialsearch'>Document search</NavItem>)}
                     </Nav>
                     <Nav pullRight>
                     {!this.props.signedIn && (<NavItem eventKey={1} href='/user/signin'>Log in</NavItem>)}
                     {!this.props.signedIn && (<NavItem eventKey={2} href='/user/register'>Create new user</NavItem>)}
+                    {this.props.signedIn && (<NavItem eventKey={3}>{this.props.userName}</NavItem>)}
                     {this.props.signedIn && (<NavItem eventKey={3} href='/user/signout'>Log out</NavItem>)}
                     {this.props.signedIn && (<a href='/user' className='logo-link'>
                             <Image src='/../images/userIcon.png' className='header-logo' />

@@ -101,7 +101,7 @@ class DocumentUploadPage extends React.Component {
                                    onChange={this.courseChanged.bind(this)}>
                           <option value='' label=''/>
                          {this.props.courses.map(course => {
-                             return (<option value={course.id} label={course.name}/>)
+                             return (<option value={course.courseId} label={course.courseName}/>)
                             })
                          }
                       </FormControl>
