@@ -11,6 +11,7 @@
         @Html.React("CocoaHeader", new
         {
             signedIn = (User?.Identity.IsAuthenticated ?? false),
+            isTeacher = Model.isTeacher,
             userName = Model.userName,
             enrolledCourses = Model.enrolledCourses,
             assignedCourses = Model.assignedCourses

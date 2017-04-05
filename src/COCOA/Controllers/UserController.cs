@@ -122,12 +122,11 @@ namespace COCOA.Controllers
 
                         return new RedirectToActionResult("index", "home", null);
                     }
-
                 }
             }
 
             // Error
-            return StatusCode(400, resultCreate?.Errors);
+            return StatusCode(400, resultCreate?.Errors.First().Description ?? "Email address not under supported domain.");
         }
 
         /// <summary>
