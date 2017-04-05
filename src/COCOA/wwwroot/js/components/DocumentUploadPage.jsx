@@ -34,6 +34,9 @@ class DocumentUploadPage extends React.Component {
     fileChanged(event) {
 
         var name = event.target.files[0].name;
+        if (name.lastIndexOf('.') > 0) {
+            name = name.substring(0, name.lastIndexOf('.'));
+        }
         this.setState({ file: event.target.files[0], materialName: name });
     }
 

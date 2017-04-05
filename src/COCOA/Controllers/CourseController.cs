@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -139,6 +140,15 @@ namespace COCOA.Controllers
         }
 
         /// <summary>
+        /// View for creating bulletin course. /createbulletin
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult CreateBulletin()
+        {
+            return View("CreateBulletin");
+        }
+
+        /// <summary>
         /// Async call to save material PDF to database. User needs to be assigned to a course(Owner, Instructor or Assistant) to add a file for it.
         /// </summary>
         /// <param name="courseId">Course to add this MaterialPDF to</param>
@@ -234,6 +244,7 @@ namespace COCOA.Controllers
             return Ok();
         }
 
+        [HttpPost]
         public async Task<IActionResult> NewBulletin (int courseId, string title, string content, string href, BulletinType bulletinType, bool stickey)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -354,9 +365,12 @@ namespace COCOA.Controllers
         public async Task<IActionResult> DocumentSearch(int courseId, string searchString, int page = 0)
         {
             var result = await (from m in _context.MaterialPDFs
-                                where (m.CourseId == courseId && m.Name.Contains(searchString))
-                                select m.Meta).Skip(10 * page).Take(10).ToListAsync();
+                                where (m.CourseId == courseId && (m.Name.Contains(searchString) || m.Description.Contains(searchString)))
+                                select m.Meta).ToListAsync();
 
+            
+            result = result.OrderBy(mpmd => mpmd.name.Contains(searchString)?0:1)
+                .Skip(10 * page).Take(10).ToList();
             /*string pdfPath = System.IO.Path.GetFullPath("..\\..\\example.pdf");
             using (PdfReader reader = new PdfReader(pdfPath))
             {
@@ -385,7 +399,9 @@ namespace COCOA.Controllers
             Response.Clear();
             Response.ContentType = "application/pdf";
             Response.Headers.Add("Content-Disposition",
-                "filename=\"" + doc.Name + ".pdf\"");
+                "filename=\"" 
+                + WebUtility.UrlEncode(doc.Name)
+                + ".pdf\"");
 
             await Response.Body.WriteAsync(doc.Data, 0, doc.Data.Length);
 
