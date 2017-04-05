@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_HeaderLayout.cshtml";
+}
+<html>
+    <head>
+        <title>Enroll</title>
+    </head>
+    <body>
+        @Html.React("EnrollmentPage", new {
+            courses = Model
+         })
+        <script src="@Url.Content("~/js/components/CourseMetaComponent.jsx")"></script>
+        <script src="@Url.Content("~/js/components/EnrollmentPage.jsx")"></script>
+    </body>
+</html>

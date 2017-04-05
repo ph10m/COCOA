@@ -86,6 +86,15 @@ namespace COCOA.Controllers
         }
 
         /// <summary>
+        /// View for enrollment to courses. /enrollment
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Enrollment()
+        {
+            return View("Enrollment");
+        }
+
+        /// <summary>
         /// Async call to save material PDF to database. User needs to be assigned to a course(Owner, Instructor or Assistant) to add a file for it.
         /// </summary>
         /// <param name="courseId">Course to add this MaterialPDF to</param>
@@ -307,6 +316,15 @@ namespace COCOA.Controllers
                     }
                 }
             }*/
+            return Json(result);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> CourseSearch(string searchString, int page = 0)
+        {
+            var result = await (from c in _context.Courses
+                                where (c.Name.Contains(searchString))
+                                select c).Skip(10 * page).Take(10).ToListAsync();
             return Json(result);
         }
 
