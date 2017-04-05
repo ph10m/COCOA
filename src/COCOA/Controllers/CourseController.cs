@@ -172,9 +172,19 @@ namespace COCOA.Controllers
         /// View for enrollment to courses. /enrollment
         /// </summary>
         /// <returns></returns>
-        public IActionResult Enrollment()
+        public async Task<IActionResult> Enrollment()
         {
-            return View("Enrollment");
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View("Enrollment", model);
         }
 
         /// <summary>
