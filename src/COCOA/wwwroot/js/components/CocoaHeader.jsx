@@ -38,6 +38,7 @@ class CocoaHeader extends React.Component {
                         {this.props.isTeacher && (<MenuItem eventKey={"new"} href={"/course/register"}>Create new course</MenuItem>)}
                     </NavDropdown>
                     {this.props.signedIn && (<NavItem eventKey={"4"} href='/course/materialsearch'>Document search</NavItem>)}
+                    {this.props.signedIn && (<NavItem eventKey={"5"} href='/course/enrollment'>Enroll to course</NavItem>)}
                     </Nav>
                     <Nav pullRight>
                     {!this.props.signedIn && (<NavItem eventKey={1} href='/user/signin'>Log in</NavItem>)}

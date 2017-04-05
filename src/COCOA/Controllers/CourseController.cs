@@ -40,13 +40,13 @@ namespace COCOA.Controllers
             }
 
             var enrollment = await (from e in _context.Enrollments
-                                    where e.UserId == user.Id
+                                    where e.UserId == user.Id && e.CourseId == id
                                     select e)
                                    .Include(x => x.Course)
                                    .SingleOrDefaultAsync();
 
             var assignment = await (from cA in _context.CourseAssignments
-                                    where cA.UserId == user.Id
+                                    where cA.UserId == user.Id && cA.CourseId == id
                                     select cA).SingleOrDefaultAsync();
 
             if (enrollment == null && assignment == null)
@@ -169,6 +169,25 @@ namespace COCOA.Controllers
         }
 
         /// <summary>
+        /// View for enrollment to courses. /enrollment
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Enrollment()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View("Enrollment", model);
+        }
+
+        /// <summary>
         /// Async call to save material PDF to database. User needs to be assigned to a course(Owner, Instructor or Assistant) to add a file for it.
         /// </summary>
         /// <param name="courseId">Course to add this MaterialPDF to</param>
@@ -206,7 +225,8 @@ namespace COCOA.Controllers
 
             return false;
         }
-        [AllowAnonymous]
+
+    
         public async Task<IActionResult> Upload(string name, int courseId, string description)
         {
             byte[] bytes;
@@ -381,7 +401,6 @@ namespace COCOA.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> DocumentSearch(int courseId, string searchString, int page = 0)
         {
             var result = await (from m in _context.MaterialPDFs
@@ -405,6 +424,14 @@ namespace COCOA.Controllers
                     }
                 }
             }*/
+            return Json(result);
+        }
+
+        public async Task<IActionResult> CourseSearch(string searchString, int page = 0)
+        {
+            var result = await (from c in _context.Courses
+                                where (c.Name.Contains(searchString))
+                                select c).Skip(10 * page).Take(10).ToListAsync();
             return Json(result);
         }
 

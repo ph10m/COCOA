@@ -127,6 +127,8 @@ namespace COCOA
                 .AddScript("~/js/components/DocumentSearchPage.jsx")
                 .AddScript("~/js/components/DocumentUploadPage.jsx")
                 .AddScript("~/js/components/MaterialPDFMetaComponent.jsx")
+                .AddScript("~/js/components/EnrollmentPage.jsx")
+                .AddScript("~/js/components/CourseMetaComponent.jsx")
                 .AddScript("~/js/components/CoursePage.jsx");
 
                 // If you use an external build too (for example, Babel, Webpack,
