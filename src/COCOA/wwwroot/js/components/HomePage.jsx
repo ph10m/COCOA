@@ -49,24 +49,18 @@ class HomePage extends React.Component {
                 <div className="panel panel-primary" id={c.courseId}>
                     <div className="panel-heading" >
                         <a href={"/course/index/" + c.courseId}>{c.courseName}</a>
-                        <button type="button" className="close" onClick={this.onClickClose.bind(this)}>
-                            &times;
-                        </button>
                     </div>
-                    <div className="panel-body" onClick={this.onClickPanel.bind(this)}>{c.courseDescription}
+                    <div className="panel-body" onClick={this.onClickPanel.bind(this)}>
+                        {c.courseDescription}
                     </div>
                 </div>
             );
         });
         return (
-
             <div>
                 <PageHeader>Welcome to COCOA!</PageHeader>
                 <div className="scroll">{elementList}</div>
             </div>
-
         );
     }
-
-
 }

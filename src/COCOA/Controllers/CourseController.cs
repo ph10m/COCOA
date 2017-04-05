@@ -134,18 +134,38 @@ namespace COCOA.Controllers
         /// View for register course. /register
         /// </summary>
         /// <returns></returns>
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
-            return View("Register");
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View("Register", model);
         }
 
         /// <summary>
         /// View for creating bulletin course. /createbulletin
         /// </summary>
         /// <returns></returns>
-        public IActionResult CreateBulletin()
+        public async Task<IActionResult> CreateBulletin()
         {
-            return View("CreateBulletin");
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var model = new SharedLayoutViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            if (resultShared != null)
+            {
+                return StatusCode(400, resultShared);
+            }
+
+            return View("CreateBulletin", model);
         }
 
         /// <summary>
