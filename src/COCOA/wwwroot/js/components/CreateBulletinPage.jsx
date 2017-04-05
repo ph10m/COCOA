@@ -116,7 +116,7 @@ class CreateBulletinPage extends React.Component {
                         </FormGroup>
                         <Checkbox checked={this.state.stickey}
                                   onChange={this.stickeyChanged.bind(this)}>
-                            Stickey
+                            Sticky
                         </Checkbox>
                         <p>{this.state.errorText}</p>
                         <Button onClick={this.createNewBulletin.bind(this)}>
