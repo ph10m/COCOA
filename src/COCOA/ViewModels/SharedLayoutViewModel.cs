@@ -23,36 +23,42 @@ namespace COCOA.ViewModels
 
         public async Task<string> SetSharedDataAsync (CocoaIdentityDbContext dbContext, UserManager<User> userManager, User user)
         {
-            userName = user.Name;
+            enrolledCourses = new List<CourseListItemViewModel>();
+            assignedCourses = new List<CourseListItemViewModel>();
 
-            enrolledCourses = await(
-                from e in dbContext.Enrollments
-                where e.UserId == user.Id
-                select new CourseListItemViewModel
-                {
-                    courseId = e.Course.Id,
-                    courseName = e.Course.Name,
-                    courseDescription = e.Course.Description
-                }).ToListAsync();
-
-            assignedCourses = await(
-                from cA in dbContext.CourseAssignments
-                where cA.UserId == user.Id
-                select new CourseListItemViewModel
-                {
-                    courseId = cA.Course.Id,
-                    courseName = cA.Course.Name,
-                    courseDescription = cA.Course.Description
-                }).ToListAsync();
-
-            if (enrolledCourses == null)
+            if (user != null)
             {
-                return "Couldn't fetch enrolled courses.";
-            }
+                userName = user.Name;
 
-            if (assignedCourses == null)
-            {
-                return "Couldn't fetch assigned courses.";
+                enrolledCourses = await (
+                    from e in dbContext.Enrollments
+                    where e.UserId == user.Id
+                    select new CourseListItemViewModel
+                    {
+                        courseId = e.Course.Id,
+                        courseName = e.Course.Name,
+                        courseDescription = e.Course.Description
+                    }).ToListAsync();
+
+                assignedCourses = await (
+                    from cA in dbContext.CourseAssignments
+                    where cA.UserId == user.Id
+                    select new CourseListItemViewModel
+                    {
+                        courseId = cA.Course.Id,
+                        courseName = cA.Course.Name,
+                        courseDescription = cA.Course.Description
+                    }).ToListAsync();
+
+                if (enrolledCourses == null)
+                {
+                    return "Couldn't fetch enrolled courses.";
+                }
+
+                if (assignedCourses == null)
+                {
+                    return "Couldn't fetch assigned courses.";
+                }
             }
 
             return null;

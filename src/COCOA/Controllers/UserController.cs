@@ -157,7 +157,6 @@ namespace COCOA.Controllers
         /// Signs out user.
         /// </summary>
         /// <returns></returns>
-        [Authorize(Policy = "Authenticated")]
         public async Task<IActionResult> SignOut ()
         {
             await _signInManager.SignOutAsync();

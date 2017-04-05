@@ -22,7 +22,7 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { email: '', password: '' };
+        this.state = { email: '', password: '', error: false };
     }
 
 
@@ -31,14 +31,17 @@ class LoginPage extends React.Component {
         var xhr = new XMLHttpRequest();
         var email = this.state.email;
         var password = this.state.password;
+        this.setState({ error: false });
 
         xhr.open('get', "/user/signinuser?email=" + encodeURIComponent(email) + "&password=" + encodeURIComponent(password) + "&persistent=true", true);
         xhr.onload = function () {
             if (xhr.status == 200) {
                 console.log("Signed in with " + email + ".");
+                window.location.href = "/";
             }
             else {
                 console.log("Failed to sign in, wrong email or password.");
+                this.setState({ error: true });
             }
         }.bind(this);
         xhr.send();
@@ -70,6 +73,7 @@ class LoginPage extends React.Component {
                         placeholder='Password'
                         bsSize='lg'
                         onChange={this.passwordChanged.bind(this)}/>
+                    {this.state.error && (<p>Wrong password or username!</p>)}
                     <Button onClick={this.sendLoginRequest.bind(this)}>
                         Log in
                     </Button>
