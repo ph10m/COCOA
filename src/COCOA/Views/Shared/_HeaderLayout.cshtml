@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model COCOA.ViewModels.SharedLayoutViewModel
+<!DOCTYPE html>
 
 <html>
     <head>
@@ -9,7 +10,10 @@
     <body>
         @Html.React("CocoaHeader", new
         {
-            signedIn = (User?.Identity.IsAuthenticated ?? false)
+            signedIn = (User?.Identity.IsAuthenticated ?? false),
+            userName = Model.userName,
+            enrolledCourses = Model.enrolledCourses,
+            assignedCourses = Model.assignedCourses
         })
         <script src="@Url.Content("~/node_modules/react/dist/react.min.js")"></script>
         <script src="@Url.Content("~/node_modules/react-dom/dist/react-dom.min.js")"></script>

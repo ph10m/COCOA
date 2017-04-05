@@ -5,13 +5,9 @@ var Panel = ReactBootstrap.Panel;
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { courses: null };
-        this.setState({ courses: props.courses });
-        console.log(props.courses);
 
-        this.id = 0;
-        this.data = [JSON.parse('{ "id": "0", "header": "TDT4145", "text": "tralala" }')];
-        this.indexTest = 4100;
+        //this.data = [JSON.parse('{ "id": "0", "header": "TDT4145", "text": "tralala" }')];
+        //this.indexTest = 4100;
     }
 
     // Temporary on click listener for adding panel for testing
@@ -48,15 +44,16 @@ class HomePage extends React.Component {
    }
 
    render() {
-        const elementList = this.props.courses.map((c) => {
+        const elementList = this.props.enrolledCourses.map((c) => {
             return (
-                <div className="panel panel-primary" id={c.id}>
-                    <div className="panel-heading">{c.name}
+                <div className="panel panel-primary" id={c.courseId}>
+                    <div className="panel-heading" >
+                        <a href={"/course/index/" + c.courseId}>{c.courseName}</a>
                         <button type="button" className="close" onClick={this.onClickClose.bind(this)}>
                             &times;
                         </button>
                     </div>
-                    <div className="panel-body" onClick={this.onClickPanel.bind(this)}>{c.description}
+                    <div className="panel-body" onClick={this.onClickPanel.bind(this)}>{c.courseDescription}
                     </div>
                 </div>
             );

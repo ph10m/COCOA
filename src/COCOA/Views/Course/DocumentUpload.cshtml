@@ -1,4 +1,4 @@
-﻿@model List<COCOA.Models.Course>
+﻿@model COCOA.ViewModels.SharedLayoutViewModel
 @{
     Layout = "~/Views/Shared/_HeaderLayout.cshtml";
 }
@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="~/css/site.css">
 </head>
 <body>
-    @Html.React("DocumentUploadPage", new { courses = Model })
+    @Html.React("DocumentUploadPage", new { courses = Model.assignedCourses })
     <script src="@Url.Content("~/js/components/DocumentUploadPage.jsx")"></script>
 
     @Html.ReactInitJavaScript()
