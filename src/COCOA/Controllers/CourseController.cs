@@ -139,6 +139,15 @@ namespace COCOA.Controllers
         }
 
         /// <summary>
+        /// View for creating bulletin course. /createbulletin
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult CreateBulletin()
+        {
+            return View("CreateBulletin");
+        }
+
+        /// <summary>
         /// Async call to save material PDF to database. User needs to be assigned to a course(Owner, Instructor or Assistant) to add a file for it.
         /// </summary>
         /// <param name="courseId">Course to add this MaterialPDF to</param>
@@ -234,6 +243,7 @@ namespace COCOA.Controllers
             return Ok();
         }
 
+        [HttpPost]
         public async Task<IActionResult> NewBulletin (int courseId, string title, string content, string href, BulletinType bulletinType, bool stickey)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);

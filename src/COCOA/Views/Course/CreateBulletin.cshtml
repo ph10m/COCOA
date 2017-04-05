@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Shared/_HeaderLayout.cshtml";
+}
+<html>
+    <head>
+        <title>Create bulletin</title>
+    </head>
+    <body>
+        @Html.React("CreateBulletinPage", new { })
+        <script src="@Url.Content("~/js/components/CreateBulletinPage.jsx")"></script>
+    </body>
+</html>
