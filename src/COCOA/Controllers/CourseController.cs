@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -364,9 +365,12 @@ namespace COCOA.Controllers
         public async Task<IActionResult> DocumentSearch(int courseId, string searchString, int page = 0)
         {
             var result = await (from m in _context.MaterialPDFs
-                                where (m.CourseId == courseId && m.Name.Contains(searchString))
-                                select m.Meta).Skip(10 * page).Take(10).ToListAsync();
+                                where (m.CourseId == courseId && (m.Name.Contains(searchString) || m.Description.Contains(searchString)))
+                                select m.Meta).ToListAsync();
 
+            
+            result = result.OrderBy(mpmd => mpmd.name.Contains(searchString)?0:1)
+                .Skip(10 * page).Take(10).ToList();
             /*string pdfPath = System.IO.Path.GetFullPath("..\\..\\example.pdf");
             using (PdfReader reader = new PdfReader(pdfPath))
             {
@@ -395,7 +399,9 @@ namespace COCOA.Controllers
             Response.Clear();
             Response.ContentType = "application/pdf";
             Response.Headers.Add("Content-Disposition",
-                "filename=\"" + doc.Name + ".pdf\"");
+                "filename=\"" 
+                + WebUtility.UrlEncode(doc.Name)
+                + ".pdf\"");
 
             await Response.Body.WriteAsync(doc.Data, 0, doc.Data.Length);
 
