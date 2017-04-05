@@ -225,7 +225,8 @@ namespace COCOA.Controllers
 
             return false;
         }
-        [AllowAnonymous]
+
+    
         public async Task<IActionResult> Upload(string name, int courseId, string description)
         {
             byte[] bytes;
@@ -400,7 +401,6 @@ namespace COCOA.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> DocumentSearch(int courseId, string searchString, int page = 0)
         {
             var result = await (from m in _context.MaterialPDFs
@@ -427,7 +427,6 @@ namespace COCOA.Controllers
             return Json(result);
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> CourseSearch(string searchString, int page = 0)
         {
             var result = await (from c in _context.Courses
