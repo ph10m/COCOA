@@ -77,7 +77,7 @@ class CreateBulletinPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="content">
                 <div>
                     <h1>Create new bulletin</h1>
                     <form>

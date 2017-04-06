@@ -46,7 +46,7 @@ class HomePage extends React.Component {
    render() {
         const elementList = this.props.enrolledCourses.map((c) => {
             return (
-                <div className="panel panel-primary" id={c.courseId}>
+                <div className="content" className="panel panel-primary" id={c.courseId}>
                     <div className="panel-heading" >
                         <a href={"/course/index/" + c.courseId}>{c.courseName}</a>
                     </div>
@@ -57,7 +57,7 @@ class HomePage extends React.Component {
             );
         });
         return (
-            <div>
+            <div className="content">
                 <PageHeader>Welcome to COCOA!</PageHeader>
                 <div className="scroll">{elementList}</div>
             </div>

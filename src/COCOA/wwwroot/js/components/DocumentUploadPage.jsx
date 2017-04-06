@@ -85,7 +85,7 @@ class DocumentUploadPage extends React.Component {
 
     render() {
             return (
-                <div>
+                <div className="content">
                 <div className='container'>
                   <h1>Upload document</h1>
                   <form>

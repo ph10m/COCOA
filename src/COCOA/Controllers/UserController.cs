@@ -129,6 +129,12 @@ namespace COCOA.Controllers
             return StatusCode(400, resultCreate?.Errors.First().Description ?? "Email address not under supported domain.");
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> set1024(string name)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+        }
+
         /// <summary>
         /// Login to Cocoa.
         /// </summary>

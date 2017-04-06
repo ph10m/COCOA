@@ -3,6 +3,7 @@ var FormGroup = ReactBootstrap.FormGroup;
 var ControlLabel = ReactBootstrap.ControlLabel;
 var FormControl = ReactBootstrap.FormControl;
 var HelpBlock = ReactBootstrap.HelpBlock;
+var CenterButton = '/standalone/centerButton.jsx';
 
 class DocumentSearchPage extends React.Component {
     constructor(props) {
@@ -39,45 +40,47 @@ class DocumentSearchPage extends React.Component {
         xhr.send();
     }
 
+    searchButton() {
+        return (
+            <div className="centeredButton">
+            <Button
+                    onClick={this.searchInDocuments.bind(this)}
+                    disabled={!(this.state.courseId.length > 0 &&
+                    this.state.searchString.length > 0)}>
+                Search
+            </Button>
+            </div>
+        );
+    }
+
     render() {
 
         viewRef = this;
         return (
 
-        <div>
-          <form>
+        <div className="content">
               <h1>Document search</h1>
-            <FormGroup controllerId="formSearch">
-                <ControlLabel>
-                    Search:
-                </ControlLabel>
-                <FormControl type="text"
-                             value={this.state.searchString}
-                             placeholder="Enter search string"
-
-                             onChange={this.handleSearchStringChange.bind(this)} />
+                <form onSubmit={this.searchInDocuments.bind(this)}>
+                <ControlLabel className="docSearchField">Search:</ControlLabel>
+                    <FormControl type="text"
+                                 value={this.state.searchString}
+                                 placeholder="Enter search string"
+                                 onChange={this.handleSearchStringChange.bind(this)} />
                 <FormGroup controlId="formControlsSelect">
-                      <ControlLabel>Course</ControlLabel>
-                      <FormControl componentClass="select"
-                                   placeholder="Course"
-                                   onChange={this.handleCourseIdChange.bind(this)}>
-                          <option value='' label='' />
-                          {this.props.courses.map(course => {
-                              return (<option value={course.courseId} label={course.courseName} />)
-                            })
-                          }
-                      </FormControl>
+
+                <ControlLabel className="docSearchField">Course:</ControlLabel>
+                    <FormControl componentClass="select"
+                                placeholder="Course"
+                                onChange={this.handleCourseIdChange.bind(this)}>
+                        <option value="" label=""/>
+                        {this.props.courses.map(course => {
+                            return (<option value={course.courseId} label={course.courseName} />)
+                        })}
+                    </FormControl>
                 </FormGroup>
                 <HelpBlock>We will search for this string in the course material</HelpBlock>
-                <Button onClick={this.searchInDocuments.bind(this)}
-                        disabled={!(this.state.courseId.length > 0&&
-                                    this.state.searchString.length > 0)}>
-                    Search
-                </Button>
-            </FormGroup>
-          </form>
-
-          <div>
+                    {this.searchButton()}
+                </form>
             {this.state.result.map(function (el) {
                 return (
                     <MaterialPDFMetaComponent name={el.name} 
@@ -88,10 +91,8 @@ class DocumentSearchPage extends React.Component {
                     );
                 })  
             }
-          </div>
         </div>
-
-);
+        );
     }
 
 

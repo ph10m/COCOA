@@ -2,11 +2,21 @@
     padding-bottom: 20px;
 }
 
+h1 {
+    font-size: 26px;
+    text-align: center;
+}
 
+/* This is the main view */
 .main {
     width: 60%;
     margin: 0 auto;
-    
+}
+
+/* Content inside main view */
+.content {
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 @media (max-width: 768px){
@@ -32,4 +42,18 @@ div.scroll {
 
 .btn-close {
     float: right;
+}
+
+.set1024 {
+    margin-top: 2em;
+}
+
+/* Search field names in DocumentSearch */
+.docSearchField {
+    margin-top: 1em;
+}
+
+/* Used for centered buttons */
+.centered{
+    text-align: center;
 }

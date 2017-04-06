@@ -22,7 +22,7 @@ class CourseMetaComponent extends React.Component {
 
     render() {
         return (
-            <Panel header={this.props.name} onSelect={this.props.onSelect}>
+            <Panel className="content" header={this.props.name} onSelect={this.props.onSelect}>
                 <div float='left'>
                 {this.props.description}
                 </div>

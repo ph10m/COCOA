@@ -31,7 +31,7 @@ class EnrollmentPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="content">
                 <form>
                     <h1>Course enrollment</h1>
                     <FormGroup controllerId="formSearch">

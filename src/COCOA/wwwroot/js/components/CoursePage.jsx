@@ -39,7 +39,7 @@ class CoursePage extends React.Component {
         });
 
         return (
-            <div>
+            <div className="content">
                 <PageHeader>Welcome to COCOA!</PageHeader>
                 <div className="scroll">
                     {sticky}
