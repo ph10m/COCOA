@@ -85,6 +85,7 @@ namespace COCOA.Controllers
 
             model.courseName = enrollment.Course.Name;
             model.courseId = enrollment.Course.Id;
+            model.courseDescription = enrollment.Course.Description;
             model.courseManagment = managment;
             model.bulletins = normal;
             model.stickyBulletins = sticky;
