@@ -1,4 +1,5 @@
 ﻿body {
+    background-color: #fefefe;
     padding-bottom: 20px;
 }
 
@@ -27,9 +28,75 @@
 
 div.scroll {
     height: 500px;
-    overflow-y: auto;
 }
 
 .btn-close {
     float: right;
+}
+
+.panel {
+    border-style: none;
+    border-radius: 1px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.3) 4px 4px 10px 0px;
+    color: #444;
+}
+
+.hoverPlate:hover {
+    background-color: rgb(230,249,255);
+}
+
+.panelHeaderNormal {
+    background-color: #f5f5f5;
+    padding: 5px 10px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #dedede;
+    font-size: 20px;
+}
+
+.panelFooter {
+    text-align: right;
+    display: inline;
+    float: right;
+    
+}
+
+.panelBody {
+    padding: 10px;
+}
+
+.panelMaterialView {
+    height: 600px;
+    max-height: 600px;
+    overflow: hidden;
+    transition-duration: 0.25s;
+}
+
+.panelMaterialViewClosed {
+    max-height: 0;
+    transition-duration: 0.25s;
+}
+
+.materialToolbar {
+    display: inline-block;
+}
+
+.materialVisible {
+    opacity: 1;
+    transition-duration: 1s;
+}
+
+.materialHidden {
+    opacity: 0;
+    transition-duration: 1s;
+}
+
+h4 {
+    color: #000;
+    margin-bottom: -10px;
+}
+
+a {
+    color: #000;
 }

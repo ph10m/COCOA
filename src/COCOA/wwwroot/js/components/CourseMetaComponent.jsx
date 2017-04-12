@@ -1,5 +1,4 @@
-﻿var Panel = ReactBootstrap.Panel;
-var Button = ReactBootstrap.Button;
+﻿var Button = ReactBootstrap.Button;
 
 class CourseMetaComponent extends React.Component {
     constructor(props) {
@@ -22,11 +21,13 @@ class CourseMetaComponent extends React.Component {
 
     render() {
         return (
-            <Panel header={this.props.name} onSelect={this.props.onSelect}>
-                <div float='left'>
-                {this.props.description}
+            <Panel className="panel" onSelect={this.props.onSelect}>
+                <div className="panelHeaderNormal">
+                    {this.props.name}
                 </div>
-                <div float='right'>
+                <div className="panelBody">
+                    {this.props.description}
+                    <br /><br />
                     <Button onClick={this.enroll.bind(this)}>
                         Enroll
                     </Button>
