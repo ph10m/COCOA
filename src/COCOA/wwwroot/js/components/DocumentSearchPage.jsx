@@ -35,7 +35,7 @@ class DocumentSearchPage extends React.Component {
     openDocument(event) {
         id = event.target.id;
         var xhr = new XMLHttpRequest();
-        xhr.open('get', "/course/getdocumentdata?documentid=" + id);
+        xhr.open('get', "/course/getdocumentdata?documentid=" + id + "#page=2");
         xhr.send();
     }
 

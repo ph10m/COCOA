@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
-using React.AspNet;
 using COCOA.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using COCOA.Data;
@@ -16,9 +15,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace COCOA
 {
-    public class Startup
+    public class StartupTests
     {
-        public Startup(IHostingEnvironment env)
+        public StartupTests(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -40,15 +39,12 @@ namespace COCOA
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddReact();
 
             services.AddMvc();
 
-            var connection = @"Server=cocoadatabase.database.windows.net; Database=cocoadatabase; User Id=coffee; password=HEm3LsGnjVMn27LR";
-            services.AddDbContext<CocoaIdentityDbContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<CocoaIdentityDbContext>(options => options.UseInMemoryDatabase());
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<CocoaIdentityDbContext>()
@@ -58,7 +54,7 @@ namespace COCOA
             {
                 options.AddPolicy("Authenticated", policy => policy.RequireRole("Administrator", "Student", "Teacher"));
             });
-            
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -89,10 +85,7 @@ namespace COCOA
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            // REMEMBER TO SEED ROLES ON BLANK DATABASE
-            //RolesSetup.SeedRoles(app.ApplicationServices);
-
-            app.UseApplicationInsightsRequestTelemetry();
+            RolesSetup.SeedRoles(app.ApplicationServices).Wait();
 
             if (env.IsDevelopment())
             {
@@ -103,45 +96,6 @@ namespace COCOA
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
-            //RolesSetup.SeedRoles(app.ApplicationServices).Wait();
-
-            app.UseApplicationInsightsExceptionTelemetry();
-
-            // Initialise ReactJS.NET. Must be before static files.
-            app.UseReact(config =>
-            {
-                // If you want to use server-side rendering of React components,
-                // add all the necessary JavaScript files here. This includes
-                // your components as well as all of their dependencies.
-                // See http://reactjs.net/ for more information. Example:
-                config
-                .AddScript("~/node_modules/react-bootstrap/dist/react-bootstrap.js")
-                .AddScript("~/js/components/HomePage.jsx")
-                .AddScript("~/js/components/LoginPage.jsx")
-                .AddScript("~/js/components/CreateUserPage.jsx")
-                .AddScript("~/js/components/UserPage.jsx")
-                .AddScript("~/js/components/CreateCoursePage.jsx")
-                .AddScript("~/js/components/CreateBulletinPage.jsx")
-                .AddScript("~/js/components/CocoaHeader.jsx")
-                .AddScript("~/js/components/DocumentSearchPage.jsx")
-                .AddScript("~/js/components/DocumentUploadPage.jsx")
-                .AddScript("~/js/components/MaterialPDFMetaComponent.jsx")
-                .AddScript("~/js/components/EnrollmentPage.jsx")
-                .AddScript("~/js/components/CourseMetaComponent.jsx")
-                .AddScript("~/js/components/CoursePage.jsx")
-                .AddScript("~/js/components/Bulletin.jsx");
-                
-                // If you use an external build too (for example, Babel, Webpack,
-                // Browserify or Gulp), you can improve performance by disabling
-                // ReactJS.NET's version of Babel and loading the pre-transpiled
-                // scripts. Example:
-                //config
-                //  .SetLoadBabel(false)
-                //  .AddScriptWithoutTransform("~/Scripts/bundle.server.js");
-            });
-
-            app.UseStaticFiles();
 
             app.UseIdentity();
 

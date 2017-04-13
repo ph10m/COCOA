@@ -256,6 +256,7 @@ namespace COCOA.Controllers
         }
 
         // TODO: restrict action to teachers only.
+        [HttpPost]
         public async Task<IActionResult> NewCourse(string name, string description, string name1024)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
