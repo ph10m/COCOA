@@ -98,6 +98,7 @@ namespace COCOA.Controllers
         /// <param name="password">Password. Will be hashed by ASP.NET Identity</param>
         /// <returns>Returns Ok(200) on success. (400) on fail.</returns>
         [AllowAnonymous]
+        [HttpPost]
         public async Task<IActionResult> RegisterUser(string email, string name, string password)
         {
             var user = new User { UserName = email, Email = email, Name = name };
@@ -120,7 +121,7 @@ namespace COCOA.Controllers
                         // Sign in
                         await _signInManager.SignInAsync(user, true);
 
-                        return new RedirectToActionResult("index", "home", null);
+                        return Ok();
                     }
                 }
             }
@@ -161,6 +162,13 @@ namespace COCOA.Controllers
             await _signInManager.SignOutAsync();
 
             return new RedirectToActionResult("signin", "user", null);
+        }
+
+        public async Task<IActionResult> Name ()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            return Json(user?.Name ?? "xx");
         }
     }
 }
