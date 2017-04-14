@@ -7,21 +7,17 @@ using System.Threading.Tasks;
 namespace COCOA.Tests.CourseController
 {
     /// <summary>
-    /// Tests for teacher -> course 
+    /// Tests for teacher -> course.
     /// </summary>
     [TestClass]
     public class TeacherCourse : IntegrationTest
     {
-        public TeacherCourse() : base()
-        {
-            // Arrange
-            _client.PostAsync("/user/registeruser?email=test%40ntnu.no&name=Test&password=password", null).Wait();
-        }
-
         [TestMethod]
         public async Task NewCourseSuccess()
         {
             // Act
+            await RegisterSignIn("testTeacherCourseNewCourseSuccess@ntnu.no");
+
             var response = await _client.PostAsync("/course/newcourse?name=Databasefag&description=Blablabla&name1024=x", null);
 
             // Assert

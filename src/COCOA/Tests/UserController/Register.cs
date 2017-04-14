@@ -13,12 +13,6 @@ namespace COCOA.Tests.UserController
     [TestClass]
     public class Register : IntegrationTest
     {
-        public Register () : base()
-        {
-            // Arrange RegisterDuplicate
-            _client.PostAsync("/user/registeruser?email=existing%40ntnu.no&name=Test&password=password", null).Wait();
-        }
-
         [TestMethod]
         public async Task RegisterSuccess()
         {
@@ -43,6 +37,8 @@ namespace COCOA.Tests.UserController
         public async Task RegisterDuplicate()
         {
             // Act
+            _client.PostAsync("/user/registeruser?email=existing%40ntnu.no&name=Test&password=password", null).Wait();
+
             var response = await _client.PostAsync("/user/registeruser?email=existing%40ntnu.no&name=Test&password=password", null);
 
             // Assert
@@ -53,13 +49,12 @@ namespace COCOA.Tests.UserController
         public async Task RegisterName()
         {
             // Act
-            await _client.PostAsync("/user/registeruser?email=name%40ntnu.no&name=Tobias&password=password", null);
+            await RegisterSignIn("testRegisterName@ntnu.no");
 
-            // TODO: Fix authentication by implementing token auth
             var response = await _client.GetAsync("/user/name");
 
             // Assert
-            Assert.AreEqual("TOBIAS", (await response.Content.ReadAsStringAsync()).ToUpper());
+            Assert.AreEqual("testRegisterName", (await response.Content.ReadAsStringAsync()).Trim('"'));
         }
     }
 }

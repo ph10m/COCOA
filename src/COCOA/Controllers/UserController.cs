@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using COCOA.ViewModels;
 using COCOA.Data;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace COCOA.Controllers
 {
@@ -24,6 +27,10 @@ namespace COCOA.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly CocoaIdentityDbContext _context;
 
+        private readonly TimeSpan tokenExpiration = new TimeSpan(30, 0, 0, 0);
+        private readonly SymmetricSecurityKey signingKey = StartupTests.signingKey;
+        private readonly SigningCredentials signingCredentials;
+
         public UserController (UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, CocoaIdentityDbContext context)
         {
             // Dependency injection
@@ -31,6 +38,8 @@ namespace COCOA.Controllers
             _signInManager = signInManager;
             _roleManager = roleManager;
             _context = context;
+
+            signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
         }
 
         /// <summary>
@@ -154,6 +163,44 @@ namespace COCOA.Controllers
         }
 
         /// <summary>
+        /// Signs in user and returns a JWT token to be used in HTTP-request headers for authorization.
+        /// </summary>
+        /// <param name="username">Username</param>
+        /// <param name="password">Password</param>
+        /// <returns>JWT token</returns>
+        [HttpPost]
+        public async Task<IActionResult> SignInUserToken(string email, string password)
+        {
+            var result = await _signInManager.PasswordSignInAsync(email, password, true, false);
+
+            if (!result.Succeeded)
+            {
+                return StatusCode(400, "Invalid username or password.");
+            }
+
+            var id = (await _userManager.FindByEmailAsync(email)).Id;
+
+            // Specifically add the jti (random nonce), iat (issued timestamp), and UniqueName (userId) claims.
+            var claims = new Claim[]
+            {
+                new Claim(JwtRegisteredClaimNames.UniqueName, id),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, ((long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds).ToString(), ClaimValueTypes.Integer64)
+            };
+
+            // Create the JWT and write it to a string
+            var jwt = new JwtSecurityToken(
+                claims: claims,
+                notBefore: DateTime.UtcNow,
+                expires: DateTime.UtcNow.Add(tokenExpiration),
+                signingCredentials: signingCredentials);
+
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            return Json(encodedJwt);
+        }
+
+        /// <summary>
         /// Signs out user.
         /// </summary>
         /// <returns></returns>
@@ -164,9 +211,12 @@ namespace COCOA.Controllers
             return new RedirectToActionResult("signin", "user", null);
         }
 
+        //[Authorize]
         public async Task<IActionResult> Name ()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var x = Request;
 
             return Json(user?.Name ?? "xx");
         }
