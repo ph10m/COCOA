@@ -47,16 +47,8 @@ class HomePage extends React.Component {
         const elementList = this.props.enrolledCourses.map((c) => {
             return (
                 <Bulletin
-                    course={{id: c.courseId, name: c.courseName, description: c.courseDescription}}
-                          />
-            )
-
-            return (
-                <div className="panel panelBody hoverPlate" id={c.courseId}>
-                    <h4><a href={"/course/index/" + c.courseId}>{c.courseName}</a></h4>
-                    <br/>
-                    {c.courseDescription}
-                </div>
+                    course={{ id: c.courseId, name: c.courseName, description: c.courseDescription }} 
+                    hoverPlate={true} />
             );
         });
 

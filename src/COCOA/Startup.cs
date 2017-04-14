@@ -117,6 +117,7 @@ namespace COCOA
                 // See http://reactjs.net/ for more information. Example:
                 config
                 .AddScript("~/node_modules/react-bootstrap/dist/react-bootstrap.js")
+                .AddScript("~/node_modules/remarkable/dist/remarkable.min.js")
                 .AddScript("~/js/components/HomePage.jsx")
                 .AddScript("~/js/components/LoginPage.jsx")
                 .AddScript("~/js/components/CreateUserPage.jsx")

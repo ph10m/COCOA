@@ -57,7 +57,7 @@ div.scroll {
 
 .panelFooter {
     text-align: right;
-    display: inline;
+    display: normal;
     float: right;
 }
 
