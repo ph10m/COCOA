@@ -12,11 +12,17 @@ using COCOA.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using COCOA.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace COCOA
 {
     public class StartupTests
     {
+        public const string secretKey = "GNmRb%VK/t(B73xT";
+        public static readonly SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+
         public StartupTests(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -76,6 +82,7 @@ namespace COCOA
                 // User settings
                 options.User.RequireUniqueEmail = false;
 
+                options.ClaimsIdentity.UserIdClaimType = ClaimTypes.Name;
             });
         }
 
@@ -96,6 +103,34 @@ namespace COCOA
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                // The signing key must match!
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+
+                // Validate the JWT Issuer (iss) claim
+                ValidateIssuer = false,
+                ValidIssuer = null,
+
+                // Validate the JWT Audience (aud) claim
+                ValidateAudience = false,
+                ValidAudience = null,
+
+                // Validate the token expiry
+                ValidateLifetime = true,
+
+                // If you want to allow a certain amou6nt of clock drift, set that here:
+                ClockSkew = TimeSpan.Zero
+            };
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
 
             app.UseIdentity();
 
