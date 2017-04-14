@@ -1,4 +1,9 @@
 ﻿
+function createRemarkable() {
+    var remarkable = (("undefined" != typeof global) && (global.Remarkable)) ? global.Remarkable : window.Remarkable;
+    return new remarkable();
+}
+
 class Bulletin extends React.Component {
     constructor(props) {
         super(props);
@@ -9,8 +14,10 @@ class Bulletin extends React.Component {
     }
 
     render() {
+        var md = createRemarkable();
+
         return (
-            <div className="panel hoverPlate">
+            <div className={"panel " + (this.props.hoverPlate == true ? "hoverPlate" : "")}>
                 <div className="panelHeaderNormal">
                     {this.props.title}
                 </div>
@@ -21,19 +28,18 @@ class Bulletin extends React.Component {
                             {this.props.course.name}
                         </a>
                     </p>}
-                    {this.props.course.description}
-                    {this.props.content}
-                    <br /><br />
-                    {(this.props.materials != undefined) &&
+                    {this.props.course && this.props.course.description}
+                    <span dangerouslySetInnerHTML={{ __html: md.render(this.props.content) }} />
+                    <br />
                     <ButtonToolbar className="materialToolbar">
-                        {this.props.materials.map((element, index) => {
+                        {(this.props.materials != undefined) && this.props.materials.map((element, index) => {
                             return (
                                 <Button onClick={this.setMaterial.bind(this, index)} active={this.checkMaterial(index)}>
                                     {element.name}
                                 </Button>
                             );
                         })}
-                    </ButtonToolbar>}
+                    </ButtonToolbar>
                     {(this.props.author != null) && (this.props.timestamp != null) && 
                     (<p className="panelFooter">Published by <b>{this.props.author}</b>, {this.props.timestamp}</p>)}
                 </div>

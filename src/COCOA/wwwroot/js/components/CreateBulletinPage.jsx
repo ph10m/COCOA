@@ -4,6 +4,11 @@ var ControlLabel = ReactBootstrap.ControlLabel;
 var FormControl = ReactBootstrap.FormControl;
 var Checkbox = ReactBootstrap.Checkbox;
 
+function createRemarkable() {
+    var remarkable = (("undefined" != typeof global) && (global.Remarkable)) ? global.Remarkable : window.Remarkable;
+    return new remarkable();
+}
+
 class FieldGroup extends React.Component {
     constructor(props) {
         super(props);
@@ -76,6 +81,8 @@ class CreateBulletinPage extends React.Component {
     }
 
     render() {
+        var md = new createRemarkable();
+
         return (
             <div>
                 <div>
@@ -123,6 +130,12 @@ class CreateBulletinPage extends React.Component {
                             Create bulletin
                         </Button>
                     </form>
+                </div>
+                <div>
+                    PREVIEW:<br /><br />
+                    <Bulletin 
+                        title={this.state.title}
+                        content={this.state.content} />
                 </div>
             </div>
 
