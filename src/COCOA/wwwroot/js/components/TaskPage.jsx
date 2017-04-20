@@ -1,43 +1,37 @@
-﻿var Button = ReactBootstrap.Button;
+﻿var FormControl = ReactBootstrap.FormControl;
+var ControlLabel = ReactBootstrap.ControlLabel;
 var PageHeader = ReactBootstrap.PageHeader;
-var Panel = ReactBootstrap.Panel;
-
-class FieldGroup extends React.Component {
-    constructor(props) {
-        super(props);
-    }
- 
-    render() {
-        return (
-            <FormGroup controlId={this.props.id}>
-                <ControlLabel>{this.props.label}</ControlLabel>
-                <FormControl {...this.props} />
-            </FormGroup>
-        );
-    }
-}
+var FormGroup = ReactBootstrap.FormGroup;
 
 class TaskPage extends React.Component {
     constructor(props) {
         super(props);
+        this.state = { searchString: '', result: [] };
+    }
+
+    handleSearchStringChange(event) {
+        this.setState({ searchString: event.target.value });
+    }
+
+    search(event) {
+        event.preventDefault();
+        console.log(this.state.searchString);
     }
 
     render() {
-        const elementList = this.props.enrolledCourses.map((c) => {
-            return (
-                <Bulletin
-                    course={{ id: c.courseId, name: c.courseName, description: c.courseDescription }} 
-    hoverPlate={true} />
-);
-    });
-
-    return (
-        <div>
-            <PageHeader>Task</PageHeader>
-            <div className="scroll">{elementList}</div>
+        return (
+            <div>
+                <form onSubmit={this.search.bind(this)}>
+                    <h1>Search</h1>
+                    <FormGroup controllerId="formSearch">
+                        <ControlLabel>Search:</ControlLabel>
+        <FormControl type="text"
+        value={this.state.searchString}
+        placeholder="Enter search string"
+        onChange={this.handleSearchStringChange.bind(this)} />
+</FormGroup>
+</form>
         </div>
-    );
-    }
-
-
+        );
+            }
 }

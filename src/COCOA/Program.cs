@@ -11,8 +11,9 @@ namespace COCOA
     {
         public static void Main(string[] args)
         {
-            WebScraper scraper = new WebScraper("tollefj");
-            scraper.getNextLecture();
+            WikiSearch search = new WikiSearch("Artificial");
+            //WebScraper scraper = new WebScraper("tollefj");
+            //scraper.getNextLecture();
 
             var host = new WebHostBuilder()
                 .UseKestrel()
