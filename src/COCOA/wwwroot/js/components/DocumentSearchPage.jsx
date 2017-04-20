@@ -8,25 +8,51 @@ class DocumentSearchPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { searchString: '', courseId: '', result: [] };
+        this.state = { searchString: '', courseId: '', result: [], cache: {} };
+    }
+
+    checkCacheAndSearch() {
+        // Search if string has a non-zero length and course is selected AND the result isn't already cached
+        if(this.state.searchString.length > 0 &&
+            this.state.courseId.length > 0){
+            if(this.state.cache[this.state.courseId + ';' + this.state.searchString]){
+                this.setState({result: this.state.cache[this.state.courseId + ';' + this.state.searchString]})
+            } else {
+                this.searchInDocuments.bind(this)();
+            }
+        } else {
+            this.setState({ result: []})
+        }
     }
 
     handleSearchStringChange(e) {
-        this.setState({ searchString: e.target.value });
+        this.setState(
+            { searchString: e.target.value },
+            this.checkCacheAndSearch.bind(this)
+        );
+             
     }
 
     handleCourseIdChange(event) {
-        this.setState({ courseId: event.target.options[event.target.selectedIndex].value });
+        this.setState(
+            { courseId: event.target.options[event.target.selectedIndex].value },
+            this.checkCacheAndSearch.bind(this)
+        );
     }
 
     searchInDocuments() {
-        console.log("Searching with " + this.state.searchString);
         var xhr = new XMLHttpRequest();
         var searchString = this.state.searchString;
         xhr.open('get', "/course/documentsearch?courseId=" + this.state.courseId + "&searchString=" + searchString, true);
         xhr.onload = function () {
             if (xhr.status == 200) {
-                this.setState({ result: JSON.parse(xhr.response) });
+                var result = JSON.parse(xhr.response);
+                var newCache = this.state.cache;
+                newCache[this.state.courseId + ';' + searchString] = result;
+                this.setState({
+                    result: result,
+                    cache: newCache
+                });
             }
         }.bind(this);
         xhr.send();
