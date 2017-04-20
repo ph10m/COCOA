@@ -1,7 +1,6 @@
 ﻿var Button = ReactBootstrap.Button;
-var FormGroup = ReactBootstrap.FormGroup;
-var ControlLabel = ReactBootstrap.ControlLabel;
-var FormControl = ReactBootstrap.FormControl;
+var PageHeader = ReactBootstrap.PageHeader;
+var Panel = ReactBootstrap.Panel;
 
 class FieldGroup extends React.Component {
     constructor(props) {
@@ -24,22 +23,20 @@ class TaskPage extends React.Component {
     }
 
     render() {
-        return (
-              <div>
-                  <div>
-                    <h1>Tasks</h1>
-                  <form>
-                    <FieldGroup id="formControlsUsername"
-                        type="username"
-                        label="Email"
-                        placeholder='Email'
-                        bsSize='lg'
-                        />
-                </form>
-                </div>
-            </div>
-            
-        );
+        const elementList = this.props.enrolledCourses.map((c) => {
+            return (
+                <Bulletin
+                    course={{ id: c.courseId, name: c.courseName, description: c.courseDescription }} 
+    hoverPlate={true} />
+);
+    });
+
+    return (
+        <div>
+            <PageHeader>Task</PageHeader>
+            <div className="scroll">{elementList}</div>
+        </div>
+    );
     }
 
 

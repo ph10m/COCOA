@@ -29,7 +29,7 @@ namespace COCOA.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            var model = new HomePageViewModel();
+            var model = new SharedLayoutViewModel();
             string resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
 
             if (resultShared != null)

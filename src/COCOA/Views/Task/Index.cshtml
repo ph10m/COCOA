@@ -5,8 +5,12 @@
     <head>
         <title>Task</title>
     </head>
-    <body>
-        @Html.React("TaskPage", new { })
-        <script src="@Url.Content("~/js/components/TaskPage.jsx")"></script>
-    </body>
+<body>
+    @Html.React("TaskPage", new
+{
+    enrolledCourses = Model.enrolledCourses
+})
+    <script src="@Url.Content("~/js/components/TaskPage.jsx")"></script>
+</body>
+
 </html>
