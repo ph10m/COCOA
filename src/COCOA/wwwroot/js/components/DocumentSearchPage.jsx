@@ -8,25 +8,51 @@ class DocumentSearchPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { searchString: '', courseId: '', result: [] };
+        this.state = { searchString: '', courseId: '', result: [], cache: {} };
+    }
+
+    checkCacheAndSearch() {
+        // Search if string has a non-zero length and course is selected AND the result isn't already cached
+        if(this.state.searchString.length > 0 &&
+            this.state.courseId.length > 0){
+            if(this.state.cache[this.state.courseId + ';' + this.state.searchString]){
+                this.setState({result: this.state.cache[this.state.courseId + ';' + this.state.searchString]})
+            } else {
+                this.searchInDocuments.bind(this)();
+            }
+        } else {
+            this.setState({ result: []})
+        }
     }
 
     handleSearchStringChange(e) {
-        this.setState({ searchString: e.target.value });
+        this.setState(
+            { searchString: e.target.value },
+            this.checkCacheAndSearch.bind(this)
+        );
+             
     }
 
     handleCourseIdChange(event) {
-        this.setState({ courseId: event.target.options[event.target.selectedIndex].value });
+        this.setState(
+            { courseId: event.target.options[event.target.selectedIndex].value },
+            this.checkCacheAndSearch.bind(this)
+        );
     }
 
     searchInDocuments() {
-        console.log("Searching with " + this.state.searchString);
         var xhr = new XMLHttpRequest();
         var searchString = this.state.searchString;
         xhr.open('get', "/course/documentsearch?courseId=" + this.state.courseId + "&searchString=" + searchString, true);
         xhr.onload = function () {
             if (xhr.status == 200) {
-                this.setState({ result: JSON.parse(xhr.response) });
+                var result = JSON.parse(xhr.response);
+                var newCache = this.state.cache;
+                newCache[this.state.courseId + ';' + searchString] = result;
+                this.setState({
+                    result: result,
+                    cache: newCache
+                });
             }
         }.bind(this);
         xhr.send();
@@ -39,23 +65,18 @@ class DocumentSearchPage extends React.Component {
         xhr.send();
     }
 
+    ignoreEnter(event) {
+        event.preventDefault();
+    }
+
     render() {
 
         viewRef = this;
         return (
 
         <div>
-          <form>
+          <form onSubmit={this.ignoreEnter.bind(this)}>
               <h1>Document search</h1>
-            <FormGroup controllerId="formSearch">
-                <ControlLabel>
-                    Search:
-                </ControlLabel>
-                <FormControl type="text"
-                             value={this.state.searchString}
-                             placeholder="Enter search string"
-
-                             onChange={this.handleSearchStringChange.bind(this)} />
                 <FormGroup controlId="formControlsSelect">
                       <ControlLabel>Course</ControlLabel>
                       <FormControl componentClass="select"
@@ -68,13 +89,15 @@ class DocumentSearchPage extends React.Component {
                           }
                       </FormControl>
                 </FormGroup>
-                <HelpBlock>We will search for this string in the course material</HelpBlock>
-                <Button onClick={this.searchInDocuments.bind(this)}
-                        disabled={!(this.state.courseId.length > 0&&
-                                    this.state.searchString.length > 0)}>
-                    Search
-                </Button>
-            </FormGroup>
+              <FormGroup controllerId="formSearch">
+                <ControlLabel>
+                    Search:
+                </ControlLabel>
+                <FormControl type="text"
+                             value={this.state.searchString}
+                             placeholder="Enter search string"
+                             onChange={this.handleSearchStringChange.bind(this)} />
+              </FormGroup>
           </form>
 
           <div>
