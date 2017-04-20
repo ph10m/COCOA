@@ -31,7 +31,7 @@ class CocoaHeader extends React.Component {
                 <Navbar.Collapse>
                     <Nav>
                     <NavItem eventKey={"1"} href='/home'>Home</NavItem>
-                    <NavItem eventKey={"2"} href='/home'>Tasks</NavItem>
+                    <NavItem eventKey={"2"} href='/task'>Tasks</NavItem>
                     <NavDropdown eventKey={"3"} title="Courses" id="basic-nav-dropdown">
                         {enrolled}
                         {this.props.isTeacher && (<MenuItem divider />)}
