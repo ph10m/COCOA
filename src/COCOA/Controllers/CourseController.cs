@@ -128,7 +128,7 @@ namespace COCOA.Controllers
                 return StatusCode(400, resultShared);
             }
 
-            return View("DocumentSearch", model);
+            return View("DocumentUpload", model);
         }
 
         /// <summary>
