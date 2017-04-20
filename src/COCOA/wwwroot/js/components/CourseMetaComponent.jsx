@@ -1,4 +1,5 @@
 ﻿var Button = ReactBootstrap.Button;
+var Panel = ReactBootstrap.Panel;
 
 class CourseMetaComponent extends React.Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class CourseMetaComponent extends React.Component {
 
     render() {
         return (
-            <Panel className="panel" onSelect={this.props.onSelect}>
+            <Panel className="panel">
                 <div className="panelHeaderNormal">
                     {this.props.name}
                 </div>
