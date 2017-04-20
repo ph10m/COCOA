@@ -1,13 +1,12 @@
-@model COCOA.ViewModels.CoursePageViewModel
 @{
     Layout = "~/Views/Shared/_HeaderLayout.cshtml";
 }
 <html>
     <head>
-        <title>@Model.courseName</title>
+        <title>Task</title>
     </head>
     <body>
-        @Html.React("TaskPage", new { data = Model })
+        @Html.React("TaskPage", new { })
         <script src="@Url.Content("~/js/components/TaskPage.jsx")"></script>
     </body>
 </html>
