@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
@@ -13,6 +14,9 @@ using COCOA.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+
+using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.parser;
 
 namespace COCOA.Controllers
 {
@@ -189,6 +193,125 @@ namespace COCOA.Controllers
         }
 
         /// <summary>
+        /// Async call to retrieve topics from a byte array representing a PDF
+        /// </summary>
+        /// <param name="pdf">PDF binary data</param>
+        /// <returns>Returns the extracted topics </returns>
+        private async Task<List<string>> ExtractTopicsFromPdf(byte[] pdf)
+        {
+            var strategy = new SizeTextExtractionStrategy();
+
+            List<string> topics = new List<string>();
+
+            using (PdfReader reader = new PdfReader(pdf))
+            {
+                List<TextAndSize> aggregatedList = new List<TextAndSize>();
+
+                for (int i = 1; i <= reader.NumberOfPages; i++)
+                {
+                    PdfTextExtractor.GetTextFromPage(reader, i, strategy);
+                    aggregatedList.AddRange(strategy.texts);
+                }
+
+                aggregatedList = aggregatedList.OrderBy(tas => tas.size).ToList();
+                const float LimitTopicSize = 0.95f; // Only the top % font sizes are considered topics
+                int length = aggregatedList.Count();
+                int startSearchForTopicSize = (int)(LimitTopicSize * length);
+                int index = startSearchForTopicSize;
+                while (Math.Abs(aggregatedList[index].size - aggregatedList[startSearchForTopicSize].size) < 1 &&
+                    index < aggregatedList.Count())
+                {
+                    index++;
+                }
+
+
+                if (index > aggregatedList.Count() * 0.99)
+                {
+                    index = startSearchForTopicSize;
+                }
+
+                float limit = aggregatedList[index].size;
+
+
+                for (int i = 1; i <= reader.NumberOfPages; i++)
+                {
+                    StringBuilder tempBuilder = new StringBuilder();
+                    var tempStrategy = new SizeTextExtractionStrategy();
+                    PdfTextExtractor.GetTextFromPage(reader, i, tempStrategy);
+
+                    if (tempStrategy.texts[0].size >= limit)
+                    {
+                        tempBuilder.Append(tempStrategy.texts[0].text);
+                    }
+
+                    for (int j = 1; j < tempStrategy.texts.Count(); j++)
+                    {
+                        const int sizeDiff = 3; // The allowed difference in fontsize within a sentence
+                        //Only append text segment if the text is big enough
+                        if (tempStrategy.texts[j].size >= limit)
+                        {
+                            if (tempBuilder.Length != 0 && !(Math.Abs(tempStrategy.texts[j].size - tempStrategy.texts[j - 1].size) < sizeDiff))
+                            {
+                                //This segment doesn't belong to previous one, flush stringbuilder
+                                topics.Add(tempBuilder.ToString().Replace('\t', ' '));
+                                tempBuilder.Clear();
+                            }
+
+                            tempBuilder.Append(tempStrategy.texts[j].text);
+                        }
+                        else if (tempBuilder.Length > 0)
+                        {
+                            topics.Add(tempBuilder.ToString().Replace('\t', ' '));
+                            tempBuilder.Clear();
+                        }
+                    }
+
+                    if (tempBuilder.Length != 0)
+                    {
+                        topics.Add(tempBuilder.ToString().Replace('\t', ' '));
+                    }
+                }
+            }
+
+            topics = topics.Distinct().ToList();
+
+            return topics;
+        }
+
+        public class TextAndSize
+        {
+            public float size;
+            public String text;
+            public TextAndSize(float size, String text)
+            {
+                this.size = size;
+                this.text = text;
+            }
+        }
+
+        public class SizeTextExtractionStrategy : LocationTextExtractionStrategy
+        {
+
+            public List<TextAndSize> texts = new List<TextAndSize>();
+
+            //Automatically called for each chunk of text in the PDF
+            public override void RenderText(TextRenderInfo renderInfo)
+            {
+                base.RenderText(renderInfo);
+
+                //Get the bounding box for the chunk of text
+                var bottomLeft = renderInfo.GetBaseline().GetStartPoint();
+                var topRight = renderInfo.GetAscentLine().GetEndPoint();
+
+                var size = (-bottomLeft[Vector.I2] + topRight[Vector.I2]);
+                texts.Add(new TextAndSize(size, renderInfo.GetText()));
+                //Console.WriteLine(size);
+                //if(size > 30)
+                //Console.Write(renderInfo.GetText());
+            }
+        }
+
+        /// <summary>
         /// Async call to save material PDF to database. User needs to be assigned to a course(Owner, Instructor or Assistant) to add a file for it.
         /// </summary>
         /// <param name="courseId">Course to add this MaterialPDF to</param>
@@ -196,7 +319,7 @@ namespace COCOA.Controllers
         /// <param name="description">Description of file.</param>
         /// <param name="data">PDF binary data</param>
         /// <returns>Returns true if successfully saved, false if not.</returns>
-        private async Task<bool> SaveMaterialPDF (int courseId, string name, string description, byte[] data)
+        private async Task<bool> SaveMaterialPDF (int courseId, string name, string description, List<string> topics, byte[] data)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -215,7 +338,8 @@ namespace COCOA.Controllers
                     Name = name,
                     Description = description,
                     Timestamp = DateTime.Now,
-                    Data = data
+                    Data = data,
+                    Topics = topics
                 };
 
                 _context.MaterialPDFs.Add(materialPDF);
@@ -247,7 +371,9 @@ namespace COCOA.Controllers
                 return StatusCode(404, "No matching course was found");
             }
 
-            bool success = await SaveMaterialPDF(courses.First().Id, name, description, bytes);
+            List<string> topics = await ExtractTopicsFromPdf(bytes);
+
+            bool success = await SaveMaterialPDF(courses.First().Id, name, description, topics, bytes);
 
             if (success)
                 return Ok();
