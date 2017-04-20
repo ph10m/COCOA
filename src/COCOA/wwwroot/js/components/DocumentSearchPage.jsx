@@ -65,23 +65,18 @@ class DocumentSearchPage extends React.Component {
         xhr.send();
     }
 
+    ignoreEnter(event) {
+        event.preventDefault();
+    }
+
     render() {
 
         viewRef = this;
         return (
 
         <div>
-          <form>
+          <form onSubmit={this.ignoreEnter.bind(this)}>
               <h1>Document search</h1>
-            <FormGroup controllerId="formSearch">
-                <ControlLabel>
-                    Search:
-                </ControlLabel>
-                <FormControl type="text"
-                             value={this.state.searchString}
-                             placeholder="Enter search string"
-
-                             onChange={this.handleSearchStringChange.bind(this)} />
                 <FormGroup controlId="formControlsSelect">
                       <ControlLabel>Course</ControlLabel>
                       <FormControl componentClass="select"
@@ -94,13 +89,15 @@ class DocumentSearchPage extends React.Component {
                           }
                       </FormControl>
                 </FormGroup>
-                <HelpBlock>We will search for this string in the course material</HelpBlock>
-                <Button onClick={this.searchInDocuments.bind(this)}
-                        disabled={!(this.state.courseId.length > 0&&
-                                    this.state.searchString.length > 0)}>
-                    Search
-                </Button>
-            </FormGroup>
+              <FormGroup controllerId="formSearch">
+                <ControlLabel>
+                    Search:
+                </ControlLabel>
+                <FormControl type="text"
+                             value={this.state.searchString}
+                             placeholder="Enter search string"
+                             onChange={this.handleSearchStringChange.bind(this)} />
+              </FormGroup>
           </form>
 
           <div>
