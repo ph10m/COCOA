@@ -37,7 +37,7 @@ class CreateUserPage extends React.Component {
         this.setState({ errorText: null });
 
         if (password === passwordConfirmed) {
-            xhr.open('get', "/user/registeruser?email=" + encodeURIComponent(email) + "&name=" + encodeURIComponent(name) + "&password=" + encodeURIComponent(password) + "&persistent=true", true);
+            xhr.open('post', "/user/registeruser?email=" + encodeURIComponent(email) + "&name=" + encodeURIComponent(name) + "&password=" + encodeURIComponent(password) + "&persistent=true", true);
             xhr.onload = function () {
                 if (xhr.status == 200) {
                     console.log("Signed in with " + email + ".");
