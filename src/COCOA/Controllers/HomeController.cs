@@ -27,8 +27,17 @@ namespace COCOA.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-
+            var userName = "";
             var model = new HomePageViewModel();
+            if (user == null)
+            {
+                userName = "You do not seem to be logged in!";
+            }
+            else
+            {
+                userName = user.Name;
+            }
+            model.userName = userName;
             string resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
 
             if (resultShared != null)

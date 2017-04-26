@@ -44,17 +44,19 @@ class HomePage extends React.Component {
    }
 
    render() {
-        const elementList = this.props.enrolledCourses.map((c) => {
+       const elementList = this.props.enrolledCourses.map((c) => {
+           var rand = Math.floor(Math.random()*10 + 1);
+           var newtasks = rand.toString() + " new tasks available!";
             return (
                 <Bulletin
-                    course={{ id: c.courseId, name: c.courseName, description: c.courseDescription }} 
+                    course={{ id: c.courseId, name: c.courseName, description: newtasks }} 
                     hoverPlate={true} />
             );
         });
 
         return (
-            <div>
-                <PageHeader>Courses</PageHeader>
+            <div className="margin">
+                <PageHeader>Welcome, Ola Nordmann! {this.props.userName}</PageHeader>
                 <div className="scroll">{elementList}</div>
             </div>
         );

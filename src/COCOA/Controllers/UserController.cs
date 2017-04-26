@@ -43,7 +43,7 @@ namespace COCOA.Controllers
         }
 
         /// <summary>
-        /// User managment page.
+        /// User coordinator page.
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> Index()

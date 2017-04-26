@@ -31,25 +31,27 @@ class CoursePage extends React.Component {
                     timestamp={c.publishedDate} />
             );
         });
-
         return (
             <div>
                 <PageHeader>{this.props.data.courseName}</PageHeader>
                 <div>
                     <Col md={8}>
-                        {sticky}
-                        {normal}
+                        <h3>Overview</h3>{this.props.data.courseDescription}
+
                     </Col>
-                    <Col md={4}>
-                        <h3>Overview</h3>
-                        {this.props.data.courseDescription}
-                        <h3>Managment</h3>
-                        {this.props.data.courseManagment.map(function (element) {
-                            return (
-                                <p>{element}</p>    
-                            );
-                        })}
+                    <Col md={2}>
+                        <h3>Relevant links</h3>
+                        <Button>Wikipedia</Button>
+                    <p></p>
+                        <Button>Wikipendium</Button>
+                    <p></p>
+                        <h3>Coordinator</h3>
+                        <p>Morten Hovd</p>
+                        <a href={`mailto:${this.props.data.courseCoordinator}`}>
+                            {this.props.data.courseCoordinator}
+                        </a>
                     </Col>
+  
                 </div>
             </div>
         );

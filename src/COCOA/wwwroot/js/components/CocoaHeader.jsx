@@ -31,14 +31,14 @@ class CocoaHeader extends React.Component {
                 <Navbar.Collapse>
                     <Nav>
                     <NavItem eventKey={"1"} href='/home'>Home</NavItem>
-                    <NavItem eventKey={"2"} href='/home'>Tasks</NavItem>
-                    <NavDropdown eventKey={"3"} title="Courses" id="basic-nav-dropdown">
+                    <NavDropdown eventKey={"2"} title="Courses" id="basic-nav-dropdown">
+                        {!this.props.signedIn && (<MenuItem>Log in before viewing courses.</MenuItem>)}
                         {enrolled}
                         {this.props.isTeacher && (<MenuItem divider />)}
                         {this.props.isTeacher && (<MenuItem eventKey={"new"} href={"/course/register"}>Create new course</MenuItem>)}
                     </NavDropdown>
-                    {this.props.signedIn && (<NavItem eventKey={"4"} href='/course/materialsearch'>Document search</NavItem>)}
-                    {this.props.signedIn && (<NavItem eventKey={"5"} href='/course/enrollment'>Enroll to course</NavItem>)}
+                    {this.props.signedIn && (<NavItem eventKey={"3"} href='/course/materialsearch'>Document search</NavItem>)}
+                    {this.props.signedIn && (<NavItem eventKey={"4"} href='/course/enrollment'>Enroll to course</NavItem>)}
                     </Nav>
                     <Nav pullRight>
                     {!this.props.signedIn && (<NavItem eventKey={1} href='/user/signin'>Log in</NavItem>)}

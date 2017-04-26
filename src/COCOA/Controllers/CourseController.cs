@@ -69,9 +69,13 @@ namespace COCOA.Controllers
                                        stickey = b.Stickey
                                     }).ToListAsync();
 
-            var managment = await (from cA in _context.CourseAssignments
-                                   where cA.CourseId == id
-                                   select (cA.CourseAssignmentRole.ToString() + ": " + cA.User.Name)).ToListAsync();
+            var coordinator = await (from cA in _context.Courses
+                                     where cA.Id == id
+                                     select cA.Coordinator.ToString()).SingleOrDefaultAsync();
+            //var managment = await (from cA in _context.CourseAssignments
+            //                       where cA.CourseId == id
+            //                       select (cA.CourseAssignmentRole.ToString() + ": " + cA.User.Name)).ToListAsync();
+
 
             var sticky = bulletins.Where(x =>
             {
@@ -86,7 +90,7 @@ namespace COCOA.Controllers
             model.courseName = enrollment.Course.Name;
             model.courseId = enrollment.Course.Id;
             model.courseDescription = enrollment.Course.Description;
-            model.courseManagment = managment;
+            model.courseCoordinator = coordinator;
             model.bulletins = normal;
             model.stickyBulletins = sticky;
 
