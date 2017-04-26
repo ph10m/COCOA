@@ -9,10 +9,15 @@
     margin: 0 auto;
 }
 
-@media (max-width: 768px){
+@media (width: 768px){
     .main {
         width: 100%;
     }
+    .navbar .container {
+        width: 30%;
+    }
+}
+
 }
 
 .margin {
@@ -61,7 +66,6 @@ div.scroll {
 
 .panelFooter {
     text-align: right;
-    display: normal;
     float: right;
 }
 
@@ -106,4 +110,8 @@ h4 {
 
 a {
     color: #000;
+}
+
+.modal-dialog {
+    margin-top: 20%;
 }

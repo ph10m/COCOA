@@ -16,6 +16,9 @@ namespace COCOA.ViewModels
 
         public string courseCoordinator { get; set; }
 
+        public string courseInfolink { get; set; }
+
+
         public IEnumerable<BulletinViewModel> bulletins { get; set; }
         public IEnumerable<BulletinViewModel> stickyBulletins { get; set; }
     }

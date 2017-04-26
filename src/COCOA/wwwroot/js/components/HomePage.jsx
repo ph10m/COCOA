@@ -56,7 +56,9 @@ class HomePage extends React.Component {
 
         return (
             <div className="margin">
-                <PageHeader>Welcome, Ola Nordmann! {this.props.userName}</PageHeader>
+                <PageHeader>
+                    Hi, {this.props.userName}
+                </PageHeader>
                 <div className="scroll">{elementList}</div>
             </div>
         );

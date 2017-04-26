@@ -15,7 +15,7 @@ namespace COCOA.ViewModels
     /// </summary>
     public class SharedLayoutViewModel
     {
-        public string userName { get; private set; }
+        public string userName { get; set; }
 
         public bool isTeacher { get; private set; }
 

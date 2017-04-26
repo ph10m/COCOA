@@ -4,6 +4,7 @@ var PageHeader = ReactBootstrap.PageHeader;
 var Panel = ReactBootstrap.Panel;
 var Col = ReactBootstrap.Col;
 
+
 class CoursePage extends React.Component {
     constructor(props) {
         super(props);
@@ -31,24 +32,30 @@ class CoursePage extends React.Component {
                     timestamp={c.publishedDate} />
             );
         });
+        const coordinator = this.props.data.courseCoordinator.split(",");
+        const coordName = coordinator[0];
+        const coordMail = coordinator[1].replace(/\s+/g, ""); //remove trailing spaces
+        const courseCode = this.props.data.courseName.substr(0, this.props.data.courseName.indexOf(" "));
+        const prettyText = `<p>${this.props.data.courseDescription.replace(/([!.?,)])/g, "$1<br>")}</p>`;
+        
         return (
             <div>
                 <PageHeader>{this.props.data.courseName}</PageHeader>
                 <div>
                     <Col md={8}>
-                        <h3>Overview</h3>{this.props.data.courseDescription}
-
+                        <h3>Overview</h3>
+                    <div dangerouslySetInnerHTML={{ __html: prettyText }}></div>
                     </Col>
-                    <Col md={2}>
-                        <h3>Relevant links</h3>
-                        <Button>Wikipedia</Button>
-                    <p></p>
-                        <Button>Wikipendium</Button>
+                    <Col md={4}>
+                        <h3>Additional information</h3>
+                        <a href={this.props.data.courseInfolink} target="_blank">
+                            <Button>Info page</Button>
+                        </a>
                     <p></p>
                         <h3>Coordinator</h3>
-                        <p>Morten Hovd</p>
-                        <a href={`mailto:${this.props.data.courseCoordinator}`}>
-                            {this.props.data.courseCoordinator}
+                        <p>{coordName}</p>
+                        <a href={`mailto:${coordMail}?subject=${courseCode}`}>
+                            {coordMail}
                         </a>
                     </Col>
   

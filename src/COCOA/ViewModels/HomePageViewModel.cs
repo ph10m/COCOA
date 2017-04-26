@@ -7,6 +7,5 @@ namespace COCOA.ViewModels
 {
     public class HomePageViewModel : SharedLayoutViewModel
     {
-        public string userName { get; set; }
     }
 }

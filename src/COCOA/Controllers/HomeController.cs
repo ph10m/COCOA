@@ -31,7 +31,7 @@ namespace COCOA.Controllers
             var model = new HomePageViewModel();
             if (user == null)
             {
-                userName = "You do not seem to be logged in!";
+                userName = "you do not seem to be logged in!";
             }
             else
             {

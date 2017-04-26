@@ -72,6 +72,9 @@ namespace COCOA.Controllers
             var coordinator = await (from cA in _context.Courses
                                      where cA.Id == id
                                      select cA.Coordinator.ToString()).SingleOrDefaultAsync();
+            var infolink = await (from cA in _context.Courses
+                                     where cA.Id == id
+                                     select cA.Infolink.ToString()).SingleOrDefaultAsync();
             //var managment = await (from cA in _context.CourseAssignments
             //                       where cA.CourseId == id
             //                       select (cA.CourseAssignmentRole.ToString() + ": " + cA.User.Name)).ToListAsync();
@@ -91,6 +94,7 @@ namespace COCOA.Controllers
             model.courseId = enrollment.Course.Id;
             model.courseDescription = enrollment.Course.Description;
             model.courseCoordinator = coordinator;
+            model.courseInfolink = infolink;
             model.bulletins = normal;
             model.stickyBulletins = sticky;
 

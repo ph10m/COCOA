@@ -19,7 +19,7 @@ class CocoaHeader extends React.Component {
         });
 
         return (
-            <Navbar inverse>
+            <Navbar inverse staticTop className="navbar">
                 <Navbar.Header>
                     <a href='/home' className='logo-link'>
                         <Image src='/../images/logo.png' className='header-logo' />
