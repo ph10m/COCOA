@@ -1,0 +1,435 @@
+TTM4105 Access and Transport Networks 
+TTT4250 Acoustical Measurement Techniques 
+TTT4900 Acoustics, Signal Processing and Communication, Master's Thesis 
+TTT4565 Acoustics, Specialization Course 
+TTT4560 Acoustics, Specialization Project 
+TTT4561 Acoustics, Specialization Project 
+MA8406 Advanced Algebraic Topology 
+TT8207 Advanced Antenna Engineering 
+MA8108 Advanced Complex Analysis 
+TTK4210 Advanced Control of Industrial Processes 
+DT8118 Advanced Cooperation Systems 
+TDT4150 Advanced Database Management Systems 
+TM8105 Advanced Discrete Event Simulation Methodology 
+IT8802 Advanced Information Retrieval 
+TT8210 Advanced Microwave Electromagnetics 
+MA8702 Advanced Modern Statistical Methods 
+TK8103 Advanced Nonlinear Systems 
+MA3105 Advanced Real Analysis(Exam only, no teaching) 
+TDT4250 Advanced Software Design 
+TDT4242 Advanced Software Engineering 
+IT8000 Advanced Topics in Case-Based Reasoning 
+TK8109 Advanced Topics in Guidance and Navigation 
+IT8002 Advanced Topics in Human-Computer Interaction 
+IT8003 Advanced Topics in Organization and ICT 
+TMA4150 Algebra 
+MA8203 Algebraic Geometry 
+MA3403 Algebraic Topology 
+MA3405 Algebraic Topology II(Exam only, no teaching) 
+MA8403 Algebraic Topology III 
+TDT4125 Algorithm Construction 
+TDT4120 Algorithms and Data Structures 
+TDT4287 Algorithms for Bioinformatics 
+TFE4187 Analog CMOS 1 
+TFE4545 Analog Circuit Design and Radio Systems, Specialization Course 
+TFE4541 Analog Circuit Design and Radio Systems, Specialization Project 
+TFE4540 Analog Circuit Design and Radio Systems, Specialization Project 
+MA3402 Analysis on Manifolds 
+TTT4215 Antenna Engineering 
+MA8002 Applied Biomodellling for PhD Students 
+TET5100 Applied Electromagnetics in Power Engineering 
+TTM4180 Applied Networking 
+TTK4605 Applied Parameter and State Estimation 
+TFE4165 Applied Photonics 
+FE8127 Applied Photonics - Advanced Course 
+TTT4225 Applied Signal Processing 
+TMA4255 Applied Statistics 
+TDT4171 Artificial Intelligence Methods 
+IT3105 Artificial Intelligence Programming 
+TTT4170 Audio Technology 
+TT3010 Audio Technology and Room Acoustics 
+MA2002 Bachelor`s Project in Mathematical Studies 
+MA1101 Basic Calculus I 
+MA1102 Basic Calculus II 
+TTT4275 Basic Methods for Estimation and Detection 
+TDT4305 Big Data Architecture 
+IT3708 Bio-Inspired Artificial Intelligence 
+DT8109 Business Systems 
+IFUD1002 C#.NET 
+TMA4100 Calculus 1 
+TMA4105 Calculus 2 
+TMA4115 Calculus 3 
+TMA4110 Calculus 3 
+TMA4135 Calculus 4D 
+TMA4120 Calculus 4K 
+TMA4122 Calculus 4M(Exam only, no teaching) 
+TMA4123 Calculus 4M(Exam only, no teaching) 
+TMA4125 Calculus 4N 
+TMA4130 Calculus 4N 
+TET4100 Circuit Analysis 
+TFE4915 Circuits- and Systems Design, Master's Thesis 
+DT8119 Clinical Decision Support 
+TMA4185 Coding Theory 
+TDT4137 Cognitive Architectures 
+TTM4100 Communication - Services and Networks 
+TTM4175 Communication Technology, introduction 
+TTT4115 Communication Theory 
+MA8202 Commutative Algebra 
+TDT4205 Compiler Construction 
+TMA4175 Complex Analysis 
+TDT4260 Computer Architecture 
+DT8105 Computer Architecture 2 
+TDT4255 Computer Design 
+TDT4295 Computer Design Project 
+TMA4300 Computer Intensive Statistical Methods 
+TDT4900 Computer Science, Master's Thesis 
+TDT4113 Computer Science, Programming Project 
+TDT4506 Computer Science, Specialization Course 
+TDT4501 Computer Science, Specialization Project 
+TDT4265 Computer Vision 
+TTK4100 Computerized Control, Introduction 
+TDT4160 Computers and Digital Design 
+IT8001 Context-Sensitive Systems 
+TTK4105 Control Systems 
+TTK4230 Control Systems 
+TDT4245 Cooperation Technology and Social Media 
+TM8107 Cryptographic Protocols and Their Applications 
+TMA4160 Cryptography 
+IT3020 Current Topics in Informatics 
+TDT4290 Customer Driven Project 
+TDT4145 Data Modelling, Databases and Database Management Systems 
+TDT4300 Data Warehousing and Data Mining 
+IFUD1004 Databases 2 
+TM8101 Dependability Analysis of Information and Communication Systems 
+TTM4158 Dependability and Performance Design 
+TTM4110 Dependability and Performance with Discrete Event Simulation 
+TET4175 Design and Operation of Smart Grid Power Systems 
+FE8109 Design and Utilization of Memory Hierarchies in Multi-Media Applications 
+TFE4141 Design of Digital Systems 1 
+TFE4171 Design of Digital Systems 2 
+TFE4525 Design of Digital Systems, Specialization Course 
+TFE4152 Design of Integrated Circuits 
+TTM4115 Design of Reactive Systems 1 
+TTM4160 Design of Reactive Systems 2 
+TMA4165 Differential Equations and Dynamical Systems 
+TTT4130 Digital Communication 
+TTM4165 Digital Economics 
+TTM4546 Digital Economics, Specialization Course 
+TDT4257 Digital Service Innovation 
+TTT4120 Digital Signal Processing 
+ET8300 Digital Signal Processing in Power Electronic Systems 
+IT1604 Digital Society 
+TFE4520 Digital System Design, Specialization Project 
+TFE4521 Digital System Design, Specialization Project 
+TMA4140 Discrete Mathematics 
+DT8103 Distributed Database Systems 
+MA8102 Dynamical Systems and Ergodic Theory 
+TTK4220 Dynamics in Social Systems 
+ET8100 Electric Conductivity, Dielectric Losses and Breakdown of Solid and Liquid High Voltage Insulation 
+TET4900 Electric Power Engineering and Smart Grids, Master's Thesis 
+TET4525 Electric Power Engineering and Smart Grids, Specialization Course 
+TET4520 Electric Power Engineering and Smart Grids, Specialization Project 
+TET4910 Electric Power Engineering, Master's Thesis 
+TET5505 Electric Power Engineering, Specialization Course 
+TET5500 Electric Power Engineering, Specialization Project 
+TET4180 Electric Power System Stability 
+TET4920 Electric Power Systems, Master's Thesis(Exam only, no teaching) 
+TFE4112 Electrical Circuits 
+TFE4101 Electrical Circuits and Digital Design 
+TET4120 Electrical Drives 
+TET4170 Electrical Installations 
+TET4110 Electrical Machines 
+TFE4130 Electromagnetic and Acoustic Waves 
+TFE4120 Electromagnetics 
+TTT4260 Electronic System Design and Analysis I 
+TTT4265 Electronic System Design and Analysis II 
+TTT4255 Electronic System Design, Basic Course 
+TTT4270 Electronic System Design, Project 
+TFE4160 Electrooptics and Lasers(Exam only, no teaching) 
+MA0301 Elementary Discrete Mathematics 
+TTK4235 Embedded Systems 
+TTK4155 Embedded and Industrial Computer Systems Design 
+DT8111 Empirical Software Engineering 
+TET4915 Energy Planning and Environmental Analysis, Master's Thesis 
+TET4535 Energy Planning and Environmental Analysis, Specialization Course 
+TET4530 Energy Planning and Environmental Analysis, Specialization Project 
+TET4135 Energy Systems Planning and Operation 
+TET4905 Energy Use and Energy Planning, Master's Thesis 
+TET4515 Energy Use and Energy Planning, Specialization Course 
+TET4510 Energy Use and Energy Planning, Specialization Project 
+TTK4900 Engineering Cybernetics, Master's Thesis 
+TTK4555 Engineering Cybernetics, Specialization Course 
+TTK4551 Engineering Cybernetics, Specialization Project 
+TTK4550 Engineering Cybernetics, Specialization Project 
+TDT4252 Enterprise Architecture for Enterprise Innovation 
+DT8802 Enterprise Architecture for Enterprise Innovation 
+MA3061 Epistemological Knowledge for Mathematics Teachers 
+TK8107 Estimation in Nonlinear Systems 
+TTM4536 Ethical Hacking - Information Security, Specialization Course 
+TMA4851 Experts in Teamwork - Big Data 
+TTK4850 Experts in Teamwork - Building Village 
+TDT4850 Experts in Teamwork - ICT-Enabled Social Innovation for Social Good 
+TDT4856 Experts in Teamwork - IT Management of Modern Trucks 
+TDT4855 Experts in Teamwork - Large scale CO2 storage 
+TMA4850 Experts in Teamwork - Mathematics in Applications 
+TTM4850 Experts in Teamwork - Multimedia production of immersive and interactive stories of importance 
+TTK4851 Experts in Teamwork - Robot and Human 
+TTT4850 Experts in Teamwork - Sound&Hearing - Leisure Time Personal Sound Exposure 
+TFE4850 Experts in Teamwork - Space Technology 
+TET4853 Experts in Teamwork - Sustainable Energy and Society 
+TET4850 Experts in Teamwork - The Energy Challenge for a Sustainable Future 
+TM8103 Formal Methods 
+TM8108 Formal Methods 2(Exam only, no teaching) 
+TMA4225 Foundations of Analysis 
+TMA4170 Fourier Analysis 
+TMA4230 Functional Analysis 
+MA3202 Galois Theory 
+MA8701 General Statistical Methods 
+MA3002 General Topology 
+TMA4315 Generalized Linear Models 
+TT8306 Geoacoustic Modelling and Inversion 
+MA2401 Geometry Find dates
+TDT4230 Graphics and Visualization 
+DT8117 Grid Technology and Heterogenous Computing 
+TTK4190 Guidance and Control of Vehicles 
+MA8106 Harmonic Analysis 
+HMS0002 Health, Safety and Environment (HSE) course for 1st year students 
+TDT4210 Healthcare Informatics 
+TET4195 High Voltage Equipment 
+DT8101 Highly Concurrent Algorithms 
+MA3204 Homological Algebra 
+TDT4180 Human-Computer Interaction 
+DT8110 IS Development 
+TM8111 Identity-Based Cryptography 
+TTK4240 Industrial Electrotechnics 
+TMA4505 Industrial Mathematics, Specialization Course 
+TMA4500 Industrial Mathematics, Specialization Project 
+IT3950 Informatics Postgraduate Thesis 
+IT3904 Informatics Postgraduate Thesis: Algorithms and Computers 
+IT3903 Informatics Postgraduate Thesis: Artifical Intelligense 
+IT3902 Informatics Postgraduate Thesis: Database Management and Search 
+IT3905 Informatics Postgraduate Thesis: Game Technology 
+IT3906 Informatics Postgraduate Thesis: Interaction Design, Game and Learning Technology 
+IT3901 Informatics Postgraduate Thesis: Software 
+IT2901 Informatics Project II 
+IT1901 Informatics, Project I 
+TDT4117 Information Retrieval 
+TTM4135 Information Security 
+TDT4175 Information Systems 
+TDT4110 Information Technology, Introduction 
+TDT4105 Information Technology, Introduction 
+TTT4125 Information Theory, Coding and Compression 
+TT8112 Information Theory, Coding and Compression, extended 
+TET4155 Infrastructure for Energy Transmission and Distribution 
+TTK4175 Instrumentation Systems 
+TTK4101 Instrumentation and Measurements 
+TET4160 Insulating Materials for High Voltage Applications 
+TTM4150 Internet Network Architecture 
+TDT4136 Introduction to Artificial Intelligence 
+IFUD1101 Introduction to Information Technology 
+MA3407 Introduction to Lie Theory 
+TFE4220 Introduction to Nanotechnology(Exam only, no teaching) 
+TMA4320 Introduction to Scientific Computation 
+TFE4172 Introduction to Semiconductor Devices 
+TMA4190 Introduction to Topology 
+DT8115 Learning in Technology Rich Environments 
+MA8402 Lie Groups and Lie Algebras(Exam only, no teaching) 
+TMA4275 Lifetime Analysis 
+TET4165 Light and Lighting 
+ET8400 Lighting Design 
+MA1201 Linear Algebra and Geometry 
+MA1202 Linear Algebra with Applications 
+TMA4145 Linear Methods 
+TMA4267 Linear Statistical Models 
+TTK4115 Linear System Theory 
+TDT4258 Low-Level Programming 
+FE8126 Low-Voltage/Low-Power Analog CMOS 
+FE8130 MEMS Technology and Design 
+TFE4225 MEMS-design 
+TDT4173 Machine Learning and Case-Based Reasoning 
+ET8301 Magnetic Design of Permanent Magnet Machines 
+TTT4175 Marine Acoustics 
+TT8305 Marine Acoustics II 
+TET4200 Marine and Offshore Power Systems 
+ST3201 Master Seminar in Statistics 
+MA3911 Master Thesis in Mathematical Sciences 
+MA0001 Mathematical Methods A 
+MA0002 Mathematical Methods B 
+TMA4195 Mathematical Modelling 
+TTK4200 Mathematical Modelling of Physical Systems 
+MA2001 Mathematical Project 
+MA3001 Mathematical Seminar for Master Degree Students 
+MA8001 Mathematical Seminar for PhD-students 
+TMA4310 Mathematical Subjects, Advanced Course 
+MA3900 Mathematics Master Thesis 
+MA3950 Mathematics Master Thesis 
+TMA4900 Mathematics, Master's Thesis 
+TTK4160 Medical Imaging 
+ET8209 Methods for Power Production Scheduling 
+TTT4205 Microwave Techniques 
+TTM4133 Mobile Networks and Services 
+TTK4195 Modeling and Control of Robots 
+FE8119 Modelling Theory for System on Chip and Embedded Systems 
+TTK4170 Modelling and Identification of Biological Systems 
+TTK4130 Modelling and Simulation 
+MA8003 Models in Population Biology(Exam only, no teaching) 
+FE8111 Molecular Beam Epitaxy 
+TDT4280 Multi Agent Systems and Game Theory(Exam only, no teaching) 
+TTT4135 Multimedia Signal Processing 
+TK8116 Multivariate Data and Meta Modelling: Preparing for Big Data Cybernetics 
+TT2010 Music Signal and Audio Perception 
+TTT4197 Musical Acoustics 
+TFE4560 Nanoelectronics and Photocics, Specialization Project 
+TFE4920 Nanoelectronics and Photonics, Master's Thesis 
+TFE4535 Nanoelectronics and Photonics, Specialization Course 
+TFE4570 Nanoelectronics and Photonics, Specialization Project 
+TFE4240 Nanoscale Device Technology 
+FE8135 Nanostructuring 
+TFE4925 Nanotechnology, Master's Thesis 
+TTT4150 Navigation Systems 
+TTM4128 Network and Service Management 
+TTM4516 Networks and Quality of Service, Specialization Course 
+MA8103 Non-Linear Hyperbolic Conservation Laws 
+MA8105 Non-Linear Partial Differential Equations and Sobolev Spaces 
+MA8401 Non-linear Dynamical Systems(Exam only, no teaching) 
+TT8208 Nonelinear Microwave Components 
+TTK4150 Nonlinear Control Systems 
+TK8102 Nonlinear State Estimation 
+MA1301 Number Theory 
+TET4140 Numerical Field Calculations in Power Engineering 
+MA8404 Numerical Integration of Time Dependent Differential Equations 
+TMA4205 Numerical Linear Algebra 
+TMA4215 Numerical Mathematics 
+TMA4910 Numerical Mathematics, Master's Thesis 
+MA2501 Numerical Methods 
+TT8303 Numerical Methods in Acoustics 
+TK8115 Numerical Optimal Control 
+TMA4212 Numerical Solution of Differential Equations by Difference Methods 
+MA8502 Numerical Solution of Partial Differential Equations 
+TMA4220 Numerical Solution of Partial Differential Equations Using Element Methods 
+TDT4100 Object-Oriented Programming 
+TDT4186 Operating Systems 
+MA8107 Operator Algebras 
+TM8106 Optical Networking 
+TMA4180 Optimization I 
+TMA4183 Optimization II 
+TTK4135 Optimization and Control 
+TET4130 Overvoltages and Overvoltage Protection 
+TDT4200 Parallel Computing 
+TMA4305 Partial Differential Equations 
+TTK4205 Pattern Recognition 
+TT8308 PhD Seminar in Acoustics 
+FE8122 PhD Seminar in Circuits and Systems Design 
+DT8114 PhD Seminar in Computer and Information Science 
+DT8801 PhD Seminar in Database Systems 
+ET8500 PhD Seminar in Electric Power Engineering 
+FE8123 PhD Seminar in Nanoelectronics and Microsystems 
+FE8125 PhD Seminar in Photonics 
+TT8211 PhD Seminar in Radio Systems 
+TT8108 PhD Seminar in Signal Processing 
+TM8110 PhD Topics in Telematics 
+FE8117 Photonics, Selected Topics 
+TFE4575 Physical Methods for Nanostructuring and Characterization, Specialization Course 
+TET4190 Power Electronics 
+ET8303 Power Electronics, Power Semiconductor Physics and Reliability 
+ET8208 Power Market Theory 
+TET4185 Power Markets, Resources and Environment 
+TET4115 Power System Analysis 
+ET8207 Power System Reliability 
+ET8202 Power System Stability and Control 
+ET8304 Power Theories and Compensation with Power Electronics 
+MA8704 Probability Theory and Asymptotic Techniques 
+ST1101 Probability and statistics 
+TDT4102 Procedural and Object-Oriented Programming 
+TDT4112 Programming Lab for Computer Science 
+IT1501 Programming Lab for Informatics 
+TDT4165 Programming Languages 
+TDT4262 Prototyping Interactive Media 
+FE8100 Quantum Computation and Quantum Communications 
+TTT4212 RF/Microwave Design and Measurement Techniques 
+TT8209 Radar System Analysis 
+TTT4145 Radio Communications 
+TTT4200 Radio Systems, Introduction 
+TTK4145 Real-time Programming 
+TTK4147 Real-time Systems 
+MA8205 Representation Theory of Algebras 
+MA8204 Representation Theory of Finite Groups(Exam only, no teaching) 
+RFEL3100 Research Methods in Mathematics and Science Education 
+DT8112 Research Topics in Health Informatics 
+IT3010 Research-based Innovation Methodologies in Computer and Information Science 
+MA3203 Ring Theory 
+MA3201 Rings and Modules 
+TT8302 Room Acoustics 
+TT8201 Satellite Navigation 
+TTM4185 Security and robustness in ICT systems 
+TT8106 Selected Topics in Communication Theory for Wireless Channels 
+TFE4180 Semiconductor Manufacturing Technology(Exam only, no teaching) 
+TFE4145 Semiconductor Physics and Electronic Devices, Introduction 
+TFE4177 Semiconductor Physics with Lab 
+TTT4280 Sensors and Instrumentation 
+TTM4526 Services and Systems Engineering, Specialization Course 
+TTT4920 Signal Processing and Communication, Master's Thesis 
+TTT4525 Signal Processing in Medical Applications, Specialization Course 
+TTT4520 Signal Processing in Medical Applications, Specialization Project 
+TTK4165 Signal Processing in Ultrasound Imaging 
+TTT4515 Signal Processing, Specialization Course 
+TTT4510 Signal Processing, Specialization Project 
+TTT4511 Signal Processing, Specialization Project 
+TT8111 Signal and Estimation Theory 
+TDT4240 Software Architecture 
+TDT4140 Software Engineering 
+TDT4237 Software Security 
+TTT4234 Space Technology I 
+TTT4235 Space Technology II 
+TMA4250 Spatial Statistics 
+TTT4185 Speech Technology 
+TMA4295 Statistical Inference 
+ST1201 Statistical Methods 
+ST2304 Statistical Modelling for Biologists/Biotechnologists 
+TT8001 Statistical Pattern Recognition 
+TMA4245 Statistics 
+TMA4240 Statistics 
+ST3900 Statistics Master Thesis 
+ST0103 Statistics with Applications 
+TMA4905 Statistics, Master's Thesis 
+ST2302 Stochastic Population Models 
+TMA4265 Stochastic Processes 
+MA8109 Stochastic Processes and Differential Equations 
+TMA4280 Supercomputing, Introduction 
+TTK4215 System Identification and Adaptive Control 
+TTK4225 Systems Theory, Introduction 
+MA2010 Teacher Education Project in Mathematics 
+TTT4180 Technical Acoustics 
+TTM4905 Telematics, Master's Thesis 
+TTM4502 Telematics, Specialization Project 
+TTM4501 Telematics, Specialization Project(Exam only, no teaching) 
+ET8102 Testing of High Voltage Insulation 
+TK8112 The Theory of Concurrency in Real-Time Systems 
+TT8307 Theoretical Acoustics 
+MA3060 Theories for Knowledge and Learning in Mathematics 
+MA3301 Theory of Computability and Complexity(Exam only, no teaching) 
+TMA4285 Time Series Models 
+TK8108 Topics in Fisheries and Aquaculture Cybernetics for PhD students 
+DT8108 Topics in Information Technology 
+TK8111 Topics in System and Control Theory 
+TM8102 Traffic Analysis of Communication Networks 
+DT8106 Transaction Processing Systems 
+ET8104 Transformer Design 
+ET8101 Transient Overvoltages in Electrical Power Systems 
+TTK4625 UNIK, Specialization Course 
+TK8105 Ultrasound imaging in Heterogeneous, Non-Linear Tissue 
+TTK4600 Understanding Technology, Innovation and Product Development 
+IT3402 User Interface Design 
+FE8121 VLSI Test Methodology 
+MA1103 Vector Calculus 
+TDT4225 Very Large, Distributed Data Volumes 
+TT8110 Visual Communication and Image Processing 
+TDT4195 Visual Computing Fundamentals 
+TMA4235 Visualization of Scientific Data(Exam only, no teaching) 
+ET8206 Voltage Quality 
+MA8104 Wavelets 
+IT2810 Web Development 
+TDT4215 Web Intelligence 
+DT8116 Web Mining 
+IT2805 Web Technologies 
+TTM4137 Wireless Network Security 
