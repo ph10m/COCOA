@@ -57,6 +57,9 @@ class DocumentUploadPage extends React.Component {
                 , true);
             xhr.onload = function () {
                 console.log("Got status " + xhr.status + " and response '" + xhr.response + "'");
+                if (xhr.status == 200) {
+                    window.location.href = "/course/index/" + courseId;
+                }
             }
             xhr.send(bytes);
         }
@@ -102,12 +105,7 @@ class DocumentUploadPage extends React.Component {
                       <FormControl componentClass="select" 
                                    placeholder="Course"
                                    onChange={this.courseChanged.bind(this)}>
-                          <option value={this.props.data.courseId} label={this.props.data.courseName}/>
                          {this.props.data.assignedCourses.map(course => {
-                             if (course.courseId == this.props.data.courseId) {
-                                 return null;
-                             }
-
                              return (<option value={course.courseId} label={course.courseName}/>)
                             })
                          }

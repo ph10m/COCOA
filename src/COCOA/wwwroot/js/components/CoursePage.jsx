@@ -37,12 +37,14 @@ class CoursePage extends React.Component {
                 <PageHeader>{this.props.data.courseName}</PageHeader>
                 <div>
                     <Col md={8}>
+                        <h3>Overview</h3>
+                        {this.props.data.courseDescription}
+                    <br />
+                    <br />
                         {sticky}
                         {normal}
                     </Col>
                     <Col md={4}>
-                        <h3>Overview</h3>
-                        {this.props.data.courseDescription}
                         <ButtonToolbar>
                             {this.props.data.assigned &&
                             (<Button href={"/course/documentupload/" + this.props.data.courseId}>

@@ -39,6 +39,7 @@ class CreateCoursePage extends React.Component {
             if (xhr.status == 200) {
                 console.log("Added course " + code + ".");
                 this.setState({ errorText: null });
+                window.location.href = "/";
             }
             else {
                 console.error(JSON.parse(xhr.response)[0].description);

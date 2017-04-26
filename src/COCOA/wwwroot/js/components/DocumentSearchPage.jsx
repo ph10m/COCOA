@@ -82,12 +82,10 @@ class DocumentSearchPage extends React.Component {
                       <FormControl componentClass="select"
                                    placeholder="Course"
                                    onChange={this.handleCourseIdChange.bind(this)}>
-                        <option value={this.props.data.courseId} label={this.props.data.courseName} />
+                          {this.props.data.enrolledCourses.map(course => {
+                          return (<option value={course.courseId} label={course.courseName } />);
+                          })}
                           {this.props.data.assignedCourses.map(course => {
-                              if (course.courseId == this.props.data.courseId) {
-                                return null;
-                              }
-
                               return (<option value={course.courseId} label={course.courseName } />);
                           })}
                       </FormControl>

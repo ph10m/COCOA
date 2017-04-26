@@ -47,6 +47,7 @@ class CreateBulletinPage extends React.Component {
             if (xhr.status == 200) {
                 console.log("Added bulletin " + title + ".");
                 this.setState({ errorText: null });
+                window.location.href = "/course/index/" + courseId;
             }
             else {
                 console.error(JSON.parse(xhr.response)[0].description);
@@ -92,13 +93,8 @@ class CreateBulletinPage extends React.Component {
                         <FormControl componentClass="select"
                                    placeholder="Course"
                                    onChange={this.courseIdChanged.bind(this)}>
-                        <option value={this.props.data.courseId} label={this.props.data.courseName} />
                         {this.props.data.assignedCourses.map(course => {
-                            if (course.courseId == this.props.data.courseId) {
-                                return null;
-                            }
-
-                            return (<option value={course.courseId} label={course.courseName } />);
+                            return (<option value={course.courseId} label={course.courseName} />);
                         })}
                         </FormControl>
                         <FieldGroup id="formControlsTitle"

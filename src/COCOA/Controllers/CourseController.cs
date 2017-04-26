@@ -47,7 +47,9 @@ namespace COCOA.Controllers
 
             var assignment = await (from cA in _context.CourseAssignments
                                     where cA.UserId == user.Id && cA.CourseId == id
-                                    select cA).SingleOrDefaultAsync();
+                                    select cA)
+                                    .Include(x => x.Course)
+                                    .SingleOrDefaultAsync();
 
             if (enrollment == null && assignment == null)
             {
@@ -67,7 +69,7 @@ namespace COCOA.Controllers
                                        publishedDateUnix = (long)b.Timestamp.Subtract(new DateTime(1970, 1, 1)).TotalSeconds,
                                        bulletinType = b.BulletinType,
                                        stickey = b.Stickey
-                                    }).ToListAsync();
+                                    }).OrderByDescending(x => x.publishedDateUnix).ToListAsync();
 
             var managment = await (from cA in _context.CourseAssignments
                                    where cA.CourseId == id
