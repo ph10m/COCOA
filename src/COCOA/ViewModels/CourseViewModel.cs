@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace COCOA.ViewModels
 {
-    public class CoursePageViewModel : SharedLayoutViewModel
+    public class CoursePageViewModel : CourseSubViewModel
     {
-        public int courseId { get; set; }
-
         public string courseName { get; set; }
 
         public string courseDescription { get; set; }

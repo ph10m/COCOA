@@ -8,7 +8,9 @@ class DocumentSearchPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { searchString: '', courseId: '', result: [], cache: {} };
+        this.state = { searchString: '', courseId: this.props.data.courseId, result: [], cache: {} };
+
+        this.searchInDocuments = this.searchInDocuments.bind(this);
     }
 
     checkCacheAndSearch() {
@@ -26,18 +28,16 @@ class DocumentSearchPage extends React.Component {
     }
 
     handleSearchStringChange(e) {
-        this.setState(
-            { searchString: e.target.value },
-            this.checkCacheAndSearch.bind(this)
-        );
-             
+        this.setState({ searchString: e.target.value });
+        this.searchInDocuments();
     }
 
     handleCourseIdChange(event) {
         this.setState(
-            { courseId: event.target.options[event.target.selectedIndex].value },
-            this.checkCacheAndSearch.bind(this)
+            { courseId: event.target.options[event.target.selectedIndex].value }
         );
+
+        this.searchInDocuments();
     }
 
     searchInDocuments() {
@@ -82,11 +82,14 @@ class DocumentSearchPage extends React.Component {
                       <FormControl componentClass="select"
                                    placeholder="Course"
                                    onChange={this.handleCourseIdChange.bind(this)}>
-                          <option value='' label='' />
-                          {this.props.courses.map(course => {
-                              return (<option value={course.courseId} label={course.courseName} />)
-                            })
-                          }
+                        <option value={this.props.data.courseId} label={this.props.data.courseName} />
+                          {this.props.data.assignedCourses.map(course => {
+                              if (course.courseId == this.props.data.courseId) {
+                                return null;
+                              }
+
+                              return (<option value={course.courseId} label={course.courseName } />);
+                          })}
                       </FormControl>
                 </FormGroup>
               <FormGroup controllerId="formSearch">

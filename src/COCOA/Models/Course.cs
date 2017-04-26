@@ -17,5 +17,9 @@ namespace COCOA.Models
         public string Name1024 { get; set; }
 
         public DateTime Timestamp { get; set; }
+
+        public string Coordinator { get; set; }
+
+        public string InfoLink { get; set; }
     }
 }

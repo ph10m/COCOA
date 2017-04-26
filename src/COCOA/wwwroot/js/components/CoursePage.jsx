@@ -43,6 +43,19 @@ class CoursePage extends React.Component {
                     <Col md={4}>
                         <h3>Overview</h3>
                         {this.props.data.courseDescription}
+                        <ButtonToolbar>
+                            {this.props.data.assigned &&
+                            (<Button href={"/course/documentupload/" + this.props.data.courseId}>
+                                Upload
+                            </Button>)}
+                            {this.props.data.assigned &&
+                            (<Button href={"/course/createbulletin/" + this.props.data.courseId}>
+                                Post Bulletin
+                            </Button>)}
+                            <Button href={"/course/materialsearch/" + this.props.data.courseId}>
+                                Search Material
+                            </Button>
+                        </ButtonToolbar>
                         <h3>Managment</h3>
                         {this.props.data.courseManagment.map(function (element) {
                             return (

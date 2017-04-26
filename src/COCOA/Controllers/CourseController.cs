@@ -83,9 +83,10 @@ namespace COCOA.Controllers
                 return !x.stickey;
             });
 
-            model.courseName = enrollment.Course.Name;
-            model.courseId = enrollment.Course.Id;
-            model.courseDescription = enrollment.Course.Description;
+            model.courseName = enrollment?.Course.Name ?? assignment.Course.Name;
+            model.courseId = enrollment?.Course.Id ?? assignment.Course.Id;
+            model.assigned = (assignment != null);
+            model.courseDescription = enrollment?.Course.Description ?? assignment.Course.Description;
             model.courseManagment = managment;
             model.bulletins = normal;
             model.stickyBulletins = sticky;
@@ -97,17 +98,11 @@ namespace COCOA.Controllers
         /// View for searching in course material. /materialsearch
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> MaterialSearch()
+        public async Task<IActionResult> MaterialSearch(int id)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            var model = new SharedLayoutViewModel();
-            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
-
-            if (resultShared != null)
-            {
-                return StatusCode(400, resultShared);
-            }
+            var model = await GetCourseSubViewModel(user, id);
 
             return View("DocumentSearch", model);
         }
@@ -116,17 +111,11 @@ namespace COCOA.Controllers
         /// View for uploading documents /documentupload
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> DocumentUpload()
+        public async Task<IActionResult> DocumentUpload(int id)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            var model = new SharedLayoutViewModel();
-            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
-
-            if (resultShared != null)
-            {
-                return StatusCode(400, resultShared);
-            }
+            var model = await GetCourseSubViewModel(user, id);
 
             return View("DocumentUpload", model);
         }
@@ -150,21 +139,41 @@ namespace COCOA.Controllers
             return View("Register", model);
         }
 
+        private async Task<CourseSubViewModel> GetCourseSubViewModel(User user, int id)
+        {
+            var model = new CourseSubViewModel();
+            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
+
+            var enrollment = await (from e in _context.Enrollments
+                                    where e.UserId == user.Id && e.CourseId == id
+                                    select e)
+                                   .Include(x => x.Course)
+                                   .SingleOrDefaultAsync();
+
+            var assignment = await (from cA in _context.CourseAssignments
+                                    where cA.UserId == user.Id && cA.CourseId == id
+                                    select cA).SingleOrDefaultAsync();
+
+            var course = await (from c in _context.Courses
+                                where c.Id == id
+                                select c).SingleOrDefaultAsync();
+
+            model.assigned = (assignment != null);
+            model.courseId = id;
+            model.courseName = course.Name;
+
+            return model;
+        }
+
         /// <summary>
         /// View for creating bulletin course. /createbulletin
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> CreateBulletin()
+        public async Task<IActionResult> CreateBulletin(int id)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            var model = new SharedLayoutViewModel();
-            var resultShared = await model.SetSharedDataAsync(_context, _userManager, user);
-
-            if (resultShared != null)
-            {
-                return StatusCode(400, resultShared);
-            }
+            var model = await GetCourseSubViewModel(user, id);
 
             return View("CreateBulletin", model);
         }

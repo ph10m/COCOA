@@ -28,7 +28,7 @@ class FieldGroup extends React.Component {
 class CreateBulletinPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { courseId: '', title: '', content: '', href: '', stickey: false, bulletinType: '0', errorText: null };
+        this.state = { courseId: this.props.data.courseId, title: '', content: '', href: '', stickey: false, bulletinType: '0', errorText: null };
     }
 
 
@@ -57,7 +57,7 @@ class CreateBulletinPage extends React.Component {
     }
 
     courseIdChanged(event) {
-        this.setState({ courseId: event.target.value });
+        this.setState({ courseId: event.target.options[event.target.selectedIndex].value });
     }
 
     titleChanged(event) {
@@ -88,12 +88,19 @@ class CreateBulletinPage extends React.Component {
                 <div>
                     <h1>Create new bulletin</h1>
                     <form>
-                        <FieldGroup id="formControlsCourseId"
-                                    type="text"
-                                    label="Course ID"
-                                    placeholder='Course ID'
-                                    bsSize='lg'
-                                    onChange={this.courseIdChanged.bind(this)} />
+                        <ControlLabel>Course</ControlLabel>
+                        <FormControl componentClass="select"
+                                   placeholder="Course"
+                                   onChange={this.courseIdChanged.bind(this)}>
+                        <option value={this.props.data.courseId} label={this.props.data.courseName} />
+                        {this.props.data.assignedCourses.map(course => {
+                            if (course.courseId == this.props.data.courseId) {
+                                return null;
+                            }
+
+                            return (<option value={course.courseId} label={course.courseName } />);
+                        })}
+                        </FormControl>
                         <FieldGroup id="formControlsTitle"
                                     type="text"
                                     label="Title"
@@ -132,7 +139,7 @@ class CreateBulletinPage extends React.Component {
                     </form>
                 </div>
                 <div>
-                    PREVIEW:<br /><br />
+                    <br /><br />
                     <Bulletin 
                         title={this.state.title}
                         content={this.state.content} />

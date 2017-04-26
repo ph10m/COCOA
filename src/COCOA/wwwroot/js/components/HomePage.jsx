@@ -44,7 +44,7 @@ class HomePage extends React.Component {
    }
 
    render() {
-        const elementList = this.props.enrolledCourses.map((c) => {
+        const enrolled = this.props.enrolledCourses.map((c) => {
             return (
                 <Bulletin
                     course={{ id: c.courseId, name: c.courseName, description: c.courseDescription }} 
@@ -52,10 +52,22 @@ class HomePage extends React.Component {
             );
         });
 
+       const assigned = this.props.assignedCourses.map((c) => {
+           return (
+               <Bulletin
+                   course={{ id: c.courseId, name: c.courseName }} 
+                   hoverPlate={true} />
+            );
+        });
+
         return (
             <div>
                 <PageHeader>Courses</PageHeader>
-                <div className="scroll">{elementList}</div>
+                <div className="scroll">
+                    {enrolled}
+                    <hr />
+                    {assigned}
+                </div>
             </div>
         );
     }

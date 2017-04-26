@@ -87,7 +87,7 @@ class UserPage extends React.Component {
                             bsSize='lg'
                             onChange={this.passwordConfirmedChanged.bind(this)} />
                         <Button onClick={this.updatePassword.bind(this)}>
-                            Change password
+                            Update
                         </Button>
                     </form>
                 </div>

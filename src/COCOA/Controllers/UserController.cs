@@ -12,6 +12,7 @@ using COCOA.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 namespace COCOA.Controllers
 {
@@ -124,6 +125,29 @@ namespace COCOA.Controllers
                 {
                     // Add role
                     var resultRole = await _userManager.AddToRoleAsync(user, role);
+
+                    // Check if Teacher is a coordinator
+                    if (role == "Teacher")
+                    {
+                        var result = await (from x in _context.Courses
+                                            where x.Coordinator.Contains(email)
+                                            select x).ToListAsync();
+
+                        foreach (var course in result)
+                        {
+                            var newCourseAssignment = new CourseAssignment
+                            {
+                                CourseId = course.Id,
+                                UserId = user.Id,
+                                CourseAssignmentRole = CourseAssignment.Role.Owner,
+                                Timestamp = DateTime.Now
+                            };
+
+                            _context.CourseAssignments.Add(newCourseAssignment);
+                            await _context.SaveChangesAsync();
+                        }
+
+                    }
 
                     if (resultRole.Succeeded)
                     {

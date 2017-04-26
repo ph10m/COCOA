@@ -26,7 +26,7 @@ class DocumentUploadPage extends React.Component {
         this.state = {
             file: undefined,
             materialName: '',
-            courseId: '',
+            courseId: this.props.data.courseId,
             validMaterialName: true
         };
     }
@@ -102,8 +102,12 @@ class DocumentUploadPage extends React.Component {
                       <FormControl componentClass="select" 
                                    placeholder="Course"
                                    onChange={this.courseChanged.bind(this)}>
-                          <option value='' label=''/>
-                         {this.props.courses.map(course => {
+                          <option value={this.props.data.courseId} label={this.props.data.courseName}/>
+                         {this.props.data.assignedCourses.map(course => {
+                             if (course.courseId == this.props.data.courseId) {
+                                 return null;
+                             }
+
                              return (<option value={course.courseId} label={course.courseName}/>)
                             })
                          }
@@ -125,10 +129,8 @@ class DocumentUploadPage extends React.Component {
                                   value={this.state.description}
                                   onChange={this.descriptionChanged.bind(this)} />
                     <Button onClick={this.sendFile.bind(this)}
-                            disabled={!(this.state.courseId.length > 0
-                                        && this.isValidMaterialName(this.state.materialName)
-                                        && this.state.materialName.length > 0
-                                        && this.state.file !== undefined)}>
+                            disabled={(!this.isValidMaterialName(this.state.materialName)
+                                      || this.state.file == null)}>
                         Upload
                     </Button>
                   </form>

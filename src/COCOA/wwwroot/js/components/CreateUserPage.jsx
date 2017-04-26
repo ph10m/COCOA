@@ -84,11 +84,11 @@ class CreateUserPage extends React.Component {
                             bsSize='lg'
                             onChange={this.emailChanged.bind(this)} />
                         <FieldGroup id="formControlsName"
-                            type="username"
-                            label="Name"
-                            placeholder='Name'
-                            bsSize='lg'
-                            onChange={this.nameChanged.bind(this)} />
+                                    type="username"
+                                    label="Name"
+                                    placeholder='Name'
+                                    bsSize='lg'
+                                    onChange={this.nameChanged.bind(this)} />
                         <FieldGroup id="formControlPassword"
                             label="Password"
                             type="password" 
@@ -103,7 +103,7 @@ class CreateUserPage extends React.Component {
                             onChange={this.passwordConfirmedChanged.bind(this)} />
                         <p>{this.state.errorText}</p>
                         <Button onClick={this.createNewUser.bind(this)}>
-                            Submit
+                            Register
                         </Button>
                     </form>
                 </div>

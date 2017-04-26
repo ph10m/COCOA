@@ -1,4 +1,4 @@
-﻿@model COCOA.ViewModels.SharedLayoutViewModel
+﻿@model COCOA.ViewModels.CourseSubViewModel
 @{
     Layout = "~/Views/Shared/_HeaderLayout.cshtml";
 }
@@ -12,7 +12,7 @@
 </head>
 <body>
     @Html.React("DocumentSearchPage", new {
-        courses = Model.enrolledCourses
+        data = Model
      })
     <script src="@Url.Content("~/js/components/MaterialPDFMetaComponent.jsx")"></script>
     <script src="@Url.Content("~/js/components/DocumentSearchPage.jsx")"></script>

@@ -12,10 +12,15 @@ class CocoaHeader extends React.Component {
     }
     render() {
         const enrolled = this.props.enrolledCourses.map(course => {
-            console.log(course.courseName + ": " + course.courseId);
             return (
                 <MenuItem eventKey={"3." + course.courseId} href={"/course/index/" + course.courseId}>{course.courseName}</MenuItem>
-                );
+            );
+        });
+
+        const assigned = this.props.assignedCourses.map(course => {
+            return (
+                <MenuItem eventKey={"3." + course.courseId} href={"/course/index/" + course.courseId}>{course.courseName}</MenuItem>
+            );
         });
 
         return (
@@ -31,20 +36,19 @@ class CocoaHeader extends React.Component {
                 <Navbar.Collapse>
                     <Nav>
                     <NavItem eventKey={"1"} href='/home'>Home</NavItem>
-                    <NavItem eventKey={"2"} href='/home'>Tasks</NavItem>
                     <NavDropdown eventKey={"3"} title="Courses" id="basic-nav-dropdown">
                         {enrolled}
                         {this.props.isTeacher && (<MenuItem divider />)}
                         {this.props.isTeacher && (<MenuItem eventKey={"new"} href={"/course/register"}>Create new course</MenuItem>)}
+                        {this.props.isTeacher && (<MenuItem divider />)}
+                        {assigned}
                     </NavDropdown>
-                    {this.props.signedIn && (<NavItem eventKey={"4"} href='/course/materialsearch'>Document search</NavItem>)}
                     {this.props.signedIn && (<NavItem eventKey={"5"} href='/course/enrollment'>Enroll to course</NavItem>)}
-                    {this.props.assignedCourses.length != 0 && (<NavItem eventKey={"6"} href='/course/documentupload'>Upload document</NavItem>)}
                     </Nav>
                     <Nav pullRight>
                     {!this.props.signedIn && (<NavItem eventKey={1} href='/user/signin'>Log in</NavItem>)}
                     {!this.props.signedIn && (<NavItem eventKey={2} href='/user/register'>Create new user</NavItem>)}
-                    {this.props.signedIn && (<NavItem eventKey={3} href="/user"><Glyphicon glyph="user" />{" " + this.props.userName}</NavItem>)}
+                    {this.props.signedIn && (<NavItem eventKey={3}><Glyphicon glyph="user" />{" " + this.props.userName}</NavItem>)}
                     {this.props.signedIn && (<NavItem eventKey={3} href='/user/signout'>Log out</NavItem>)}
                     </Nav>
                 </Navbar.Collapse>

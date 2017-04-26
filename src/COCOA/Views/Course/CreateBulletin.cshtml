@@ -1,4 +1,5 @@
-﻿@{
+﻿@model COCOA.ViewModels.CourseSubViewModel
+@{
     Layout = "~/Views/Shared/_HeaderLayout.cshtml";
 }
 <html>
@@ -6,7 +7,7 @@
         <title>Create bulletin</title>
     </head>
     <body>
-        @Html.React("CreateBulletinPage", new { })
+        @Html.React("CreateBulletinPage", new { data = Model })
         <script src="@Url.Content("~/js/components/CreateBulletinPage.jsx")"></script>
     </body>
 </html>
