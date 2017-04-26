@@ -416,27 +416,15 @@ namespace COCOA.Controllers
 
         public async Task<IActionResult> DocumentSearch(int courseId, string searchString, int page = 0)
         {
+            // the code that you want to measure comes here
             var result = await (from m in _context.MaterialPDFs
                                 where (m.CourseId == courseId && (m.Name.Contains(searchString) || m.Description.Contains(searchString)))
-                                select m.Meta).ToListAsync();
+                                select new { id =  m.Id, name = m.Name, description = m.Description} ).ToListAsync();
 
-            
             result = result.OrderBy(mpmd => mpmd.name.Contains(searchString)?0:1)
                 .Skip(10 * page).Take(10).ToList();
-            /*string pdfPath = System.IO.Path.GetFullPath("..\\..\\example.pdf");
-            using (PdfReader reader = new PdfReader(pdfPath))
-            {
-                searchString = searchString.ToLower();
-                for (int i = 1; i <= reader.NumberOfPages; i++)
-                {
-                    string page = PdfTextExtractor.GetTextFromPage(reader, i).ToLower();
-                    if (page.IndexOf(searchString) != -1)
-                    {
-                        string url = System.IO.Path.GetFullPath(pdfPath) + "#page=" + i;
-                        return Ok(url);
-                    }
-                }
-            }*/
+
+            
             return Json(result);
         }
 

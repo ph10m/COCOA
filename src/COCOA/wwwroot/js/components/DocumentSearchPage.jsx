@@ -67,7 +67,6 @@ class DocumentSearchPage extends React.Component {
     }
 
     searchInDocuments() {
-        console.log("Searching with '" + this.state.searchString + "'");
         var xhr = new XMLHttpRequest();
         var searchString = this.state.searchString;
         xhr.open('get', "/course/documentsearch?courseId=" + this.state.courseId + "&searchString=" + searchString, true);
