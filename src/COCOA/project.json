@@ -56,7 +56,11 @@
   },
 
   "frameworks": {
-    "net452": {}
+    "net452": {
+      "frameworkAssemblies": {
+        "System.Web.Extensions": "4.0.0.0"
+      }
+    }
   },
 
   "buildOptions": {

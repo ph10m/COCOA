@@ -93,7 +93,7 @@ namespace COCOA.Controllers
             model.bulletins = normal;
             model.stickyBulletins = sticky;
 
-            return View(model);
+            return View("Index", model);
         }
 
         /// <summary>
@@ -416,27 +416,15 @@ namespace COCOA.Controllers
 
         public async Task<IActionResult> DocumentSearch(int courseId, string searchString, int page = 0)
         {
+            // the code that you want to measure comes here
             var result = await (from m in _context.MaterialPDFs
                                 where (m.CourseId == courseId && (m.Name.Contains(searchString) || m.Description.Contains(searchString)))
-                                select m.Meta).ToListAsync();
+                                select new { id =  m.Id, name = m.Name, description = m.Description} ).ToListAsync();
 
-            
             result = result.OrderBy(mpmd => mpmd.name.Contains(searchString)?0:1)
                 .Skip(10 * page).Take(10).ToList();
-            /*string pdfPath = System.IO.Path.GetFullPath("..\\..\\example.pdf");
-            using (PdfReader reader = new PdfReader(pdfPath))
-            {
-                searchString = searchString.ToLower();
-                for (int i = 1; i <= reader.NumberOfPages; i++)
-                {
-                    string page = PdfTextExtractor.GetTextFromPage(reader, i).ToLower();
-                    if (page.IndexOf(searchString) != -1)
-                    {
-                        string url = System.IO.Path.GetFullPath(pdfPath) + "#page=" + i;
-                        return Ok(url);
-                    }
-                }
-            }*/
+
+            
             return Json(result);
         }
 
@@ -469,6 +457,40 @@ namespace COCOA.Controllers
             //Response.Flush();
 
             //Response.End();
+        }
+
+        public async Task<IActionResult> GetAssignedCourses()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+
+            var courses = await (from c in _context.Courses
+                                  join a in _context.CourseAssignments
+                                  on c.Id equals a.CourseId
+                                  join u in _context.Users
+                                  on a.UserId equals u.Id
+                                  where u.Id == user.Id
+                                  select c)
+                                  .ToArrayAsync();
+
+            return Json(courses);
+        }
+
+        public async Task<IActionResult> GetEnrolledCourses()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+
+            var courses = await (from c in _context.Courses
+                                 join e in _context.Enrollments
+                                 on c.Id equals e.CourseId
+                                 join u in _context.Users
+                                 on e.UserId equals u.Id
+                                 where u.Id == user.Id
+                                 select c)
+                                  .ToArrayAsync();
+
+            return Json(courses);
         }
     }
 }

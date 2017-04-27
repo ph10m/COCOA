@@ -4,13 +4,26 @@ var ControlLabel = ReactBootstrap.ControlLabel;
 var FormControl = ReactBootstrap.FormControl;
 var HelpBlock = ReactBootstrap.HelpBlock;
 
+const timeBetweenChecks = 50; //Milliseconds
+const delaySearchAfterTyping = 500; //Milliseconds
+const searchSpinDelay = 500; //Milliseconds
+
 class DocumentSearchPage extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = { searchString: '', courseId: this.props.data.courseId, result: [], cache: {} };
 
-        this.searchInDocuments = this.searchInDocuments.bind(this);
+        this.state = { searchString: '', courseId: '', result: [], cache: {}, ongoingSearches: 0, searchSpinStateIndex: 0 };
+        this.timer = 0.0;
+        this.updated = false;
+        this.ongoingSearches = 0; //Duplicated in object and state to ensure read/write errors don't occur
+        typeof window !== "undefined" &&
+            (this.countdown = window.setInterval(this.searchIfEnoughTimePassed.bind(this), timeBetweenChecks)); //Small workaround to make setInterval work with server-side rendering
+
+        this.searchSpinStates = ["Searching", "Searching.", "Searching..", "Searching..."];
+        typeof window !== "undefined" &&
+            (this.searchSpinTimer = window.setInterval(this.updateSearchSpinState.bind(this), searchSpinDelay));
     }
 
     checkCacheAndSearch() {
@@ -27,17 +40,30 @@ class DocumentSearchPage extends React.Component {
         }
     }
 
+    searchIfEnoughTimePassed() {
+        this.timer = Math.max(0, this.timer - timeBetweenChecks);
+        if (this.timer == 0 && this.updated) {
+            this.updated = false;
+            this.checkCacheAndSearch.bind(this)();
+        }
+    }
+
+    updateSearchSpinState() {
+        this.setState({ searchSpinStateIndex: (this.state.searchSpinStateIndex + 1) % this.searchSpinStates.length });
+    }
+
     handleSearchStringChange(e) {
-        this.setState({ searchString: e.target.value });
-        this.searchInDocuments();
+        this.setState(
+            { searchString: e.target.value },
+            () => { this.updated = true; this.timer = delaySearchAfterTyping; }
+        );
     }
 
     handleCourseIdChange(event) {
         this.setState(
-            { courseId: event.target.options[event.target.selectedIndex].value }
-        );
+            { courseId: event.target.options[event.target.selectedIndex].value },
+            () => { this.updated = true; this.timer = delaySearchAfterTyping; });
 
-        this.searchInDocuments();
     }
 
     searchInDocuments() {
@@ -45,6 +71,8 @@ class DocumentSearchPage extends React.Component {
         var searchString = this.state.searchString;
         xhr.open('get', "/course/documentsearch?courseId=" + this.state.courseId + "&searchString=" + searchString, true);
         xhr.onload = function () {
+            this.ongoingSearches -= 1;
+            this.setState({ ongoingSearches: this.ongoingSearches });
             if (xhr.status == 200) {
                 var result = JSON.parse(xhr.response);
                 var newCache = this.state.cache;
@@ -56,6 +84,8 @@ class DocumentSearchPage extends React.Component {
             }
         }.bind(this);
         xhr.send();
+        this.ongoingSearches += 1;
+        this.setState({ ongoingSearches: this.ongoingSearches });
     }
 
     openDocument(event) {
@@ -86,6 +116,7 @@ class DocumentSearchPage extends React.Component {
                           return (<option value={course.courseId} label={course.courseName } />);
                           })}
                           {this.props.data.assignedCourses.map(course => {
+                        <option value={this.props.data.courseId} label={this.props.data.courseName} />
                               return (<option value={course.courseId} label={course.courseName } />);
                           })}
                       </FormControl>
@@ -102,6 +133,8 @@ class DocumentSearchPage extends React.Component {
           </form>
 
           <div>
+            {this.state.ongoingSearches > 0 && ( <div><h4>{this.searchSpinStates[this.state.searchSpinStateIndex]}</h4> <br/></div> )}
+
             {this.state.result.map(function (el) {
                 return (
                     <MaterialPDFMetaComponent name={el.name} 
