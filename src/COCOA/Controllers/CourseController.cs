@@ -93,7 +93,7 @@ namespace COCOA.Controllers
             model.bulletins = normal;
             model.stickyBulletins = sticky;
 
-            return View(model);
+            return View("Index", model);
         }
 
         /// <summary>
@@ -457,6 +457,40 @@ namespace COCOA.Controllers
             //Response.Flush();
 
             //Response.End();
+        }
+
+        public async Task<IActionResult> GetAssignedCourses()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+
+            var courses = await (from c in _context.Courses
+                                  join a in _context.CourseAssignments
+                                  on c.Id equals a.CourseId
+                                  join u in _context.Users
+                                  on a.UserId equals u.Id
+                                  where u.Id == user.Id
+                                  select c)
+                                  .ToArrayAsync();
+
+            return Json(courses);
+        }
+
+        public async Task<IActionResult> GetEnrolledCourses()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+
+            var courses = await (from c in _context.Courses
+                                 join e in _context.Enrollments
+                                 on c.Id equals e.CourseId
+                                 join u in _context.Users
+                                 on e.UserId equals u.Id
+                                 where u.Id == user.Id
+                                 select c)
+                                  .ToArrayAsync();
+
+            return Json(courses);
         }
     }
 }
