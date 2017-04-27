@@ -12,7 +12,9 @@ namespace COCOA.ViewModels
 
         public string courseDescription { get; set; }
 
-        public List<string> courseManagment { get; set; }
+        public string courseCoordinator { get; set; }
+
+        public string courseInfolink { get; set; }
 
         public IEnumerable<BulletinViewModel> bulletins { get; set; }
         public IEnumerable<BulletinViewModel> stickyBulletins { get; set; }

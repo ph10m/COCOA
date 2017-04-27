@@ -20,6 +20,6 @@ namespace COCOA.Models
 
         public string Coordinator { get; set; }
 
-        public string InfoLink { get; set; }
+        public string Infolink { get; set; }
     }
 }
