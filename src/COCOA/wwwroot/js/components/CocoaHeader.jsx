@@ -24,7 +24,7 @@ class CocoaHeader extends React.Component {
         });
 
         return (
-            <Navbar inverse>
+            <Navbar inverse staticTop>
                 <Navbar.Header>
                     <a href='/home' className='logo-link'>
                         <Image src='/../images/logo.png' className='header-logo' />
@@ -37,14 +37,15 @@ class CocoaHeader extends React.Component {
                     <Nav>
                     <NavItem eventKey={"1"} href='/home'>Home</NavItem>
                     <NavDropdown eventKey={"3"} title="Courses" id="basic-nav-dropdown">
+                        {!this.props.signedIn && (<MenuItem>Log in before viewing courses.</MenuItem>)}
                         {enrolled}
                         {this.props.isTeacher && (<MenuItem divider />)}
                         {this.props.isTeacher && (<MenuItem eventKey={"new"} href={"/course/register"}>Create new course</MenuItem>)}
                         {this.props.isTeacher && (<MenuItem divider />)}
                         {assigned}
                     </NavDropdown>
-                    {this.props.signedIn && (<NavItem eventKey={"5"} href='/course/enrollment'>Enroll to course</NavItem>)}
-                    </Nav>
+                             {this.props.signedIn && (<NavItem eventKey={"5"} href='/course/enrollment'>Follow a new course</NavItem>)}
+</Nav>
                     <Nav pullRight>
                     {!this.props.signedIn && (<NavItem eventKey={1} href='/user/signin'>Log in</NavItem>)}
                     {!this.props.signedIn && (<NavItem eventKey={2} href='/user/register'>Create new user</NavItem>)}

@@ -33,7 +33,7 @@ class EnrollmentPage extends React.Component {
         return (
             <div>
                 <form>
-                    <h1>Course enrollment</h1>
+                    <h1>Search in available courses at IDI</h1>
                     <FormGroup controllerId="formSearch">
                         <ControlLabel>Search:</ControlLabel>
                         <FormControl type="text"

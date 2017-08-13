@@ -103,3 +103,7 @@ h4 {
 a {
     color: #000;
 }
+
+.modal-dialog {
+    margin-top: 20%;
+}
